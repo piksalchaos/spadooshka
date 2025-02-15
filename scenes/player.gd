@@ -17,6 +17,7 @@ const BOOSTED_JUMP_VELOCITY: float = 12.0
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -65,6 +66,7 @@ func _physics_process(delta: float) -> void:
 		pass
 	elif input_dir != Vector2.ZERO and is_on_floor():
 		animation_player.play("move")
+		pass
 	else:
 		animation_player.play("idle")
 	

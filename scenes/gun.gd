@@ -35,12 +35,13 @@ func shoot():
 		reload()
 	else:
 		$FireTimer.start()
-		
 func reload():
 	$ReloadTimer.start()
+	$ReloadSoundEffect.play()
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("gun/reload")
 	
 func play_shoot_effects():
+	$ShootSoundEffect.play()
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("gun/shoot")

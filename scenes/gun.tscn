@@ -1,0 +1,105 @@
+[gd_scene load_steps=9 format=3 uid="uid://b84jqg6v7ev0v"]
+
+[ext_resource type="Script" path="res://scripts/gun.gd" id="1_51xk5"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_v0qj0"]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.0
+
+[sub_resource type="Animation" id="Animation_q7oej"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5)
+
+[sub_resource type="Animation" id="Animation_gds7w"]
+resource_name = "idle"
+length = 3.0
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_cowen"]
+resource_name = "move"
+loop_mode = 1
+step = 0.25
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5, 0.5, 1, 0.5, -0.1, -0.5, 1, 1, 0.5, -0.25, -0.5)
+
+[sub_resource type="Animation" id="Animation_6fh3t"]
+resource_name = "shoot"
+length = 0.4
+step = 0.1
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.707108, 0, 0, 0.707106, 0.1, 1, 0.84209, 0, 0, 0.539337, 0.4, 1, 0.707108, 0, 0, 0.707106)
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5, 0.1, 1, 0.5, -0.18589, -0.5, 0.4, 1, 0.5, -0.25, -0.5)
+
+[sub_resource type="Animation" id="Animation_0syds"]
+resource_name = "reload"
+step = 0.1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5, 0.5, 1, 0.215158, -0.25, -0.5, 1, 1, 0.5, -0.25, -0.5)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.707107, 0, 0, 0.707107, 0.5, 1, 0.664345, 0.242169, -0.242169, 0.664345, 1, 1, 0.707107, 0, 0, 0.707107)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tx8a1"]
+_data = {
+"RESET": SubResource("Animation_q7oej"),
+"idle": SubResource("Animation_gds7w"),
+"move": SubResource("Animation_cowen"),
+"reload": SubResource("Animation_0syds"),
+"shoot": SubResource("Animation_6fh3t")
+}
+
+[node name="Gun" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, -0.25, -0.5)
+mesh = SubResource("CylinderMesh_v0qj0")
+skeleton = NodePath("../..")
+script = ExtResource("1_51xk5")
+
+[node name="FireTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tx8a1")
+}
+autoplay = "idle"
+playback_default_blend_time = 1.0
+
+[node name="ShootSoundEffect" type="AudioStreamPlayer" parent="."]
+
+[node name="ReloadSoundEffect" type="AudioStreamPlayer" parent="."]

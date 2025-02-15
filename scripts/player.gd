@@ -40,7 +40,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			selected_item_slot = (selected_item_slot + items.size()-1) % items.size()
 
 func _physics_process(delta: float) -> void:
-	print(selected_item_slot)
 	if interact_cast.is_colliding():
 		#change this block of code later so it works well with all kinds of interactables
 		var target = interact_cast.get_collider()

@@ -12,6 +12,7 @@ var is_speed_boosted: bool = false
 const MAX_ITEM_COUNT: int = 3
 const DEFAULT_SPEED: float = 10.0
 const BOOSTED_SPEED: float = 16.0
+const DASH_SPEED: float = 50.0
 const DEFAULT_JUMP_VELOCITY: float = 7.0
 const BOOSTED_JUMP_VELOCITY: float = 12.0
 
@@ -32,6 +33,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("jump") and is_on_floor():
 		velocity.y = DEFAULT_JUMP_VELOCITY
+	
+	if event.is_action_pressed("dash"):
+		velocity = -camera.global_transform.basis.z * DASH_SPEED
 	
 	if items.size() > 0:
 		if event.is_action_pressed("item_slot_right"):

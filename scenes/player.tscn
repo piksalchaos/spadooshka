@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://cyxjceb2t4xis"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_x756l"]
-[ext_resource type="PackedScene" uid="uid://beai70ioh5ndh" path="res://scenes/gun.tscn" id="2_mg0qd"]
+[ext_resource type="PackedScene" uid="uid://wnwahfuq57mv" path="res://scenes/gun.tscn" id="2_mg0qd"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wu3n4"]
 
@@ -126,7 +126,6 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.5)
 script = ExtResource("1_x756l")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -140,7 +139,8 @@ shape = SubResource("CapsuleShape3D_dqyto")
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42768, 0)
 
-[node name="Gun_scene" parent="Camera" instance=ExtResource("2_mg0qd")]
+[node name="Gun" parent="Camera" instance=ExtResource("2_mg0qd")]
+transform = Transform3D(1, 0, 0, 0, -3.61999e-06, -1, 0, 1, -3.61999e-06, 0.5, -0.25, -0.5)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

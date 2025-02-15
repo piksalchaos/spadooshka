@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://beai70ioh5ndh"]
+[gd_scene load_steps=16 format=3 uid="uid://wnwahfuq57mv"]
 
 [ext_resource type="Script" path="res://scenes/gun.gd" id="1_1ns7o"]
 [ext_resource type="AudioStream" uid="uid://cl5oafygc3bgh" path="res://assets/soundfx/shoot.ogg" id="2_3aiox"]
@@ -201,6 +201,15 @@ tracks/0/keys = {
 "values": [Vector3(0.5, -0.25, -0.5), Vector3(0.410477, -0.138934, -0.5), Vector3(0.5, -0.25, -0.5), Vector3(0.536469, -0.138934, -0.5)]
 }
 
+[sub_resource type="Animation" id="Animation_aepgj"]
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0.0333333, 1, 0.707107, 0, 0, 0.707107, 0.5, 1, 0, 0, 0, 1, 1, 1, 0.707, 0, 0, 0.707)
+
 [sub_resource type="Animation" id="Animation_n2vav"]
 resource_name = "shoot"
 length = 0.4
@@ -229,15 +238,6 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector3(1.75519, 0, 0), Vector3(1.5708, 0, 0)]
 }
-
-[sub_resource type="Animation" id="Animation_aepgj"]
-tracks/0/type = "rotation_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0.0333333, 1, 0.707107, 0, 0, 0.707107, 0.5, 1, 0, 0, 0, 1, 1, 1, 0.707, 0, 0, 0.707)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4mlsv"]
 _data = {

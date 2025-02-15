@@ -11,7 +11,7 @@ var is_speed_boosted: bool = false
 
 const MAX_ITEM_COUNT: int = 3
 const DEFAULT_SPEED: float = 10.0
-const BOOSTED_SPEED: float = 16.0
+const BOOSTED_SPEED: float = 20.0
 const DEFAULT_JUMP_VELOCITY: float = 7.0
 const BOOSTED_JUMP_VELOCITY: float = 12.0
 

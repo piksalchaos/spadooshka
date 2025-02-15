@@ -151,6 +151,6 @@ skeleton = NodePath("../..")
 target_position = Vector3(0, 0, -5)
 
 [node name="SpeedBoostTimer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 10.0
 
 [connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]

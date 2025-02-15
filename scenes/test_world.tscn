@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://q7llm5mr03ct" path="res://scenes/test_environment.tscn" id="1_ok3hk"]
 [ext_resource type="PackedScene" uid="uid://cyxjceb2t4xis" path="res://scenes/player.tscn" id="2_ld57g"]
 [ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="4_230fl"]
-[ext_resource type="PackedScene" uid="uid://bynxv5w268ees" path="res://scenes/loot_box.tscn" id="5_qq4x6"]
+[ext_resource type="PackedScene" uid="uid://by0mye1dj10gn" path="res://scenes/loot_box.tscn" id="5_qq4x6"]
 [ext_resource type="Resource" uid="uid://c8fxpau6c47ak" path="res://resources/items/speed_boost.tres" id="6_qmdj7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cbq6g"]
@@ -39,11 +39,10 @@ shadow_enabled = true
 environment = SubResource("Environment_h1gcq")
 
 [node name="Test Environment" parent="." instance=ExtResource("1_ok3hk")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7389, -2.00995, -3.34783)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -1.7389, -2.00995, -3.34783)
 
 [node name="Player" parent="." instance=ExtResource("2_ld57g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.903215, 0)
-visible = false
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://bynxv5w268ees"]
+[gd_scene load_steps=5 format=3 uid="uid://by0mye1dj10gn"]
 
 [ext_resource type="Script" path="res://scenes/loot_box.gd" id="1_hhbn5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_43mc8"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xuskm"]
+albedo_color = Color(1, 0.141176, 1, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_3xsiv"]
+material = SubResource("StandardMaterial3D_xuskm")
 
 [node name="LootBox" type="StaticBody3D"]
 script = ExtResource("1_hhbn5")

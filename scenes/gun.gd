@@ -38,6 +38,7 @@ func shoot():
 		
 func reload():
 	$ReloadTimer.start()
+	$AnimationPlayer.stop()
 	$AnimationPlayer.play("gun/reload")
 	
 func play_shoot_effects():

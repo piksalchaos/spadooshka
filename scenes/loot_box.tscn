@@ -1,14 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://by0mye1dj10gn"]
+[gd_scene load_steps=4 format=3 uid="uid://bynxv5w268ees"]
+
+[ext_resource type="Script" path="res://scenes/loot_box.gd" id="1_hhbn5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_43mc8"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_3xsiv"]
 
 [node name="LootBox" type="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000557184, -0.00607729, 0.00355792)
+script = ExtResource("1_hhbn5")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_43mc8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_3xsiv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

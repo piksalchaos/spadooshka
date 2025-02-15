@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var camera: Camera3D = $Camera
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var see_cast: RayCast3D = $Camera/SeeCast
 
 const SPEED = 10.0
 const JUMP_VELOCITY = 7.0
@@ -18,16 +19,19 @@ func _unhandled_input(event: InputEvent) -> void:
 		play_shoot_effects()
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	if see_cast.is_colliding():
+		var target = see_cast.get_collider()
+		if target is LootBox:
+			if Input.is_action_just_pressed("interact"):
+				target.open()
+				#change code later
+	
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
-	# Handle jump.
+	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+	
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:

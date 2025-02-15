@@ -8,14 +8,14 @@ const JUMP_VELOCITY = 7.0
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * .005)
 		camera.rotate_x(-event.relative.y * 0.005)
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
-	if event.is_action_pressed("shoot"):
-		play_shoot_effects()
+	
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -41,11 +41,8 @@ func _physics_process(delta: float) -> void:
 		pass
 	elif input_dir != Vector2.ZERO and is_on_floor():
 		animation_player.play("move")
+		pass
 	else:
 		animation_player.play("idle")
 	
 	move_and_slide()
-
-func play_shoot_effects():
-	animation_player.stop()
-	animation_player.play("shoot")

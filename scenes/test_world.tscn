@@ -65,3 +65,7 @@ offset_bottom = 23.0
 [node name="LootBox" parent="." instance=ExtResource("5_qq4x6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3378, 0.5, -2.49323)
 item = ExtResource("6_qmdj7")
+
+[node name="LootBox2" parent="." instance=ExtResource("5_qq4x6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3378, 0.5, 4.04229)
+item = ExtResource("6_qmdj7")

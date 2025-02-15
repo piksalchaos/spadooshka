@@ -16,5 +16,3 @@ shape = SubResource("BoxShape3D_43mc8")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_3xsiv")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]

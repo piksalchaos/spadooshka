@@ -147,5 +147,10 @@ transform = Transform3D(1, 0, 0, 0, -3.61999e-06, -1, 0, 1, -3.61999e-06, 0.5, -
 mesh = SubResource("CylinderMesh_5mvrd")
 skeleton = NodePath("../..")
 
-[node name="SeeCast" type="RayCast3D" parent="Camera"]
+[node name="InteractCast" type="RayCast3D" parent="Camera"]
 target_position = Vector3(0, 0, -5)
+
+[node name="SpeedBoostTimer" type="Timer" parent="."]
+wait_time = 15.0
+
+[connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]

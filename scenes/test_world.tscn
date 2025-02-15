@@ -1,11 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://c3y6d2imfjfk1"]
+[gd_scene load_steps=8 format=3 uid="uid://c3y6d2imfjfk1"]
 
 [ext_resource type="Script" path="res://scenes/test_world.gd" id="1_4bed4"]
 [ext_resource type="PackedScene" uid="uid://q7llm5mr03ct" path="res://scenes/test_environment.tscn" id="1_ok3hk"]
 [ext_resource type="PackedScene" uid="uid://cyxjceb2t4xis" path="res://scenes/player.tscn" id="2_ld57g"]
 [ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="4_230fl"]
-[ext_resource type="PackedScene" uid="uid://bynxv5w268ees" path="res://scenes/loot_box.tscn" id="5_qq4x6"]
-[ext_resource type="Resource" uid="uid://c8fxpau6c47ak" path="res://resources/items/speed_boost.tres" id="6_qmdj7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cbq6g"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -18,15 +16,6 @@ sky_material = SubResource("ProceduralSkyMaterial_cbq6g")
 background_mode = 2
 sky = SubResource("Sky_c8opc")
 tonemap_mode = 2
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kco21"]
-expand_margin_left = 10.0
-expand_margin_top = 10.0
-expand_margin_right = 10.0
-expand_margin_bottom = 10.0
-
-[sub_resource type="Theme" id="Theme_7lfqm"]
-Label/styles/normal = SubResource("StyleBoxFlat_kco21")
 
 [node name="Test World" type="Node"]
 script = ExtResource("1_4bed4")
@@ -65,19 +54,3 @@ scale = Vector2(0.03, 0.03)
 pivot_offset = Vector2(640, 360)
 texture = ExtResource("4_230fl")
 stretch_mode = 5
-
-[node name="ItemListLabel" type="Label" parent="CanvasLayer/HUD"]
-layout_mode = 0
-offset_left = 43.0
-offset_top = 592.0
-offset_right = 195.0
-offset_bottom = 667.0
-theme = SubResource("Theme_7lfqm")
-
-[node name="LootBox" parent="." instance=ExtResource("5_qq4x6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3378, 0.5, -2.49323)
-item = ExtResource("6_qmdj7")
-
-[node name="LootBox2" parent="." instance=ExtResource("5_qq4x6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3378, 0.5, 4.04229)
-item = ExtResource("6_qmdj7")

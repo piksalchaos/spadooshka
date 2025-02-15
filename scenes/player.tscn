@@ -125,25 +125,9 @@ _data = {
 "shoot": SubResource("Animation_6fh3t")
 }
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_wu3n4"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dqyto"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_5mvrd"]
-top_radius = 0.1
-bottom_radius = 0.1
-height = 1.0
-
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.5)
 script = ExtResource("1_x756l")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_tx8a1")
-}
-autoplay = "idle"
-playback_default_blend_time = 1.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -158,10 +142,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42768, 0)
 
 [node name="Gun_scene" parent="Camera" instance=ExtResource("2_mg0qd")]
 
-[node name="InteractCast" type="RayCast3D" parent="Camera"]
-target_position = Vector3(0, 0, -5)
-
-[node name="SpeedBoostTimer" type="Timer" parent="."]
-wait_time = 15.0
-
-[connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tx8a1")
+}
+autoplay = "idle"
+playback_default_blend_time = 1.0

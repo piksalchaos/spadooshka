@@ -13,15 +13,13 @@ var selected_item_slot = 0
 var is_speed_boosted: bool = false
 var can_dash: bool = true
 var is_dashing: bool = false
-var dash_direction: Vector3
 
 const MAX_ITEM_COUNT: int = 3
 const DEFAULT_SPEED: float = 10.0
 const BOOSTED_SPEED: float = 16.0
-const DASH_SPEED: float = 25.0
+const DASH_SPEED: float = 50.0
 const DEFAULT_JUMP_VELOCITY: float = 7.0
 const BOOSTED_JUMP_VELOCITY: float = 12.0
-
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -41,8 +39,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump") and is_on_floor():
 		velocity.y = DEFAULT_JUMP_VELOCITY
 	
-	if event.is_action_pressed("dash"):
-		velocity = -camera.global_transform.basis.z * DASH_SPEED
+	#if event.is_action_pressed("dash"):
+		#velocity = -camera.global_transform.basis.z * DASH_SPEED
 	
 	if items.size() > 0:
 		if event.is_action_pressed("item_slot_right"):
@@ -73,7 +71,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, speed)
 			velocity.z = move_toward(velocity.z, 0, speed)
-	
+
 	if animation_player.current_animation == "shoot":
 		pass
 	elif input_dir != Vector2.ZERO and is_on_floor():
@@ -85,15 +83,10 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash"):
 		if can_dash:
 			is_dashing = true
-			dash_direction = camera.global_transform.basis.z * -1
-			
-			velocity = DASH_SPEED * dash_direction
-			
+			var dash_direction := camera.global_transform.basis.z * -1
+			velocity = dash_direction * DASH_SPEED
 			dash_timer.start()
-			
-		can_dash = false
-		
-		
+			can_dash = false
 		
 	move_and_slide()
 
@@ -111,6 +104,7 @@ func _on_speed_boost_timer_timeout() -> void:
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
 	if dash_cooldown_timer.is_stopped() and not can_dash:
+		velocity = Vector3.ZERO
 		dash_cooldown_timer.start()
 
 func _on_dash_cooldown_timer_timeout() -> void:

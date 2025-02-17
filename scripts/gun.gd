@@ -42,8 +42,9 @@ func shoot():
 	var position: Vector3 = $ShootRay.get_collision_point()
 	var normal: Vector3 = $ShootRay.get_collision_normal()
 	
+	var random_angle = randf_range(0, PI * 2)
 	var new_bullet_hole = bullet_hole.instantiate()
-	new_bullet_hole.transform = Transform3D(Vector3.LEFT, normal, normal.cross(Vector3.LEFT), position)
+	new_bullet_hole.transform = Transform3D(Basis(), position).looking_at(position + normal, Vector3.RIGHT.rotated(normal, random_angle))
 	get_tree().current_scene.add_child(new_bullet_hole)
 	
 	play_shoot_effects()

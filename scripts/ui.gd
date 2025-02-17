@@ -18,4 +18,3 @@ func _process(delta: float) -> void:
 			item_list_label.text += "speed boost\n"
 	
 	gun_ammo_label.text = str(gun.num_bullets) + "/" + str(gun.MAG_CAPACITY)
-	print(str(gun.num_bullets) + "/" + str(gun.MAG_CAPACITY))

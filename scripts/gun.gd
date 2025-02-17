@@ -34,11 +34,9 @@ func shoot():
 	is_gun_ready = false
 	play_shoot_effects()
 	$FireTimer.start()
-	print(num_bullets)
 	if num_bullets == 0:
 		await $FireTimer.timeout
 		reload()
-		print("reload")
 	else:
 		pass
 func reload():

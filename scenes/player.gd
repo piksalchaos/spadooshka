@@ -7,27 +7,29 @@ class_name Player extends CharacterBody3D
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
 
-
-var items: Array[Item] = []
-var selected_item_slot = 0
-var is_speed_boosted: bool = false
-var can_dash: bool = true
-var is_dashing: bool = false
-
 const MAX_ITEM_COUNT: int = 3
 const DEFAULT_SPEED: float = 10.0
 const BOOSTED_SPEED: float = 16.0
 const DASH_SPEED: float = 50.0
 const DEFAULT_JUMP_VELOCITY: float = 7.0
 const BOOSTED_JUMP_VELOCITY: float = 12.0
+const MOUSE_SENSITIVITY = 0.005
+
+var items: Array[Item] = []
+var selected_item_slot = 0
+var is_speed_boosted: bool = false
+var can_dash: bool = true
+var is_dashing: bool = false
+var default_camera_pos 
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	default_camera_pos = camera.position
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
-		rotate_y(-event.relative.x * .005)
-		camera.rotate_x(-event.relative.y * 0.005)
+		rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
+		camera.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
 	
 	if event.is_action_pressed("shoot"):
@@ -38,9 +40,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("jump") and is_on_floor():
 		velocity.y = DEFAULT_JUMP_VELOCITY
-	
-	#if event.is_action_pressed("dash"):
-		#velocity = -camera.global_transform.basis.z * DASH_SPEED
 	
 	if items.size() > 0:
 		if event.is_action_pressed("item_slot_right"):
@@ -71,13 +70,6 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, speed)
 			velocity.z = move_toward(velocity.z, 0, speed)
-
-	if animation_player.current_animation == "shoot":
-		pass
-	elif input_dir != Vector2.ZERO and is_on_floor():
-		animation_player.play("move")
-	else:
-		animation_player.play("idle")
 	
 	# press dash
 	if Input.is_action_just_pressed("dash"):
@@ -87,6 +79,13 @@ func _physics_process(delta: float) -> void:
 			velocity = dash_direction * DASH_SPEED
 			dash_timer.start()
 			can_dash = false
+
+	if animation_player.current_animation == "shoot":
+		pass
+	elif input_dir != Vector2.ZERO and is_on_floor():
+		animation_player.play("move")
+	else:
+		animation_player.play("idle")
 		
 	move_and_slide()
 

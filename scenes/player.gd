@@ -4,17 +4,24 @@ class_name Player extends CharacterBody3D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var interact_cast: RayCast3D = $Camera/InteractCast
 @onready var speed_boost_timer: Timer = $SpeedBoostTimer
+@onready var dash_timer: Timer = $DashTimer
+@onready var dash_cooldown_timer: Timer = $DashCooldownTimer
+
 
 var items: Array[Item] = []
 var selected_item_slot = 0
 var is_speed_boosted: bool = false
+var can_dash: bool = true
+var is_dashing: bool = false
+var dash_direction: Vector3
 
 const MAX_ITEM_COUNT: int = 3
 const DEFAULT_SPEED: float = 10.0
 const BOOSTED_SPEED: float = 16.0
-const DASH_SPEED: float = 50.0
+const DASH_SPEED: float = 25.0
 const DEFAULT_JUMP_VELOCITY: float = 7.0
 const BOOSTED_JUMP_VELOCITY: float = 12.0
+
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -44,7 +51,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			selected_item_slot = (selected_item_slot + items.size()-1) % items.size()
 
 func _physics_process(delta: float) -> void:
-	print(selected_item_slot)
+	#print(selected_item_slot)
 	if interact_cast.is_colliding():
 		#change this block of code later so it works well with all kinds of interactables
 		var target = interact_cast.get_collider()
@@ -58,12 +65,14 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	var speed = BOOSTED_SPEED if is_speed_boosted else DEFAULT_SPEED
-	if direction:
-		velocity.x = direction.x * speed
-		velocity.z = direction.z * speed
-	else:
-		velocity.x = move_toward(velocity.x, 0, speed)
-		velocity.z = move_toward(velocity.z, 0, speed)
+	
+	if not is_dashing:
+		if direction:
+			velocity.x = direction.x * speed
+			velocity.z = direction.z * speed
+		else:
+			velocity.x = move_toward(velocity.x, 0, speed)
+			velocity.z = move_toward(velocity.z, 0, speed)
 	
 	if animation_player.current_animation == "shoot":
 		pass
@@ -72,6 +81,20 @@ func _physics_process(delta: float) -> void:
 	else:
 		animation_player.play("idle")
 	
+	# press dash
+	if Input.is_action_just_pressed("dash"):
+		if can_dash:
+			is_dashing = true
+			dash_direction = camera.global_transform.basis.z * -1
+			
+			velocity = DASH_SPEED * dash_direction
+			
+			dash_timer.start()
+			
+		can_dash = false
+		
+		
+		
 	move_and_slide()
 
 func play_shoot_effects():
@@ -84,3 +107,11 @@ func boost_speed():
 
 func _on_speed_boost_timer_timeout() -> void:
 	is_speed_boosted = false
+
+func _on_dash_timer_timeout() -> void:
+	is_dashing = false
+	if dash_cooldown_timer.is_stopped() and not can_dash:
+		dash_cooldown_timer.start()
+
+func _on_dash_cooldown_timer_timeout() -> void:
+	can_dash = true

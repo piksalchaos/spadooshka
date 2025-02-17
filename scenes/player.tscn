@@ -153,4 +153,12 @@ target_position = Vector3(0, 0, -5)
 [node name="SpeedBoostTimer" type="Timer" parent="."]
 wait_time = 15.0
 
+[node name="DashTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DashCooldownTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]

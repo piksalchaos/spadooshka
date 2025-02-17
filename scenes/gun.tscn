@@ -34,6 +34,24 @@ tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5, 0.5, 1, 0.5, -0.1, -0.5, 1, 1, 0.5, -0.25, -0.5)
 
+[sub_resource type="Animation" id="Animation_0syds"]
+resource_name = "reload"
+step = 0.1
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5, 0.5, 1, 0.215158, -0.25, -0.5, 1, 1, 0.5, -0.25, -0.5)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.707107, 0, 0, 0.707107, 0.5, 1, 0.664345, 0.242169, -0.242169, 0.664345, 1, 1, 0.707107, 0, 0, 0.707107)
+
 [sub_resource type="Animation" id="Animation_6fh3t"]
 resource_name = "shoot"
 length = 0.4
@@ -52,24 +70,6 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5, 0.1, 1, 0.5, -0.18589, -0.5, 0.4, 1, 0.5, -0.25, -0.5)
-
-[sub_resource type="Animation" id="Animation_0syds"]
-resource_name = "reload"
-step = 0.1
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5, 0.5, 1, 0.215158, -0.25, -0.5, 1, 1, 0.5, -0.25, -0.5)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0.707107, 0, 0, 0.707107, 0.5, 1, 0.664345, 0.242169, -0.242169, 0.664345, 1, 1, 0.707107, 0, 0, 0.707107)
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tx8a1"]
 _data = {

@@ -5,13 +5,14 @@ class_name Gun extends Node
 @export var num_bullets = MAG_CAPACITY
 @export var is_gun_ready = true
 
-@export var range = 100
+@export var shoot_range = 100
 
 var bullet_hole = preload("res://scenes/bullet_hole.tscn")
+@onready var shoot_ray = $ShootRay
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	shoot_ray.target_position = Vector3(0, -shoot_range, 0)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("shoot"):
@@ -27,14 +28,19 @@ func shoot():
 	num_bullets -= 1
 	is_gun_ready = false
 	
-	var target = $ShootRay.get_collider()
-	var position: Vector3 = $ShootRay.get_collision_point()
-	var normal: Vector3 = $ShootRay.get_collision_normal()
-	
-	var random_angle = randf_range(0, PI * 2)
-	var new_bullet_hole = bullet_hole.instantiate()
-	new_bullet_hole.transform = Transform3D(Basis(), position).looking_at(position + normal, Vector3.RIGHT.rotated(normal, random_angle))
-	get_tree().current_scene.add_child(new_bullet_hole)
+
+	if shoot_ray.is_colliding():
+		var target = shoot_ray.get_collider()
+		var position = shoot_ray.get_collision_point()
+		var normal = shoot_ray.get_collision_normal()
+		var random_angle = randf_range(0, PI * 2)
+		var new_bullet_hole = bullet_hole.instantiate()
+		new_bullet_hole.transform = Transform3D(Basis(), position)
+		if abs(normal.dot(Vector3.RIGHT)) == 1:
+			new_bullet_hole.transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.FORWARD.rotated(normal, random_angle))
+		else:
+			new_bullet_hole.transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.RIGHT.rotated(normal, random_angle))
+		get_tree().current_scene.add_child(new_bullet_hole)
 	
 	play_shoot_effects()
 	$FireTimer.start()
@@ -58,7 +64,7 @@ func play_shoot_effects():
 
 func _on_fire_timer_timeout() -> void:
 	is_gun_ready = true
-	num_bullets = MAG_CAPACITY
 
 func _on_reload_timer_timeout() -> void:
 	is_gun_ready = true
+	num_bullets = MAG_CAPACITY

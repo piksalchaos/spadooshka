@@ -4,6 +4,7 @@ class_name Player extends CharacterBody3D
 @onready var camera: Camera3D = $Head/Camera
 @onready var interact_cast: RayCast3D = $Head/Camera/InteractCast
 @onready var speed_boost_timer: Timer = $Timers/SpeedBoostTimer
+@onready var jump_boost_timer: Timer = $Timers/JumpBoostTimer
 @onready var dash_timer: Timer = $Timers/DashTimer
 @onready var dash_cooldown_timer: Timer = $Timers/DashCooldownTimer
 
@@ -12,12 +13,13 @@ class_name Player extends CharacterBody3D
 signal interact(target: Object)
 
 const DEFAULT_SPEED: float = 10.0
-const BOOSTED_SPEED: float = 100.0
+const BOOSTED_SPEED: float = 30.0
 const DASH_SPEED: float = 50.0
 
 const DEFAULT_JUMP_VELOCITY: float = 11.0
 const BOOSTED_JUMP_VELOCITY: float = 18.0
 const WALL_JUMP_VELOCITY: float = 20.0
+
 const WALL_JUMP_Y_DIRECTION: float = 0.2
 const WALL_SLIDE_GRAVITY: float = -2.0
 
@@ -26,6 +28,7 @@ const IN_AIR_DECELERATION: float = 0.5
 const FRICTION: float = 10.0
 
 var is_speed_boosted: bool = false
+var is_jump_boosted: bool = false
 var can_dash: bool = true
 var is_dashing: bool = false
 var is_wall_sliding: bool = false
@@ -48,13 +51,9 @@ func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
 	if interact_cast.is_colliding():
-		#change this block of code later so it works well with all kinds of interactables
 		var target := interact_cast.get_collider()
-		#if target is LootBox:
 		if Input.is_action_just_pressed("interact"):
 			interact.emit(target)
-			#and items.size() < MAX_ITEM_COUNT:
-				#items.append(target.obtain_item())
 	
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -92,13 +91,27 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
+func _on_inventory_use_item(item: Item) -> void:
+	call(item.player_function_name)
+
 func boost_speed():
 	speed_boost_timer.start()
 	is_speed_boosted = true
+
+func _on_speed_boost_timer_timeout() -> void:
+	is_speed_boosted = false
+	
+func boost_jump():
+	jump_boost_timer.start()
+	is_jump_boosted = true
+
+func _on_jump_boost_timer_timeout() -> void:
+	is_jump_boosted = false
 	
 func jump():
+	#velocity.y = BOOSTED_JUMP_VELOCITY if is_jump_boosted else DEFAULT_JUMP_VELOCITY
 	if is_on_floor():
-		velocity.y = DEFAULT_JUMP_VELOCITY
+		velocity.y = BOOSTED_JUMP_VELOCITY if is_jump_boosted else DEFAULT_JUMP_VELOCITY
 	elif is_wall_sliding:
 		var direction = get_wall_normal() * 0.5
 		direction.y = WALL_JUMP_Y_DIRECTION
@@ -111,9 +124,6 @@ func dash():
 	dash_timer.start()
 	can_dash = false
 
-func _on_speed_boost_timer_timeout() -> void:
-	is_speed_boosted = false
-
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
 	if dash_cooldown_timer.is_stopped() and not can_dash:
@@ -122,6 +132,3 @@ func _on_dash_timer_timeout() -> void:
 
 func _on_dash_cooldown_timer_timeout() -> void:
 	can_dash = true
-
-func _on_inventory_use_item(item: Item) -> void:
-	call(item.player_function_name)

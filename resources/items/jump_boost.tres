@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://bts2oxg27gyvo"]
+
+[ext_resource type="Script" path="res://scripts/item.gd" id="1_xw1eu"]
+
+[resource]
+resource_name = "Jump Boost"
+script = ExtResource("1_xw1eu")
+player_function_name = "boost_jump"

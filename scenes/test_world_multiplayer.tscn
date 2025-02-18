@@ -1,11 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqscg1kjp8p7"]
+[gd_scene load_steps=11 format=3 uid="uid://bqscg1kjp8p7"]
 
 [ext_resource type="Script" path="res://scenes/test_world_multiplayer.gd" id="1_sv4t1"]
 [ext_resource type="PackedScene" uid="uid://q7llm5mr03ct" path="res://scenes/test_environment.tscn" id="2_vxtl0"]
 [ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="3_8gaq5"]
-[ext_resource type="PackedScene" uid="uid://by0mye1dj10gn" path="res://scenes/loot_box.tscn" id="4_0fvr2"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/main_menu.tscn" id="4_70cj1"]
-[ext_resource type="Resource" uid="uid://c8fxpau6c47ak" path="res://resources/items/speed_boost.tres" id="5_3qtad"]
+[ext_resource type="Script" path="res://scripts/loot_box_spawner.gd" id="6_nr6q8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cbq6g"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -74,17 +73,12 @@ theme = SubResource("Theme_7lfqm")
 
 [node name="MainMenu" parent="CanvasLayer" instance=ExtResource("4_70cj1")]
 
-[node name="LootBox" parent="." instance=ExtResource("4_0fvr2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3378, 0.5, -2.49323)
-item = ExtResource("5_3qtad")
-
-[node name="LootBox2" parent="." instance=ExtResource("4_0fvr2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3378, 0.5, 4.04229)
-item = ExtResource("5_3qtad")
-
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
 spawn_path = NodePath("..")
+
+[node name="LootBoxSpawner" type="Node3D" parent="."]
+script = ExtResource("6_nr6q8")
 
 [connection signal="host_button_pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_host_button_pressed"]
 [connection signal="join_button_pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_join_button_pressed"]

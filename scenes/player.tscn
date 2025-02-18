@@ -61,6 +61,9 @@ target_position = Vector3(0, 0, 1)
 [node name="SpeedBoostTimer" type="Timer" parent="Timers"]
 wait_time = 10.0
 
+[node name="JumpBoostTimer" type="Timer" parent="Timers"]
+wait_time = 10.0
+
 [node name="DashTimer" type="Timer" parent="Timers"]
 wait_time = 0.2
 one_shot = true
@@ -76,6 +79,7 @@ replication_config = SubResource("SceneReplicationConfig_yhuv5")
 
 [connection signal="interact" from="." to="Inventory" method="_on_player_interact"]
 [connection signal="timeout" from="Timers/SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]
+[connection signal="timeout" from="Timers/JumpBoostTimer" to="." method="_on_jump_boost_timer_timeout"]
 [connection signal="timeout" from="Timers/DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="Timers/DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]
 [connection signal="use_item" from="Inventory" to="." method="_on_inventory_use_item"]

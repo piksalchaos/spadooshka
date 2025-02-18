@@ -6,9 +6,11 @@ class_name Player extends CharacterBody3D
 @onready var speed_boost_timer: Timer = $Timers/SpeedBoostTimer
 @onready var dash_timer: Timer = $Timers/DashTimer
 @onready var dash_cooldown_timer: Timer = $Timers/DashCooldownTimer
+
 @export var equipped_gun: Gun
 
-const MAX_ITEM_COUNT: int = 3
+signal interact(target: Object)
+
 const DEFAULT_SPEED: float = 10.0
 const BOOSTED_SPEED: float = 100.0
 const DASH_SPEED: float = 50.0
@@ -23,13 +25,10 @@ const ACCELERATION: float = 2.0
 const IN_AIR_DECELERATION: float = 0.5
 const FRICTION: float = 10.0
 
-var items: Array[Item] = []
-var selected_item_slot = 0
 var is_speed_boosted: bool = false
 var can_dash: bool = true
 var is_dashing: bool = false
 var is_wall_sliding: bool = false
-
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -38,32 +37,24 @@ func _ready():
 	if not is_multiplayer_authority(): return
 	camera.current = true
 	set_slide_on_ceiling_enabled(false)
-	
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
 	
 	if event.is_action_pressed("jump"):
 		jump()
-	
-	if event.is_action_pressed("use_item") and items.size() > 0:
-		call(items[selected_item_slot].player_function_name)
-	
-	if items.size() > 0:
-		if event.is_action_pressed("item_slot_right"):
-			selected_item_slot = (selected_item_slot + 1) % items.size()
-		if event.is_action_pressed("item_slot_left"):
-			selected_item_slot = (selected_item_slot + items.size()-1) % items.size()
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
 	if interact_cast.is_colliding():
 		#change this block of code later so it works well with all kinds of interactables
-		var target = interact_cast.get_collider()
-		if target is LootBox:
-			if Input.is_action_just_pressed("interact") and items.size() < MAX_ITEM_COUNT:
-				items.append(target.obtain_item())
+		var target := interact_cast.get_collider()
+		#if target is LootBox:
+		if Input.is_action_just_pressed("interact"):
+			interact.emit(target)
+			#and items.size() < MAX_ITEM_COUNT:
+				#items.append(target.obtain_item())
 	
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -131,3 +122,6 @@ func _on_dash_timer_timeout() -> void:
 
 func _on_dash_cooldown_timer_timeout() -> void:
 	can_dash = true
+
+func _on_inventory_use_item(item: Item) -> void:
+	call(item.player_function_name)

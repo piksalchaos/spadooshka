@@ -28,15 +28,19 @@ func _ready():
 	gun.set_multiplayer_authority(peer_id)
 	if not is_multiplayer_authority(): return
 	camera.current = true
-	pass #temporary. this just makes it easy to switch between windows for multiplayer,
-	#     so be sure to remove this later and replace with something better
-	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
 	
-	if event is InputEventMouseMotion:
+	if event.is_action_pressed("escape"):
+		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(-event.relative.x * .005)
 		camera.rotate_x(-event.relative.y * 0.005)
 		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)

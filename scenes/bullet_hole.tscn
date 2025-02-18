@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://npixc1rmfud5"]
+
+[ext_resource type="Texture2D" uid="uid://0ui551tqi2j6" path="res://icon.svg" id="1_fp0b4"]
+[ext_resource type="Script" path="res://scripts/bullet_hole.gd" id="2_vy387"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rvpst"]
+albedo_texture = ExtResource("1_fp0b4")
+
+[sub_resource type="BoxMesh" id="BoxMesh_wsi0f"]
+material = SubResource("StandardMaterial3D_rvpst")
+size = Vector3(0.1, 0.1, 0.1)
+
+[node name="BulletHole" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_wsi0f")
+script = ExtResource("2_vy387")
+
+[node name="CleanupTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="CleanupTimer" to="." method="_on_cleanup_timer_timeout"]

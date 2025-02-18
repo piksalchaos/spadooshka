@@ -33,8 +33,9 @@ _data = {
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dqyto"]
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("equipped_gun")]
 script = ExtResource("1_x756l")
+equipped_gun = NodePath("Camera/Gun")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

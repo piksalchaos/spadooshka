@@ -25,6 +25,7 @@ shape = SubResource("CapsuleShape3D_dqyto")
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79693, 0)
+script = ExtResource("2_q7c4t")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Head"]
 mesh = SubResource("BoxMesh_4d8mm")
@@ -32,7 +33,6 @@ mesh = SubResource("BoxMesh_4d8mm")
 [node name="Camera" type="Camera3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 0.995872, 0.0907716, 0, -0.0907716, 0.995872, 0.710775, 0.430636, 2.05939)
 fov = 90.0
-script = ExtResource("2_q7c4t")
 
 [node name="InteractCast" type="RayCast3D" parent="Head/Camera"]
 target_position = Vector3(0, 0, -5)

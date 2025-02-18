@@ -17,7 +17,7 @@ const DEFAULT_JUMP_VELOCITY: float = 8.0
 const BOOSTED_JUMP_VELOCITY: float = 12.0
 const WALL_JUMP_VELOCITY: float = 20.0
 const WALL_JUMP_Y_DIRECTION: float = 0.2
-const WALL_SLIDE_GRAVITY: float = -9.0
+const WALL_SLIDE_GRAVITY: float = -2.0
 
 const ACCELERATION: float = 2.0
 const IN_AIR_DECELERATION: float = 0.5

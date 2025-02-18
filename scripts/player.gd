@@ -17,7 +17,7 @@ const DEFAULT_JUMP_VELOCITY: float = 11.0
 const BOOSTED_JUMP_VELOCITY: float = 18.0
 const WALL_JUMP_VELOCITY: float = 20.0
 const WALL_JUMP_Y_DIRECTION: float = 0.2
-const WALL_SLIDE_GRAVITY: float = -9.0
+const WALL_SLIDE_GRAVITY: float = -2.0
 
 const ACCELERATION: float = 2.0
 const IN_AIR_DECELERATION: float = 0.5
@@ -37,6 +37,7 @@ func _enter_tree() -> void:
 func _ready():
 	if not is_multiplayer_authority(): return
 	camera.current = true
+	set_slide_on_ceiling_enabled(false)
 	
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -64,15 +65,6 @@ func _physics_process(delta: float) -> void:
 			if Input.is_action_just_pressed("interact") and items.size() < MAX_ITEM_COUNT:
 				items.append(target.obtain_item())
 	
-	if not is_on_wall_only(): # if not on wall, dont wall slide & have regular gravity
-		is_wall_sliding = false
-		velocity += get_gravity() * delta
-	elif not is_wall_sliding and is_on_wall_only(): # if just got on wall, cancel y velo & enable sliding
-		is_wall_sliding = true
-		velocity.y = 0
-	elif is_wall_sliding and velocity.y <= 0: # if sliding + falling back down, have less gravity
-		velocity.y += WALL_SLIDE_GRAVITY * delta
-	
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	var max_speed = BOOSTED_SPEED if is_speed_boosted else DEFAULT_SPEED
@@ -88,6 +80,24 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("dash") and can_dash:
 		dash()
+	
+	# maybe reduce horizontal velocity during wall sliding in the future
+	is_wall_sliding = get_slide_collision_count() == 2 and not is_on_floor()
+	if is_wall_sliding and velocity.y <= 0:
+		velocity.y += WALL_SLIDE_GRAVITY * delta
+	elif not is_on_floor() or (is_wall_sliding and velocity.y > 0):
+		velocity += get_gravity() * delta
+		
+	# same wall slide code but you will wall slide regardless of if ur pressing against the wall or not
+	#if not is_on_wall_only(): # if not on wall, dont wall slide & have regular gravity
+		#is_wall_sliding = false
+		#velocity += get_gravity() * delta
+	#elif not is_wall_sliding and is_on_wall_only(): # if just got on wall, cancel y velo & enable sliding
+		#is_wall_sliding = true
+	#elif is_wall_sliding and velocity.y <= 0: # if sliding + falling back down, have less gravity
+		#velocity.y += WALL_SLIDE_GRAVITY * delta
+	#elif is_wall_sliding and velocity.y > 0: # if sliding + falling back down, have less gravity
+		#velocity += get_gravity() * delta
 	
 	move_and_slide()
 

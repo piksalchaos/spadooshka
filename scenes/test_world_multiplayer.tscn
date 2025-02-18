@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bqscg1kjp8p7"]
 
-[ext_resource type="Script" path="res://scenes/test_world_multiplayer.gd" id="1_sv4t1"]
+[ext_resource type="Script" path="res://scripts/test_world_multiplayer.gd" id="1_sv4t1"]
 [ext_resource type="PackedScene" uid="uid://q7llm5mr03ct" path="res://scenes/test_environment.tscn" id="2_vxtl0"]
 [ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="3_8gaq5"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/main_menu.tscn" id="4_70cj1"]

@@ -7,8 +7,8 @@ class_name Gun extends Node
 
 @export var shoot_range = 100
 
-var bullet_hole = preload("res://scenes/bullet_hole.tscn")
 @onready var shoot_ray = $ShootRay
+var bullet_hole = preload("res://scenes/bullet_hole.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

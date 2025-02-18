@@ -2,7 +2,6 @@ class_name Player extends CharacterBody3D
 
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var interact_cast: RayCast3D = $Head/Camera/InteractCast
 @onready var speed_boost_timer: Timer = $SpeedBoostTimer
 @onready var dash_timer: Timer = $DashTimer
@@ -32,10 +31,7 @@ var is_wall_sliding: bool = false
 func _unhandled_input(event: InputEvent) -> void:	
 	if event.is_action_pressed("jump"):
 		jump()
-	
-	if event.is_action_pressed("shoot"):
-		play_shoot_effects()
-	
+	 
 	if event.is_action_pressed("use_item") and items.size() > 0:
 		call(items[selected_item_slot].player_function_name)
 	
@@ -74,20 +70,8 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("dash") and can_dash:
 		dash()
-
-	# animation
-	if animation_player.current_animation == "shoot":
-		pass
-	elif input_dir != Vector2.ZERO and is_on_floor():
-		animation_player.play("move")
-	else:
-		animation_player.play("idle")
 		
 	move_and_slide()
-
-func play_shoot_effects():
-	animation_player.stop()
-	animation_player.play("shoot")
 
 func boost_speed():
 	speed_boost_timer.start()

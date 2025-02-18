@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://q7llm5mr03ct"]
+[gd_scene load_steps=12 format=3 uid="uid://q7llm5mr03ct"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_rgrcc"]
 size = Vector3(10, 0.2, 10)
@@ -33,12 +33,6 @@ points = PackedVector3Array(-0.1, -1, -1.5, 0.1, -1, -1.5, -0.1, -1, 1.5, -0.1, 
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_g1tl0"]
 points = PackedVector3Array(-0.1, -1, -1.5, 0.1, -1, -1.5, -0.1, -1, 1.5, -0.1, 1, -1.5, 0.1, 1, -1.5, 0.1, -1, 1.5, -0.1, 1, 1.5, 0.1, 1, 1.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_nrj61"]
-size = Vector3(15, 15, 1)
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_5atpt"]
-data = PackedVector3Array(-7.5, 7.5, 0.5, 7.5, 7.5, 0.5, -7.5, -7.5, 0.5, 7.5, 7.5, 0.5, 7.5, -7.5, 0.5, -7.5, -7.5, 0.5, 7.5, 7.5, -0.5, -7.5, 7.5, -0.5, 7.5, -7.5, -0.5, -7.5, 7.5, -0.5, -7.5, -7.5, -0.5, 7.5, -7.5, -0.5, 7.5, 7.5, 0.5, 7.5, 7.5, -0.5, 7.5, -7.5, 0.5, 7.5, 7.5, -0.5, 7.5, -7.5, -0.5, 7.5, -7.5, 0.5, -7.5, 7.5, -0.5, -7.5, 7.5, 0.5, -7.5, -7.5, -0.5, -7.5, 7.5, 0.5, -7.5, -7.5, 0.5, -7.5, -7.5, -0.5, 7.5, 7.5, 0.5, -7.5, 7.5, 0.5, 7.5, 7.5, -0.5, -7.5, 7.5, 0.5, -7.5, 7.5, -0.5, 7.5, 7.5, -0.5, -7.5, -7.5, 0.5, 7.5, -7.5, 0.5, -7.5, -7.5, -0.5, 7.5, -7.5, 0.5, 7.5, -7.5, -0.5, -7.5, -7.5, -0.5)
 
 [node name="Test Environment" type="Node3D"]
 

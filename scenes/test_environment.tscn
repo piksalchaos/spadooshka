@@ -40,3 +40,15 @@ skeleton = NodePath("../..")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09947, 9.36249, 4.42707)
 shape = SubResource("ConcavePolygonShape3D_5atpt")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.21008, -1.36249, 3.1074)
+
+[node name="Wall" type="MeshInstance3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09947, 9.36249, 4.42707)
+mesh = SubResource("BoxMesh_nrj61")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.09947, 9.36249, 4.42707)
+shape = SubResource("ConcavePolygonShape3D_5atpt")

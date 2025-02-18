@@ -154,7 +154,7 @@ target_position = Vector3(0, 0, -5)
 wait_time = 15.0
 
 [node name="DashTimer" type="Timer" parent="."]
-wait_time = 0.3
+wait_time = 0.2
 one_shot = true
 
 [node name="DashCooldownTimer" type="Timer" parent="."]

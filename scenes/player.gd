@@ -9,22 +9,27 @@ class_name Player extends CharacterBody3D
 
 const MAX_ITEM_COUNT: int = 3
 const DEFAULT_SPEED: float = 10.0
-const BOOSTED_SPEED: float = 16.0
+const BOOSTED_SPEED: float = 100.0
 const DASH_SPEED: float = 50.0
+
 const DEFAULT_JUMP_VELOCITY: float = 7.0
 const BOOSTED_JUMP_VELOCITY: float = 12.0
+const WALL_JUMP_VELOCITY: float = 30.0
+const WALL_JUMP_Y_DIRECTION: float = 0.2
+
 const MOUSE_SENSITIVITY = 0.005
+const ACCELERATION: float = 5.0
+const FRICTION: float = 15.0
 
 var items: Array[Item] = []
 var selected_item_slot = 0
 var is_speed_boosted: bool = false
 var can_dash: bool = true
 var is_dashing: bool = false
-var default_camera_pos 
+var is_wall_sliding: bool = false
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	default_camera_pos = camera.position
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -38,9 +43,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("use_item") and items.size() > 0:
 		call(items[selected_item_slot].player_function_name)
 	
-	if event.is_action_pressed("jump") and is_on_floor():
-		velocity.y = DEFAULT_JUMP_VELOCITY
-	
+	if event.is_action_pressed("jump"):
+		jump()
+			
 	if items.size() > 0:
 		if event.is_action_pressed("item_slot_right"):
 			selected_item_slot = (selected_item_slot + 1) % items.size()
@@ -55,21 +60,25 @@ func _physics_process(delta: float) -> void:
 		if target is LootBox:
 			if Input.is_action_just_pressed("interact") and items.size() < MAX_ITEM_COUNT:
 				items.append(target.obtain_item())
-	
-	if not is_on_floor():
+		
+	is_wall_sliding = is_on_wall_only()
+		
+	if is_wall_sliding:
+		velocity.y += -3 * delta
+	elif not is_on_floor():
 		velocity += get_gravity() * delta
-	
+		
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	var speed = BOOSTED_SPEED if is_speed_boosted else DEFAULT_SPEED
 	
 	if not is_dashing:
 		if direction:
-			velocity.x = direction.x * speed
-			velocity.z = direction.z * speed
+			velocity.x = lerp(velocity.x, direction.x * 100, ACCELERATION * delta)
+			velocity.z =  lerp(velocity.z, direction.z * 100, ACCELERATION * delta)
 		else:
-			velocity.x = move_toward(velocity.x, 0, speed)
-			velocity.z = move_toward(velocity.z, 0, speed)
+			velocity.x = lerp(velocity.x, 0.0, FRICTION * delta)
+			velocity.z = lerp(velocity.z, 0.0, FRICTION * delta)
 	
 	# press dash
 	if Input.is_action_just_pressed("dash"):
@@ -96,6 +105,15 @@ func play_shoot_effects():
 func boost_speed():
 	speed_boost_timer.start()
 	is_speed_boosted = true
+	
+func jump():
+	if is_on_floor():
+		velocity.y = DEFAULT_JUMP_VELOCITY
+	elif is_wall_sliding:
+		var dir = get_wall_normal()
+		dir.y = WALL_JUMP_Y_DIRECTION
+		velocity = dir * WALL_JUMP_VELOCITY
+	
 
 func _on_speed_boost_timer_timeout() -> void:
 	is_speed_boosted = false

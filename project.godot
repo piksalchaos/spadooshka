@@ -85,6 +85,10 @@ item_slot_left={
 ]
 }
 
+[physics]
+
+3d/default_gravity=18.0
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

@@ -13,8 +13,8 @@ const DEFAULT_SPEED: float = 10.0
 const BOOSTED_SPEED: float = 100.0
 const DASH_SPEED: float = 50.0
 
-const DEFAULT_JUMP_VELOCITY: float = 8.0
-const BOOSTED_JUMP_VELOCITY: float = 12.0
+const DEFAULT_JUMP_VELOCITY: float = 11.0
+const BOOSTED_JUMP_VELOCITY: float = 18.0
 const WALL_JUMP_VELOCITY: float = 20.0
 const WALL_JUMP_Y_DIRECTION: float = 0.2
 const WALL_SLIDE_GRAVITY: float = -9.0
@@ -30,10 +30,21 @@ var can_dash: bool = true
 var is_dashing: bool = false
 var is_wall_sliding: bool = false
 
-func _unhandled_input(event: InputEvent) -> void:	
+
+func _enter_tree() -> void:
+	set_multiplayer_authority(str(name).to_int())
+
+func _ready():
+	if not is_multiplayer_authority(): return
+	camera.current = true
+	
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not is_multiplayer_authority(): return
+	
 	if event.is_action_pressed("jump"):
 		jump()
-	 
+	
 	if event.is_action_pressed("use_item") and items.size() > 0:
 		call(items[selected_item_slot].player_function_name)
 	
@@ -44,6 +55,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			selected_item_slot = (selected_item_slot + items.size()-1) % items.size()
 
 func _physics_process(delta: float) -> void:
+	if not is_multiplayer_authority(): return
+	
 	if interact_cast.is_colliding():
 		#change this block of code later so it works well with all kinds of interactables
 		var target = interact_cast.get_collider()

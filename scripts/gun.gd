@@ -15,6 +15,7 @@ func _ready() -> void:
 	shoot_ray.target_position = Vector3(0, -shoot_range, 0)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not is_multiplayer_authority(): return
 	if event.is_action_pressed("shoot"):
 		shoot()
 	if event.is_action_pressed("reload"):

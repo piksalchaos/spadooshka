@@ -5,7 +5,7 @@ signal use_item(item: Item)
 const MAX_ITEM_COUNT: int = 3
 
 var items: Array[Item] = []
-var current_item_slot = 0
+var current_item_slot: int = 0
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return

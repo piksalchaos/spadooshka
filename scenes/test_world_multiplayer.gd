@@ -7,11 +7,8 @@ var enet_peer = ENetMultiplayerPeer.new()
 @onready var item_list_label: Label = $CanvasLayer/HUD/ItemListLabel
 @onready var main_menu: PanelContainer = $CanvasLayer/MainMenu
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("quit"):
-		get_tree().quit()
-
 #this code below is stupid.
+#better to save items not on the player node, but to something else parenting it!
 #func _process(delta: float) -> void:
 	#item_list_label.text = ""
 	#for i in player.items.size():
@@ -24,9 +21,9 @@ func _on_main_menu_host_button_pressed() -> void:
 	enet_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = enet_peer
 	multiplayer.peer_connected.connect(add_player)
+	multiplayer.peer_disconnected.connect(remove_player)
 	
 	add_player(multiplayer.get_unique_id())
-
 
 func _on_main_menu_join_button_pressed() -> void:
 	enet_peer.create_client("localhost", PORT)
@@ -36,3 +33,8 @@ func add_player(peer_id):
 	var player = PLAYER_SCENE.instantiate()
 	player.name = str(peer_id)
 	add_child(player)
+
+func remove_player(peer_id):
+	var player = get_node_or_null(str(peer_id))
+	if player:
+		player.queue_free()

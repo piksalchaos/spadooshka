@@ -16,11 +16,6 @@ const BOOSTED_SPEED: float = 20.0
 const DEFAULT_JUMP_VELOCITY: float = 7.0
 const BOOSTED_JUMP_VELOCITY: float = 12.0
 
-func _enter_tree() -> void:
-	var peer_id = str(name).to_int()
-	
-	#gun.set_multiplayer_authority(peer_id)
-
 func _ready():
 	
 	var peer_id = str(name).to_int()

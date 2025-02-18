@@ -1,118 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cyxjceb2t4xis"]
+[gd_scene load_steps=7 format=3 uid="uid://cyxjceb2t4xis"]
 
-[ext_resource type="Script" path="res://scenes/player.gd" id="1_x756l"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_2aywh"]
 [ext_resource type="Script" path="res://scenes/camera.gd" id="2_q7c4t"]
 [ext_resource type="PackedScene" uid="uid://b84jqg6v7ev0v" path="res://scenes/gun.tscn" id="2_wfnaq"]
-
-[sub_resource type="Animation" id="Animation_q7oej"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Head/Camera/Gun:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0.5, -0.25, -0.5)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Head/Camera/Gun:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1.5708, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_gds7w"]
-resource_name = "idle"
-length = 3.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Head/Camera/Gun:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [Vector3(0.5, -0.25, -0.5), Vector3(0.5, -0.303891, -0.5)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Head/Camera/Gun:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.5),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [Vector3(1.5708, 0, 0), Vector3(1.48353, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_cowen"]
-resource_name = "move"
-loop_mode = 1
-step = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Head/Camera/Gun:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
-"transitions": PackedFloat32Array(0.5, 2, 0.5, 2),
-"update": 0,
-"values": [Vector3(0.5, -0.25, -0.5), Vector3(0.410477, -0.138934, -0.5), Vector3(0.5, -0.25, -0.5), Vector3(0.536469, -0.138934, -0.5)]
-}
-
-[sub_resource type="Animation" id="Animation_6fh3t"]
-resource_name = "shoot"
-length = 0.4
-step = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Head/Camera/Gun:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(0.5, 1),
-"update": 0,
-"values": [Vector3(0.5, -0.21738, -0.5), Vector3(0.5, -0.25, -0.5)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Head/Camera/Gun:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25),
-"transitions": PackedFloat32Array(0.5, 1),
-"update": 0,
-"values": [Vector3(1.75519, 0, 0), Vector3(1.5708, 0, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tx8a1"]
-_data = {
-"RESET": SubResource("Animation_q7oej"),
-"idle": SubResource("Animation_gds7w"),
-"move": SubResource("Animation_cowen"),
-"shoot": SubResource("Animation_6fh3t")
-}
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wu3n4"]
 
@@ -121,13 +11,8 @@ _data = {
 [sub_resource type="BoxMesh" id="BoxMesh_4d8mm"]
 size = Vector3(0.8, 0.8, 0.8)
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_5mvrd"]
-top_radius = 0.1
-bottom_radius = 0.1
-height = 1.0
-
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("equipped_gun")]
-script = ExtResource("1_x756l")
+script = ExtResource("1_2aywh")
 equipped_gun = NodePath("Head/Camera/Camera#Gun")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -152,12 +37,13 @@ script = ExtResource("2_q7c4t")
 [node name="InteractCast" type="RayCast3D" parent="Head/Camera"]
 target_position = Vector3(0, 0, -5)
 
-[node name="CameraCollider" type="RayCast3D" parent="Head"]
-target_position = Vector3(0, 0, 1)
 [node name="Camera#Gun" parent="Head/Camera" instance=ExtResource("2_wfnaq")]
-transform = Transform3D(1, 0, 0, 0, -0.0907716, -0.995872, 0, 0.995872, -0.0907716, 0.5, -0.25, -0.5)
+transform = Transform3D(1, 0, 0, 0, -0.0907717, -0.995872, 0, 0.995872, -0.0907717, 0.5, -0.25, -0.5)
 visible = false
 skeleton = NodePath("../../../..")
+
+[node name="CameraCollider" type="RayCast3D" parent="Head"]
+target_position = Vector3(0, 0, 1)
 
 [node name="SpeedBoostTimer" type="Timer" parent="."]
 wait_time = 10.0

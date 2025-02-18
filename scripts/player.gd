@@ -75,7 +75,7 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed("dash") and can_dash:
 		dash()
-		
+	
 	move_and_slide()
 
 func boost_speed():
@@ -86,9 +86,9 @@ func jump():
 	if is_on_floor():
 		velocity.y = DEFAULT_JUMP_VELOCITY
 	elif is_wall_sliding:
-		var dir = get_wall_normal() * 0.5
-		dir.y = WALL_JUMP_Y_DIRECTION
-		velocity = dir * WALL_JUMP_VELOCITY
+		var direction = get_wall_normal() * 0.5
+		direction.y = WALL_JUMP_Y_DIRECTION
+		velocity = direction * WALL_JUMP_VELOCITY
 	
 func dash():
 	is_dashing = true

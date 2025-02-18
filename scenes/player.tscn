@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cyxjceb2t4xis"]
+[gd_scene load_steps=9 format=3 uid="uid://cyxjceb2t4xis"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_2aywh"]
-[ext_resource type="Script" path="res://scenes/camera.gd" id="2_q7c4t"]
+[ext_resource type="Script" path="res://scenes/head_camera.gd" id="2_q7c4t"]
 [ext_resource type="PackedScene" uid="uid://b84jqg6v7ev0v" path="res://scenes/gun.tscn" id="2_wfnaq"]
+[ext_resource type="Script" path="res://scripts/inventory.gd" id="4_iowmg"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wu3n4"]
 
@@ -11,9 +12,20 @@
 [sub_resource type="BoxMesh" id="BoxMesh_4d8mm"]
 size = Vector3(0.8, 0.8, 0.8)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_yhuv5"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Head:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("equipped_gun")]
 script = ExtResource("1_2aywh")
-equipped_gun = NodePath("Head/Camera/Camera#Gun")
+equipped_gun = NodePath("Head/Camera/Gun")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -25,6 +37,7 @@ shape = SubResource("CapsuleShape3D_dqyto")
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79693, 0)
+script = ExtResource("2_q7c4t")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Head"]
 mesh = SubResource("BoxMesh_4d8mm")
@@ -32,29 +45,41 @@ mesh = SubResource("BoxMesh_4d8mm")
 [node name="Camera" type="Camera3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 0.995872, 0.0907716, 0, -0.0907716, 0.995872, 0.710775, 0.430636, 2.05939)
 fov = 90.0
-script = ExtResource("2_q7c4t")
 
 [node name="InteractCast" type="RayCast3D" parent="Head/Camera"]
 target_position = Vector3(0, 0, -5)
 
-[node name="Camera#Gun" parent="Head/Camera" instance=ExtResource("2_wfnaq")]
+[node name="Gun" parent="Head/Camera" instance=ExtResource("2_wfnaq")]
 transform = Transform3D(1, 0, 0, 0, -0.0907717, -0.995872, 0, 0.995872, -0.0907717, 0.5, -0.25, -0.5)
-visible = false
 skeleton = NodePath("../../../..")
 
 [node name="CameraCollider" type="RayCast3D" parent="Head"]
 target_position = Vector3(0, 0, 1)
 
-[node name="SpeedBoostTimer" type="Timer" parent="."]
+[node name="Timers" type="Node" parent="."]
+
+[node name="SpeedBoostTimer" type="Timer" parent="Timers"]
 wait_time = 10.0
 
-[node name="DashTimer" type="Timer" parent="."]
+[node name="JumpBoostTimer" type="Timer" parent="Timers"]
+wait_time = 10.0
+
+[node name="DashTimer" type="Timer" parent="Timers"]
 wait_time = 0.2
 one_shot = true
 
-[node name="DashCooldownTimer" type="Timer" parent="."]
+[node name="DashCooldownTimer" type="Timer" parent="Timers"]
 one_shot = true
 
-[connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]
-[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
-[connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("4_iowmg")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_yhuv5")
+
+[connection signal="interact" from="." to="Inventory" method="_on_player_interact"]
+[connection signal="timeout" from="Timers/SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]
+[connection signal="timeout" from="Timers/JumpBoostTimer" to="." method="_on_jump_boost_timer_timeout"]
+[connection signal="timeout" from="Timers/DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="Timers/DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]
+[connection signal="use_item" from="Inventory" to="." method="_on_inventory_use_item"]

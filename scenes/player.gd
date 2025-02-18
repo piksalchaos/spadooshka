@@ -18,7 +18,6 @@ const BOOSTED_JUMP_VELOCITY: float = 12.0
 const WALL_JUMP_VELOCITY: float = 30.0
 const WALL_JUMP_Y_DIRECTION: float = 0.2
 
-const MOUSE_SENSITIVITY = 0.005
 const ACCELERATION: float = 5.0
 const FRICTION: float = 15.0
 
@@ -29,15 +28,7 @@ var can_dash: bool = true
 var is_dashing: bool = false
 var is_wall_sliding: bool = false
 
-func _ready():
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
-		head.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
-		head.rotation_degrees.x = clamp(head.rotation_degrees.x, -60, 60)
-	
+func _unhandled_input(event: InputEvent) -> void:	
 	if event.is_action_pressed("jump"):
 		jump()
 	

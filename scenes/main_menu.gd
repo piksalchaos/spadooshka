@@ -12,3 +12,6 @@ func _on_host_button_pressed() -> void:
 func _on_join_button_pressed() -> void:
 	hide()
 	join_button_pressed.emit()
+
+func get_address_entry_text():
+	return address_entry.text

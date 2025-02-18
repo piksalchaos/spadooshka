@@ -16,11 +16,13 @@ const BOOSTED_SPEED: float = 20.0
 const DEFAULT_JUMP_VELOCITY: float = 7.0
 const BOOSTED_JUMP_VELOCITY: float = 12.0
 
+func _enter_tree() -> void:
+	set_multiplayer_authority(str(name).to_int())
+
 func _ready():
-	
-	var peer_id = str(name).to_int()
-	set_multiplayer_authority(peer_id)
-	gun.set_multiplayer_authority(peer_id)
+	#var peer_id = str(name).to_int()
+	#set_multiplayer_authority(peer_id)
+	#gun.set_multiplayer_authority(peer_id)
 	if not is_multiplayer_authority(): return
 	camera.current = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

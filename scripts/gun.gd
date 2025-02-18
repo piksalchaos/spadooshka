@@ -11,24 +11,13 @@ var bullet_hole = preload("res://scenes/bullet_hole.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$ShootRay.target_position = Vector3(0, -range, 0)
-	$ReloadTimer.timeout.connect(func(): 
-		is_gun_ready = true
-		num_bullets = MAG_CAPACITY
-	)
-	$FireTimer.timeout.connect(func():
-		is_gun_ready = true
-	)
+	pass
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("shoot"):
 		shoot()
 	if event.is_action_pressed("reload"):
 		reload()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func shoot():
 	if not is_gun_ready:
@@ -65,3 +54,11 @@ func play_shoot_effects():
 	$ShootSoundEffect.play()
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("shoot")
+
+
+func _on_fire_timer_timeout() -> void:
+	is_gun_ready = true
+	num_bullets = MAG_CAPACITY
+
+func _on_reload_timer_timeout() -> void:
+	is_gun_ready = true

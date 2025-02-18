@@ -9,7 +9,7 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	item_list_label.text = ""
 	for i in player.items.size():
 		if i == player.selected_item_slot:

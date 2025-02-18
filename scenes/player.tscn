@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cyxjceb2t4xis"]
+[gd_scene load_steps=11 format=3 uid="uid://cyxjceb2t4xis"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_x756l"]
 
@@ -7,7 +7,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera/Gun:position")
+tracks/0/path = NodePath("Head/Camera/Gun:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -19,7 +19,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Camera/Gun:rotation")
+tracks/1/path = NodePath("Head/Camera/Gun:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -36,7 +36,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera/Gun:position")
+tracks/0/path = NodePath("Head/Camera/Gun:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -48,7 +48,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Camera/Gun:rotation")
+tracks/1/path = NodePath("Head/Camera/Gun:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -65,7 +65,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera/Gun:position")
+tracks/0/path = NodePath("Head/Camera/Gun:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -82,7 +82,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Camera/Gun:position")
+tracks/0/path = NodePath("Head/Camera/Gun:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -94,7 +94,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Camera/Gun:rotation")
+tracks/1/path = NodePath("Head/Camera/Gun:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -115,6 +115,9 @@ _data = {
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wu3n4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dqyto"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4d8mm"]
+size = Vector3(0.8, 0.8, 0.8)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_5mvrd"]
 top_radius = 0.1
@@ -139,15 +142,22 @@ mesh = SubResource("CapsuleMesh_wu3n4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_dqyto")
 
-[node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42768, 0)
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79693, 0)
 
-[node name="Gun" type="MeshInstance3D" parent="Camera"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Head"]
+mesh = SubResource("BoxMesh_4d8mm")
+
+[node name="Camera" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 0.995872, 0.0907716, 0, -0.0907716, 0.995872, 1.17517, 0.246663, 2.34104)
+
+[node name="Gun" type="MeshInstance3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, -3.61999e-06, -1, 0, 1, -3.61999e-06, 0.5, -0.25, -0.5)
+visible = false
 mesh = SubResource("CylinderMesh_5mvrd")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 
-[node name="InteractCast" type="RayCast3D" parent="Camera"]
+[node name="InteractCast" type="RayCast3D" parent="Head/Camera"]
 target_position = Vector3(0, 0, -5)
 
 [node name="SpeedBoostTimer" type="Timer" parent="."]

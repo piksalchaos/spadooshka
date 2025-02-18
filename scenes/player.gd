@@ -1,8 +1,9 @@
 class_name Player extends CharacterBody3D
 
-@onready var camera: Camera3D = $Camera
+@onready var head: Node3D = $Head
+@onready var camera: Camera3D = $Head/Camera
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var interact_cast: RayCast3D = $Camera/InteractCast
+@onready var interact_cast: RayCast3D = $Head/Camera/InteractCast
 @onready var speed_boost_timer: Timer = $SpeedBoostTimer
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
@@ -34,8 +35,11 @@ func _ready():
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
-		camera.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
-		camera.rotation.x = clamp(camera.rotation.x, -PI/2, PI/2)
+		head.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
+		head.rotation_degrees.x = clamp(head.rotation_degrees.x, -60, 60)
+	
+	if event.is_action_pressed("jump"):
+		jump()
 	
 	if event.is_action_pressed("shoot"):
 		play_shoot_effects()
@@ -43,9 +47,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("use_item") and items.size() > 0:
 		call(items[selected_item_slot].player_function_name)
 	
-	if event.is_action_pressed("jump"):
-		jump()
-			
 	if items.size() > 0:
 		if event.is_action_pressed("item_slot_right"):
 			selected_item_slot = (selected_item_slot + 1) % items.size()
@@ -60,35 +61,30 @@ func _physics_process(delta: float) -> void:
 		if target is LootBox:
 			if Input.is_action_just_pressed("interact") and items.size() < MAX_ITEM_COUNT:
 				items.append(target.obtain_item())
-		
+	
 	is_wall_sliding = is_on_wall_only()
-		
+	
 	if is_wall_sliding:
 		velocity.y += -3 * delta
 	elif not is_on_floor():
 		velocity += get_gravity() * delta
-		
+	
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	var speed = BOOSTED_SPEED if is_speed_boosted else DEFAULT_SPEED
 	
 	if not is_dashing:
 		if direction:
-			velocity.x = lerp(velocity.x, direction.x * 100, ACCELERATION * delta)
-			velocity.z =  lerp(velocity.z, direction.z * 100, ACCELERATION * delta)
+			velocity.x = lerp(velocity.x, direction.x * speed, ACCELERATION * delta)
+			velocity.z =  lerp(velocity.z, direction.z * speed, ACCELERATION * delta)
 		else:
 			velocity.x = lerp(velocity.x, 0.0, FRICTION * delta)
 			velocity.z = lerp(velocity.z, 0.0, FRICTION * delta)
 	
-	# press dash
-	if Input.is_action_just_pressed("dash"):
-		if can_dash:
-			is_dashing = true
-			var dash_direction := camera.global_transform.basis.z * -1
-			velocity = dash_direction * DASH_SPEED
-			dash_timer.start()
-			can_dash = false
+	if Input.is_action_just_pressed("dash") and can_dash:
+		dash()
 
+	# animation
 	if animation_player.current_animation == "shoot":
 		pass
 	elif input_dir != Vector2.ZERO and is_on_floor():
@@ -114,6 +110,12 @@ func jump():
 		dir.y = WALL_JUMP_Y_DIRECTION
 		velocity = dir * WALL_JUMP_VELOCITY
 	
+func dash():
+	is_dashing = true
+	var dash_direction := camera.global_transform.basis.z * -1
+	velocity = dash_direction * DASH_SPEED
+	dash_timer.start()
+	can_dash = false
 
 func _on_speed_boost_timer_timeout() -> void:
 	is_speed_boosted = false

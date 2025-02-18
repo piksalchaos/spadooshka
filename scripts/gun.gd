@@ -1,4 +1,4 @@
-extends Node
+class_name Gun extends Node
 
 @export var MAG_CAPACITY = 5
 

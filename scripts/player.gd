@@ -4,6 +4,7 @@ class_name Player extends CharacterBody3D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var interact_cast: RayCast3D = $Camera/InteractCast
 @onready var speed_boost_timer: Timer = $SpeedBoostTimer
+@onready var equipped_gun: Gun = $Camera/Gun
 
 var items: Array[Item] = []
 var selected_item_slot = 0

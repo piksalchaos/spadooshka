@@ -4,6 +4,7 @@ class_name Player extends CharacterBody3D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var interact_cast: RayCast3D = $Camera/InteractCast
 @onready var speed_boost_timer: Timer = $SpeedBoostTimer
+@onready var gun: MeshInstance3D = $Camera/Gun
 
 var items: Array[Item] = []
 var selected_item_slot = 0
@@ -15,11 +16,26 @@ const BOOSTED_SPEED: float = 20.0
 const DEFAULT_JUMP_VELOCITY: float = 7.0
 const BOOSTED_JUMP_VELOCITY: float = 12.0
 
+func _enter_tree() -> void:
+	var peer_id = str(name).to_int()
+	
+	#gun.set_multiplayer_authority(peer_id)
+
 func _ready():
-	pass
+	
+	var peer_id = str(name).to_int()
+	set_multiplayer_authority(peer_id)
+	gun.set_multiplayer_authority(peer_id)
+	if not is_multiplayer_authority(): return
+	camera.current = true
+	pass #temporary. this just makes it easy to switch between windows for multiplayer,
+	#     so be sure to remove this later and replace with something better
 	#Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not is_multiplayer_authority(): return
+	
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * .005)
 		camera.rotate_x(-event.relative.y * 0.005)
@@ -41,6 +57,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			selected_item_slot = (selected_item_slot + items.size()-1) % items.size()
 
 func _physics_process(delta: float) -> void:
+	if not is_multiplayer_authority(): return
+	
 	if interact_cast.is_colliding():
 		#change this block of code later so it works well with all kinds of interactables
 		var target = interact_cast.get_collider()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cyxjceb2t4xis"]
+[gd_scene load_steps=11 format=3 uid="uid://cyxjceb2t4xis"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_x756l"]
 [ext_resource type="PackedScene" uid="uid://b84jqg6v7ev0v" path="res://scenes/gun.tscn" id="2_wfnaq"]
@@ -33,6 +33,17 @@ _data = {
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dqyto"]
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_yhuv5"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Camera:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_x756l")
 
@@ -58,9 +69,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42768, 0)
 target_position = Vector3(0, 0, -5)
 
 [node name="Gun" parent="Camera" instance=ExtResource("2_wfnaq")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, -0.25, -0.5)
 
 [node name="SpeedBoostTimer" type="Timer" parent="."]
 wait_time = 10.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_yhuv5")
 
 [connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]

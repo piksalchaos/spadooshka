@@ -82,5 +82,9 @@ item = ExtResource("5_3qtad")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3378, 0.5, 4.04229)
 item = ExtResource("5_3qtad")
 
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
+spawn_path = NodePath("..")
+
 [connection signal="host_button_pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_host_button_pressed"]
 [connection signal="join_button_pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_join_button_pressed"]

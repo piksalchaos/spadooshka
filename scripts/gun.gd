@@ -16,6 +16,7 @@ func _ready() -> void:
 	)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not is_multiplayer_authority(): return
 	if event.is_action_pressed("shoot"):
 		shoot()
 	if event.is_action_pressed("reload"):

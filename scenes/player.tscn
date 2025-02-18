@@ -1,48 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://cyxjceb2t4xis"]
+[gd_scene load_steps=6 format=3 uid="uid://cyxjceb2t4xis"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_x756l"]
 [ext_resource type="PackedScene" uid="uid://b84jqg6v7ev0v" path="res://scenes/gun.tscn" id="2_wfnaq"]
-
-[sub_resource type="Animation" id="Animation_q7oej"]
-length = 0.001
-
-[sub_resource type="Animation" id="Animation_gds7w"]
-resource_name = "idle"
-length = 3.0
-loop_mode = 1
-
-[sub_resource type="Animation" id="Animation_cowen"]
-resource_name = "move"
-loop_mode = 1
-step = 0.25
-
-[sub_resource type="Animation" id="Animation_6fh3t"]
-resource_name = "shoot"
-length = 0.4
-step = 0.25
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tx8a1"]
-_data = {
-"RESET": SubResource("Animation_q7oej"),
-"idle": SubResource("Animation_gds7w"),
-"move": SubResource("Animation_cowen"),
-"shoot": SubResource("Animation_6fh3t")
-}
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wu3n4"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dqyto"]
 
+[sub_resource type="BoxMesh" id="BoxMesh_4d8mm"]
+size = Vector3(0.8, 0.8, 0.8)
+
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("equipped_gun")]
 script = ExtResource("1_x756l")
-equipped_gun = NodePath("Camera/Gun")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_tx8a1")
-}
-autoplay = "idle"
-playback_default_blend_time = 1.0
+equipped_gun = NodePath("Head/Camera/Camera#Gun")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -52,16 +22,33 @@ mesh = SubResource("CapsuleMesh_wu3n4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_dqyto")
 
-[node name="Camera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42768, 0)
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79693, 0)
 
-[node name="InteractCast" type="RayCast3D" parent="Camera"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Head"]
+mesh = SubResource("BoxMesh_4d8mm")
+
+[node name="Camera" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 0.995872, 0.0907716, 0, -0.0907716, 0.995872, 1.17517, 0.246663, 2.34104)
+
+[node name="InteractCast" type="RayCast3D" parent="Head/Camera"]
 target_position = Vector3(0, 0, -5)
 
-[node name="Gun" parent="Camera" instance=ExtResource("2_wfnaq")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, -0.25, -0.5)
+[node name="Camera#Gun" parent="Head/Camera" instance=ExtResource("2_wfnaq")]
+transform = Transform3D(1, 0, 0, 0, -0.0907716, -0.995872, 0, 0.995872, -0.0907716, 0.5, -0.25, -0.5)
+visible = false
+skeleton = NodePath("../../../..")
 
 [node name="SpeedBoostTimer" type="Timer" parent="."]
 wait_time = 10.0
 
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="DashCooldownTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]

@@ -3,7 +3,7 @@ class_name GrapplingHook extends Node
 @onready var player: CharacterBody3D 
 @onready var grapple_ray: RayCast3D = $GrappleRay
 
-@export var range: float = 50.0
+@export var grapple_range: float = 50.0
 @export var rest_length: float = 2.0
 @export var stiffness: float = 10.0
 @export var damping: float = 1.0
@@ -47,8 +47,8 @@ func handle_grapple(delta):
 		var spring_force = stiffness * displacement * target_direction
 		
 		var vel_dot = player.velocity.dot(target_direction)
-		var damping = -damping * vel_dot * target_direction
+		var damping_force = -damping * vel_dot * target_direction
 		
-		force = spring_force + damping
+		force = spring_force + damping_force
 		
 	player.velocity += force * delta

@@ -97,7 +97,7 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	#stupid hack to get dash bar to immediately deplete at start of dash
-	var dash_value = dash_cooldown_timer.wait_time - dash_cooldown_timer.time_left if not is_dashing else 0
+	var dash_value = dash_cooldown_timer.wait_time - dash_cooldown_timer.time_left if not is_dashing else 0.0
 	dash_changed.emit(dash_value, dash_cooldown_timer.wait_time)
 	
 func jump():

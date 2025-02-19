@@ -113,12 +113,14 @@ func dash():
 	velocity = dash_direction * DASH_SPEED
 	dash_timer.start()
 	can_dash = false
-	
+
+@rpc("any_peer")
 func receive_damage(damage):
 	health -= damage
 	health_changed.emit(health, max_health)
 	if health <= 0:
 		health = max_health
+		position = Vector3.ZERO
 		print("dead")
 
 func _on_dash_timer_timeout() -> void:

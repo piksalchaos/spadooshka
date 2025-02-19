@@ -1,10 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://dwoph2oeu7412"]
+[gd_scene load_steps=3 format=3 uid="uid://dwoph2oeu7412"]
 
 [ext_resource type="Script" path="res://scripts/item-scripts/jump_boost.gd" id="1_3vwcp"]
+[ext_resource type="Texture2D" uid="uid://cl8ppircs332s" path="res://assets/images/jumpboost_icon_temp.png" id="2_6bm6i"]
 
 [node name="JumpBoost" type="Node3D"]
 script = ExtResource("1_3vwcp")
 item_name = "Jump Boost"
+hud_icon = ExtResource("2_6bm6i")
 
 [node name="JumpBoostTimer" type="Timer" parent="."]
 wait_time = 5.0

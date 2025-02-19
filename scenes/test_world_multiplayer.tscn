@@ -1,9 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://bqscg1kjp8p7"]
+[gd_scene load_steps=9 format=3 uid="uid://bqscg1kjp8p7"]
 
 [ext_resource type="Script" path="res://scripts/test_world_multiplayer.gd" id="1_sv4t1"]
 [ext_resource type="PackedScene" uid="uid://q7llm5mr03ct" path="res://scenes/test_environment.tscn" id="2_vxtl0"]
-[ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="3_8gaq5"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/main_menu.tscn" id="4_70cj1"]
+[ext_resource type="PackedScene" uid="uid://bjjw42kgy7uax" path="res://scenes/hud.tscn" id="5_0mt8n"]
 [ext_resource type="Script" path="res://scripts/loot_box_spawner.gd" id="6_nr6q8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cbq6g"]
@@ -17,15 +17,6 @@ sky_material = SubResource("ProceduralSkyMaterial_cbq6g")
 background_mode = 2
 sky = SubResource("Sky_c8opc")
 tonemap_mode = 2
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kco21"]
-expand_margin_left = 10.0
-expand_margin_top = 10.0
-expand_margin_right = 10.0
-expand_margin_bottom = 10.0
-
-[sub_resource type="Theme" id="Theme_7lfqm"]
-Label/styles/normal = SubResource("StyleBoxFlat_kco21")
 
 [node name="Test World Multiplayer" type="Node"]
 script = ExtResource("1_sv4t1")
@@ -42,34 +33,8 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -1.7389, -2.00995, -3.34783)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HUD" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("5_0mt8n")]
 mouse_filter = 2
-
-[node name="Crosshairs" type="TextureRect" parent="CanvasLayer/HUD"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.03, 0.03)
-pivot_offset = Vector2(640, 360)
-texture = ExtResource("3_8gaq5")
-stretch_mode = 5
-
-[node name="ItemListLabel" type="Label" parent="CanvasLayer/HUD"]
-layout_mode = 0
-offset_left = 43.0
-offset_top = 592.0
-offset_right = 195.0
-offset_bottom = 667.0
-theme = SubResource("Theme_7lfqm")
 
 [node name="MainMenu" parent="CanvasLayer" instance=ExtResource("4_70cj1")]
 

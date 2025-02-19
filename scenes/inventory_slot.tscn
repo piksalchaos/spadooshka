@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://bomh8hrwfqboa"]
+
+[ext_resource type="Texture2D" uid="uid://b61iyp4uh471f" path="res://assets/images/speedboost_icon_temp.png" id="1_tvi0f"]
+
+[node name="InventorySlot" type="AspectRatioContainer"]
+custom_minimum_size = Vector2(80, 80)
+offset_right = 30.0
+offset_bottom = 30.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment_horizontal = 2
+alignment_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture = ExtResource("1_tvi0f")
+expand_mode = 1
+stretch_mode = 5

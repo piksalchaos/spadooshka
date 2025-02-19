@@ -31,6 +31,8 @@ var can_dash: bool = true
 var is_dashing: bool = false
 var is_wall_sliding: bool = false
 
+signal ammo_changed(num_bullets: int, mag_capacity: int)
+
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
 
@@ -113,3 +115,7 @@ func _on_dash_timer_timeout() -> void:
 
 func _on_dash_cooldown_timer_timeout() -> void:
 	can_dash = true
+
+func _on_gun_ammo_changed(num_bullets: int, mag_capacity: int) -> void:
+	print(num_bullets, "/", mag_capacity)
+	ammo_changed.emit(num_bullets, mag_capacity)

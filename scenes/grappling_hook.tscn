@@ -7,3 +7,9 @@ script = ExtResource("1_gkhup")
 
 [node name="GrappleRay" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -50)
+
+[node name="LaunchSoundEffect" type="AudioStreamPlayer" parent="."]
+
+[node name="RetractSoundEffect" type="AudioStreamPlayer" parent="."]
+
+[node name="GrappleSoundEffect" type="AudioStreamPlayer" parent="."]

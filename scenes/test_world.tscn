@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://c3y6d2imfjfk1"]
+[gd_scene load_steps=9 format=3 uid="uid://c3y6d2imfjfk1"]
 
 [ext_resource type="Script" path="res://scripts/test_world.gd" id="1_4bed4"]
 [ext_resource type="PackedScene" uid="uid://cyxjceb2t4xis" path="res://scenes/player.tscn" id="2_ld57g"]
 [ext_resource type="PackedScene" uid="uid://by0mye1dj10gn" path="res://scenes/loot_box.tscn" id="5_qq4x6"]
-[ext_resource type="PackedScene" uid="uid://pbcnjysh513h" path="res://scenes/test_environment_2.tscn" id="6_5ncyn"]
+[ext_resource type="PackedScene" path="res://scenes/test_environment_2.tscn" id="6_5ncyn"]
 [ext_resource type="PackedScene" uid="uid://bjjw42kgy7uax" path="res://scenes/ui.tscn" id="6_456ai"]
-[ext_resource type="Resource" uid="uid://c8fxpau6c47ak" path="res://resources/items/speed_boost.tres" id="6_qmdj7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cbq6g"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -32,11 +31,9 @@ environment = SubResource("Environment_h1gcq")
 
 [node name="LootBox" parent="." instance=ExtResource("5_qq4x6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3378, 1.70191, -2.49323)
-item = ExtResource("6_qmdj7")
 
 [node name="LootBox2" parent="." instance=ExtResource("5_qq4x6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3378, 1.70191, 4.04229)
-item = ExtResource("6_qmdj7")
 
 [node name="Player" parent="." instance=ExtResource("2_ld57g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.7342, -59.2281)

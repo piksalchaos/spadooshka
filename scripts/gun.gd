@@ -42,12 +42,12 @@ func shoot():
 	ammo_changed.emit(num_bullets, MAG_CAPACITY)
 
 	if shoot_ray.is_colliding():
-		var target = shoot_ray.get_collider().get_parent()
+		var target = shoot_ray.get_collider()
 		var position = shoot_ray.get_collision_point()
 		var normal = shoot_ray.get_collision_normal()
 		
 		if target.has_method("receive_damage"):
-			target.receive_damage(damage)
+			target.receive_damage.rpc_id(target.get_multiplayer_authority(), damage)
 		
 		var random_angle = randf_range(0, PI * 2)
 		var new_bullet_hole = bullet_hole.instantiate()

@@ -3,6 +3,6 @@
 [ext_resource type="Script" path="res://scripts/item.gd" id="1_nxaxe"]
 
 [resource]
-resource_name = "Speed Boost"
 script = ExtResource("1_nxaxe")
-player_function_name = "boost_speed"
+use_function = "boost_speed"
+release_function = ""

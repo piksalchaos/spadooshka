@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://b1gv3j37m8d81"]
+
+[ext_resource type="Script" path="res://scripts/item.gd" id="1_r2j4x"]
+
+[resource]
+script = ExtResource("1_r2j4x")
+use_function = "grapple"
+is_used = false

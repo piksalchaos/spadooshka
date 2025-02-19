@@ -1,3 +1,4 @@
 class_name Item extends Resource
 
-@export var player_function_name: String
+@export var use_function: String
+@export var is_used: bool = false

@@ -12,12 +12,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if items.size() > 0:
 		if event.is_action_pressed("use_item"):
-			use_item.emit(items[current_item_slot])
-			items.pop_at(current_item_slot)
+			var current_item = items[current_item_slot]
+			use_item.emit(current_item)
+			if current_item.is_used:
+				items.pop_at(current_item_slot)
+				
+			print(current_item.is_used)
+		
 		if event.is_action_pressed("item_slot_left"):
 			current_item_slot = (current_item_slot + items.size() - 1) % items.size()
 			print(current_item_slot)
-		if event.is_action_pressed("item_slot_right"):
+		elif event.is_action_pressed("item_slot_right"):
 			current_item_slot = (current_item_slot + 1) % items.size()
 			print(current_item_slot)
 		
@@ -31,6 +36,6 @@ func _on_player_interact(target: Object) -> void:
 		items.append(target.obtain_item())
 	var fart = []
 	for item: Item in items:
-		fart.append(item.player_function_name)
+		fart.append(item.use_function)
 		
 	print(fart)

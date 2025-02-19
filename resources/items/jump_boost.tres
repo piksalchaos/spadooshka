@@ -3,6 +3,6 @@
 [ext_resource type="Script" path="res://scripts/item.gd" id="1_xw1eu"]
 
 [resource]
-resource_name = "Jump Boost"
 script = ExtResource("1_xw1eu")
-player_function_name = "boost_jump"
+use_function = "boost_jump"
+is_usable_function = ""

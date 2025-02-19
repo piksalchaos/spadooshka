@@ -34,6 +34,7 @@ func add_player(peer_id):
 		player.ammo_changed.connect(hud.update_ammo_display)
 		player.dash_changed.connect(hud.update_dash_display)
 		player.health_changed.connect(hud.update_health_display)
+		player.get_node("Inventory").inventory_changed.connect(hud.update_inventory_icons)
 
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
@@ -45,6 +46,7 @@ func _on_multiplayer_spawner_spawned(node: Node) -> void:
 		node.ammo_changed.connect(hud.update_ammo_display)
 		node.dash_changed.connect(hud.update_dash_display)
 		node.health_changed.connect(hud.update_health_display)
+		node.get_node("Inventory").inventory_changed.connect(hud.update_inventory_icons)
 
 func upnp_setup():
 	var upnp = UPNP.new()

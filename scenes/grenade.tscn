@@ -14,7 +14,7 @@ height = 0.2
 radius = 0.1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cvr1g"]
-radius = 1.0
+radius = 3.0
 
 [node name="Grenade" type="RigidBody3D"]
 script = ExtResource("1_hdmlq")

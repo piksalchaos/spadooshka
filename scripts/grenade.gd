@@ -2,7 +2,7 @@ extends RigidBody3D
 
 @export var max_damage = 100
 @export var max_damage_range = 0.1
-@export var range = 10
+@export var grenade_range = 10
 @export var falloff_strength = 2
 
 @export var time_to_explode = 3

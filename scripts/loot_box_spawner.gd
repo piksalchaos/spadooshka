@@ -4,7 +4,8 @@ const NUM_BOXES: int = 3
 const ITEM_FILE_NAMES: Array[String] = [
 	"res://scenes/item-scenes/speed_boost.tscn",
 	"res://scenes/item-scenes/jump_boost.tscn",
-	"res://scenes/item-scenes/grappling_hook.tscn"
+	"res://scenes/item-scenes/grappling_hook.tscn",
+	"res://scenes/item-scenes/grenade_item.tscn"
 	]
 const SPAWN_POSITIONS: PackedVector3Array = [
 	Vector3(8.338, .5, -2.493),

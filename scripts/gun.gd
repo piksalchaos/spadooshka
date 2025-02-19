@@ -51,13 +51,14 @@ func shoot():
 		
 		var random_angle = randf_range(0, PI * 2)
 		var new_bullet_hole = bullet_hole.instantiate()
-		new_bullet_hole.transform = Transform3D(Basis(), position)
+		var scale = new_bullet_hole.transform.basis.get_scale() #have to do stupid shit to preserve scaling
+		new_bullet_hole.transform = Transform3D(Basis(), position + normal * 0.01) #add normal to prevent z fighting issues
 		target.add_child(new_bullet_hole)
 		if abs(normal.dot(Vector3.RIGHT)) == 1:
 			new_bullet_hole.global_transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.FORWARD.rotated(normal, random_angle))
 		else:
 			new_bullet_hole.global_transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.RIGHT.rotated(normal, random_angle))
-		
+		new_bullet_hole.global_transform = new_bullet_hole.global_transform.scaled_local(scale)
 	
 	play_shoot_effects()
 	$FireTimer.start()

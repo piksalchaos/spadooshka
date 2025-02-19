@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/test_world_multiplayer.gd" id="1_sv4t1"]
 [ext_resource type="PackedScene" uid="uid://q7llm5mr03ct" path="res://scenes/test_environment.tscn" id="2_vxtl0"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/main_menu.tscn" id="4_70cj1"]
-[ext_resource type="PackedScene" path="res://scenes/hud.tscn" id="5_0mt8n"]
+[ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/hud.tscn" id="5_0mt8n"]
 [ext_resource type="Script" path="res://scripts/loot_box_spawner.gd" id="6_nr6q8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cbq6g"]

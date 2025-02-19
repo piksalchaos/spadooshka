@@ -34,6 +34,7 @@ var is_dashing: bool = false
 var is_wall_sliding: bool = false
 
 signal ammo_changed(num_bullets: int, mag_capacity: int)
+signal dash_changed(dash_value: int, max_dash: int)
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -92,6 +93,7 @@ func _physics_process(delta: float) -> void:
 		#velocity += get_gravity() * delta
 	
 	move_and_slide()
+	dash_changed.emit(dash_cooldown_timer.wait_time - dash_cooldown_timer.time_left, dash_cooldown_timer.wait_time)
 	
 func jump():
 	#velocity.y = BOOSTED_JUMP_VELOCITY if is_jump_boosted else DEFAULT_JUMP_VELOCITY
@@ -125,5 +127,4 @@ func _on_dash_cooldown_timer_timeout() -> void:
 	can_dash = true
 
 func _on_gun_ammo_changed(num_bullets: int, mag_capacity: int) -> void:
-	print(num_bullets, "/", mag_capacity)
 	ammo_changed.emit(num_bullets, mag_capacity)

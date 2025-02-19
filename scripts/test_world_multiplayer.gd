@@ -27,6 +27,7 @@ func add_player(peer_id):
 	var player = PLAYER_SCENE.instantiate()
 	player.name = str(peer_id)
 	player.ammo_changed.connect(hud.update_ammo_display)
+	player.dash_changed.connect(hud.update_dash_display)
 	add_child(player)
 
 func remove_player(peer_id):

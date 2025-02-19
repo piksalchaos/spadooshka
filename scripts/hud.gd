@@ -12,3 +12,6 @@ func update_dash_display(dash_value, max_dash):
 
 func update_health_display(health, max_health):
 	health_bar.value = health / max_health
+
+func update_inventory_icons():
+	pass

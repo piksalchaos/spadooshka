@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://ooxxqxmb5cvk"]
+[gd_scene load_steps=3 format=3 uid="uid://ooxxqxmb5cvk"]
 
-[ext_resource type="Texture2D" uid="uid://b61iyp4uh471f" path="res://assets/images/speedboost_icon_temp.png" id="1_tvi0f"]
+[ext_resource type="Texture2D" uid="uid://bnqpjnc85n22v" path="res://assets/images/item_icons_temp.png" id="1_f3ocr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mavk"]
+atlas = ExtResource("1_f3ocr")
+region = Rect2(0, 0, 160, 160)
 
 [node name="InventorySlot" type="AspectRatioContainer"]
 custom_minimum_size = Vector2(80, 80)
@@ -24,6 +28,6 @@ theme_override_constants/margin_bottom = 5
 [node name="TextureRect" type="TextureRect" parent="MarginContainer"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
-texture = ExtResource("1_tvi0f")
+texture = SubResource("AtlasTexture_8mavk")
 expand_mode = 1
 stretch_mode = 5

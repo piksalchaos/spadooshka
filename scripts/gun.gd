@@ -78,6 +78,7 @@ func reload():
 	$AnimationPlayer.play("reload")
 	
 func play_shoot_effects():
+	$GunEffects.play_effects()
 	$ShootSoundEffect.play()
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("shoot")

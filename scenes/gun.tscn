@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://b84jqg6v7ev0v"]
+[gd_scene load_steps=10 format=3 uid="uid://b84jqg6v7ev0v"]
 
 [ext_resource type="Script" path="res://scripts/gun.gd" id="1_51xk5"]
+[ext_resource type="PackedScene" uid="uid://cca6nf5b5ckt4" path="res://scenes/gun_effects.tscn" id="2_1lasm"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_v0qj0"]
 top_radius = 0.1
@@ -107,6 +108,10 @@ playback_default_blend_time = 1.0
 [node name="ShootRay" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -0.25)
 target_position = Vector3(0, -2, 0)
+
+[node name="GunEffects" parent="." instance=ExtResource("2_1lasm")]
+transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, -0.548936, 2.98023e-08)
+visible = false
 
 [connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

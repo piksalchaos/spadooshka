@@ -33,6 +33,7 @@ var is_wall_sliding: bool = false
 
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 signal dash_changed(dash_value: int, max_dash: int)
+signal health_changed(health: int, max_health: int)
 var is_speed_boosted: bool = false
 var is_jump_boosted: bool = false
 
@@ -115,6 +116,7 @@ func dash():
 	
 func receive_damage(damage):
 	health -= damage
+	health_changed.emit(health, max_health)
 	if health <= 0:
 		health = max_health
 		print("dead")

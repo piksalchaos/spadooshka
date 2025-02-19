@@ -26,7 +26,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		self.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
 		self.rotation_degrees.x = clamp(self.rotation_degrees.x, -60, 60)	
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if camera_collider.is_colliding():
 		camera.global_transform.origin = camera_collider.get_collision_point()
 	else:

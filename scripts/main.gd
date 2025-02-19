@@ -17,24 +17,34 @@ func _on_main_menu_host_button_pressed() -> void:
 	multiplayer.peer_disconnected.connect(remove_player)
 	
 	add_player(multiplayer.get_unique_id())
+	hud.show()
 	#upnp_setup()
 
 func _on_main_menu_join_button_pressed() -> void:
 	#enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
 	enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer
+	hud.show()
 
 func add_player(peer_id):
 	var player = PLAYER_SCENE.instantiate()
 	player.name = str(peer_id)
-	player.ammo_changed.connect(hud.update_ammo_display)
-	print(player.position)
 	add_child(player)
+	if player.is_multiplayer_authority():
+		player.ammo_changed.connect(hud.update_ammo_display)
+		player.dash_changed.connect(hud.update_dash_display)
+		player.health_changed.connect(hud.update_health_display)
 
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
+
+func _on_multiplayer_spawner_spawned(node: Node) -> void:
+	if node.is_multiplayer_authority():
+		node.ammo_changed.connect(hud.update_ammo_display)
+		node.dash_changed.connect(hud.update_dash_display)
+		node.health_changed.connect(hud.update_health_display)
 
 func upnp_setup():
 	var upnp = UPNP.new()

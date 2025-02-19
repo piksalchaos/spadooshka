@@ -1,0 +1,161 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjjw42kgy7uax"]
+
+[ext_resource type="Script" path="res://scripts/ui.gd" id="1_g07d4"]
+[ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="1_n765t"]
+[ext_resource type="Texture2D" uid="uid://cw8qtdr0bp1af" path="res://assets/images/player_icon_temp.png" id="3_xfoq2"]
+[ext_resource type="PackedScene" uid="uid://bomh8hrwfqboa" path="res://scenes/inventory_slot.tscn" id="4_l8v5w"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o11au"]
+bg_color = Color(0.6, 0.6, 0.6, 0.572549)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ms0f0"]
+bg_color = Color(1, 1, 1, 0.517647)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g07d4")
+
+[node name="Crosshairs" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 512.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.04, 0.04)
+pivot_offset = Vector2(-10.24, -10.24)
+texture = ExtResource("1_n765t")
+stretch_mode = 5
+
+[node name="PlayerStatus" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.88
+anchor_right = 0.315
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_top = -6.10352e-05
+offset_right = -0.200012
+offset_bottom = -14.0
+grow_vertical = 0
+theme_override_constants/separation = 14
+
+[node name="PlayerIcon" type="TextureRect" parent="PlayerStatus"]
+layout_mode = 2
+texture = ExtResource("3_xfoq2")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="PlayerStatus"]
+layout_mode = 2
+size_flags_horizontal = 3
+ratio = 5.5
+
+[node name="BarVBoxContainer" type="VBoxContainer" parent="PlayerStatus/AspectRatioContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="PlayerStatus/AspectRatioContainer/BarVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+show_percentage = false
+
+[node name="DashBar" type="ProgressBar" parent="PlayerStatus/AspectRatioContainer/BarVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.66
+show_percentage = false
+
+[node name="ScoreDisplay" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_right = 0.7
+anchor_bottom = 0.05
+grow_horizontal = 2
+
+[node name="LabelHBoxContainer" type="HBoxContainer" parent="ScoreDisplay"]
+layout_mode = 2
+alignment = 1
+
+[node name="P1ScoreLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoundLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Round 1
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P2ScoreLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Inventory" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_top = 0.55
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.599976
+offset_top = -0.200012
+offset_right = -19.0
+offset_bottom = -14.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 20
+alignment = 2
+
+[node name="InventorySlot1" parent="Inventory" instance=ExtResource("4_l8v5w")]
+layout_mode = 2
+
+[node name="InventorySlot2" parent="Inventory" instance=ExtResource("4_l8v5w")]
+layout_mode = 2
+
+[node name="InventorySlot3" parent="Inventory" instance=ExtResource("4_l8v5w")]
+layout_mode = 2
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AmmoAmountBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 57.0
+offset_top = -37.0
+offset_right = 72.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_o11au")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ms0f0")
+value = 100.0
+fill_mode = 3

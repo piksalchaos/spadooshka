@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqscg1kjp8p7"]
+[gd_scene load_steps=13 format=3 uid="uid://bqscg1kjp8p7"]
 
 [ext_resource type="Script" path="res://scenes/test_world_multiplayer.gd" id="1_sv4t1"]
 [ext_resource type="PackedScene" uid="uid://q7llm5mr03ct" path="res://scenes/test_environment.tscn" id="2_vxtl0"]
 [ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="3_8gaq5"]
 [ext_resource type="PackedScene" uid="uid://by0mye1dj10gn" path="res://scenes/loot_box.tscn" id="4_0fvr2"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/main_menu.tscn" id="4_70cj1"]
+[ext_resource type="PackedScene" uid="uid://bjjw42kgy7uax" path="res://scenes/hud.tscn" id="5_0mt8n"]
 [ext_resource type="Resource" uid="uid://c8fxpau6c47ak" path="res://resources/items/speed_boost.tres" id="5_3qtad"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cbq6g"]
@@ -43,7 +44,11 @@ transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -1.7389, -2.00995, -3.34783)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HUD" type="Control" parent="CanvasLayer"]
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("5_0mt8n")]
+mouse_filter = 2
+
+[node name="HUD old" type="Control" parent="CanvasLayer"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,7 +57,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Crosshairs" type="TextureRect" parent="CanvasLayer/HUD"]
+[node name="Crosshairs" type="TextureRect" parent="CanvasLayer/HUD old"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -64,7 +69,7 @@ pivot_offset = Vector2(640, 360)
 texture = ExtResource("3_8gaq5")
 stretch_mode = 5
 
-[node name="ItemListLabel" type="Label" parent="CanvasLayer/HUD"]
+[node name="ItemListLabel" type="Label" parent="CanvasLayer/HUD old"]
 layout_mode = 0
 offset_left = 43.0
 offset_top = 592.0

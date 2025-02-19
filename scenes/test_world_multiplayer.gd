@@ -4,7 +4,7 @@ const PLAYER_SCENE = preload("res://scenes/player.tscn")
 const PORT = 9999
 var enet_peer = ENetMultiplayerPeer.new()
 
-@onready var item_list_label: Label = $CanvasLayer/HUD/ItemListLabel
+#@onready var item_list_label: Label = $CanvasLayer/HUD/ItemListLabel
 @onready var main_menu: PanelContainer = $CanvasLayer/MainMenu
 
 func _on_main_menu_host_button_pressed() -> void:

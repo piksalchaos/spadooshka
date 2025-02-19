@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/test_world.gd" id="1_4bed4"]
 [ext_resource type="PackedScene" uid="uid://cyxjceb2t4xis" path="res://scenes/player.tscn" id="2_ld57g"]
 [ext_resource type="PackedScene" uid="uid://by0mye1dj10gn" path="res://scenes/loot_box.tscn" id="5_qq4x6"]
-[ext_resource type="PackedScene" path="res://scenes/test_environment_2.tscn" id="6_5ncyn"]
-[ext_resource type="PackedScene" uid="uid://bjjw42kgy7uax" path="res://scenes/ui.tscn" id="6_456ai"]
+[ext_resource type="PackedScene" uid="uid://pbcnjysh513h" path="res://scenes/test_environment_2.tscn" id="6_5ncyn"]
+[ext_resource type="PackedScene" uid="uid://bjjw42kgy7uax" path="res://scenes/hud.tscn" id="6_456ai"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cbq6g"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -38,7 +38,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3378, 1.70191, 4.04229)
 [node name="Player" parent="." instance=ExtResource("2_ld57g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.7342, -59.2281)
 
-[node name="CanvasLayer" parent="." node_paths=PackedStringArray("player") instance=ExtResource("6_456ai")]
-player = NodePath("../Player")
-
 [node name="TestEnvironment2" parent="." instance=ExtResource("6_5ncyn")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("6_456ai")]

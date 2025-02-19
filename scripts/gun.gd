@@ -9,6 +9,10 @@ class_name Gun extends Node
 @export var shoot_range = 100
 
 @onready var shoot_ray = $ShootRay
+
+enum ShootMode {AUTO, SEMI}
+@export var shoot_mode: ShootMode
+
 var bullet_hole = preload("res://scenes/bullet_hole.tscn")
 var is_reloading = false
 
@@ -20,11 +24,14 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
-	if event.is_action_pressed("shoot"):
+	if event.is_action_pressed("shoot") and shoot_mode == ShootMode.SEMI:
 		shoot()
 	if event.is_action_pressed("reload"):
 		reload()
 
+func _process(_delta) -> void:
+	if Input.is_action_pressed("shoot") and shoot_mode == ShootMode.AUTO:
+		shoot()
 func shoot():
 	if not is_gun_ready:
 		return

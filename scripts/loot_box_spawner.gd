@@ -2,8 +2,8 @@ extends Node3D
 
 const NUM_BOXES: int = 3
 const ITEM_FILE_NAMES: Array[String] = [
-	#"res://resources/items/jump_boost.tres",
-	#"res://resources/items/speed_boost.tres",
+	"res://resources/items/jump_boost.tres",
+	"res://resources/items/speed_boost.tres",
 	"res://resources/items/grappling_hook.tres"
 	]
 const SPAWN_POSITIONS: PackedVector3Array = [
@@ -23,7 +23,3 @@ func _ready() -> void:
 		loot_box.position = SPAWN_POSITIONS[random_pos_index]
 		SPAWN_POSITIONS.remove_at(random_pos_index)
 		self.add_child(loot_box)
-
-func _process(delta: float) -> void:
-	pass
-	#print(load(ITEM_FILE_NAMES.pick_random()).is_usable)

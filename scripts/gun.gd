@@ -41,14 +41,16 @@ func shoot():
 		
 		if target.has_method("receive_damage"):
 			target.receive_damage(damage)
+		
 		var random_angle = randf_range(0, PI * 2)
 		var new_bullet_hole = bullet_hole.instantiate()
 		new_bullet_hole.transform = Transform3D(Basis(), position)
-		if abs(normal.dot(Vector3.RIGHT)) == 1:
-			new_bullet_hole.transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.FORWARD.rotated(normal, random_angle))
-		else:
-			new_bullet_hole.transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.RIGHT.rotated(normal, random_angle))
 		target.add_child(new_bullet_hole)
+		if abs(normal.dot(Vector3.RIGHT)) == 1:
+			new_bullet_hole.global_transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.FORWARD.rotated(normal, random_angle))
+		else:
+			new_bullet_hole.global_transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.RIGHT.rotated(normal, random_angle))
+		
 	
 	play_shoot_effects()
 	$FireTimer.start()

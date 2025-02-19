@@ -9,6 +9,7 @@ class_name Gun extends Node
 
 @onready var shoot_ray = $ShootRay
 var bullet_hole = preload("res://scenes/bullet_hole.tscn")
+var is_reloading = false
 
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 
@@ -53,7 +54,10 @@ func shoot():
 	else:
 		pass
 func reload():
+	if is_reloading:
+		return
 	is_gun_ready = false
+	is_reloading = true
 	$ReloadTimer.start()
 	$ReloadSoundEffect.play()
 	$AnimationPlayer.stop()
@@ -70,5 +74,6 @@ func _on_fire_timer_timeout() -> void:
 
 func _on_reload_timer_timeout() -> void:
 	is_gun_ready = true
+	is_reloading = false
 	num_bullets = MAG_CAPACITY
 	ammo_changed.emit(num_bullets, MAG_CAPACITY)

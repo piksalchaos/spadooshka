@@ -10,6 +10,8 @@ class_name Gun extends Node
 @onready var shoot_ray = $ShootRay
 var bullet_hole = preload("res://scenes/bullet_hole.tscn")
 
+signal ammo_changed(num_bullets: int, mag_capacity: int)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	shoot_ray.target_position = Vector3(0, -shoot_range, 0)
@@ -28,7 +30,7 @@ func shoot():
 		return
 	num_bullets -= 1
 	is_gun_ready = false
-	
+	ammo_changed.emit(num_bullets, MAG_CAPACITY)
 
 	if shoot_ray.is_colliding():
 		var target = shoot_ray.get_collider()
@@ -69,3 +71,4 @@ func _on_fire_timer_timeout() -> void:
 func _on_reload_timer_timeout() -> void:
 	is_gun_ready = true
 	num_bullets = MAG_CAPACITY
+	ammo_changed.emit(num_bullets, MAG_CAPACITY)

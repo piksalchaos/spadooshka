@@ -6,6 +6,7 @@ var enet_peer = ENetMultiplayerPeer.new()
 
 #@onready var item_list_label: Label = $CanvasLayer/HUD/ItemListLabel
 @onready var main_menu: PanelContainer = $CanvasLayer/MainMenu
+@onready var hud: Control = $CanvasLayer/HUD
 
 func _on_main_menu_host_button_pressed() -> void:
 	enet_peer.create_server(PORT)
@@ -25,12 +26,14 @@ func _on_main_menu_join_button_pressed() -> void:
 func add_player(peer_id):
 	var player = PLAYER_SCENE.instantiate()
 	player.name = str(peer_id)
+	player.ammo_changed.connect(hud.update_ammo_display)
 	add_child(player)
 
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
+
 
 func upnp_setup():
 	var upnp = UPNP.new()

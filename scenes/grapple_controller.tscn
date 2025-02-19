@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://i115soy2r2gm"]
+
+[ext_resource type="Script" path="res://scripts/grapple_controller.gd" id="1_mfal6"]
+
+[node name="GrappleController" type="Node"]
+script = ExtResource("1_mfal6")

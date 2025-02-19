@@ -25,11 +25,12 @@ const ACCELERATION: float = 2.0
 const IN_AIR_DECELERATION: float = 0.5
 const FRICTION: float = 10.0
 
-var is_speed_boosted: bool = false
-var is_jump_boosted: bool = false
 var can_dash: bool = true
 var is_dashing: bool = false
 var is_wall_sliding: bool = false
+
+var is_speed_boosted: bool = false
+var is_jump_boosted: bool = false
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -55,13 +56,14 @@ func _physics_process(delta: float) -> void:
 	
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	var max_speed = BOOSTED_SPEED if is_speed_boosted else DEFAULT_SPEED
-	var deceleration = FRICTION if is_on_floor() else IN_AIR_DECELERATION
+	var max_speed := BOOSTED_SPEED if is_speed_boosted else DEFAULT_SPEED
+	var acceleration := ACCELERATION
+	var deceleration := FRICTION if is_on_floor() else IN_AIR_DECELERATION
 	
 	if not is_dashing:
 		if direction:
-			velocity.x = lerp(velocity.x, direction.x * max_speed, ACCELERATION * delta)
-			velocity.z =  lerp(velocity.z, direction.z * max_speed, ACCELERATION * delta)
+			velocity.x = lerp(velocity.x, direction.x * max_speed, acceleration * delta)
+			velocity.z =  lerp(velocity.z, direction.z * max_speed, acceleration * delta)
 		else:
 			velocity.x = lerp(velocity.x, 0.0, deceleration * delta)
 			velocity.z = lerp(velocity.z, 0.0, deceleration * delta)

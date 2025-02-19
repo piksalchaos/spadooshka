@@ -1,6 +1,5 @@
 class_name Player extends CharacterBody3D
 
-@onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera
 @onready var interact_cast: RayCast3D = $Head/Camera/InteractCast
 @onready var dash_timer: Timer = $Timers/DashTimer

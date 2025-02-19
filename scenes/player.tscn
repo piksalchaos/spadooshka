@@ -1,12 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://cyxjceb2t4xis"]
+[gd_scene load_steps=11 format=3 uid="uid://cyxjceb2t4xis"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_2aywh"]
 [ext_resource type="Script" path="res://scripts/head_camera.gd" id="2_q7c4t"]
 [ext_resource type="PackedScene" uid="uid://b84jqg6v7ev0v" path="res://scenes/gun.tscn" id="2_wfnaq"]
 [ext_resource type="Script" path="res://scripts/inventory.gd" id="4_iowmg"]
-[ext_resource type="PackedScene" uid="uid://cauiweoqibam3" path="res://scenes/grapple_ray.tscn" id="4_kaj42"]
+[ext_resource type="PackedScene" uid="uid://bapc3bg6tb638" path="res://scenes/grappling_hook.tscn" id="4_k5u61"]
 [ext_resource type="Script" path="res://scripts/item_use_handler.gd" id="5_6ncdy"]
-[ext_resource type="PackedScene" uid="uid://i115soy2r2gm" path="res://scenes/grapple_controller.tscn" id="7_qcnyh"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wu3n4"]
 
@@ -45,6 +44,9 @@ script = ExtResource("2_q7c4t")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Head"]
 mesh = SubResource("BoxMesh_4d8mm")
 
+[node name="CameraCollider" type="RayCast3D" parent="Head"]
+target_position = Vector3(0, 0, 1)
+
 [node name="Camera" type="Camera3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 0.995872, 0.0907716, 0, -0.0907716, 0.995872, 0.710775, 0.430636, 2.05939)
 fov = 90.0
@@ -57,10 +59,7 @@ transform = Transform3D(1, 0, 0, 0, -0.0907717, -0.995872, 0, 0.995872, -0.09077
 skeleton = NodePath("../../../..")
 shoot_mode = 1
 
-[node name="GrappleRay" parent="Head/Camera" instance=ExtResource("4_kaj42")]
-
-[node name="CameraCollider" type="RayCast3D" parent="Head"]
-target_position = Vector3(0, 0, 1)
+[node name="GrapplingHook" parent="Head/Camera" instance=ExtResource("4_k5u61")]
 
 [node name="Timers" type="Node" parent="."]
 
@@ -82,8 +81,6 @@ wait_time = 10.0
 
 [node name="JumpBoostTimer" type="Timer" parent="ItemUseHandler"]
 wait_time = 10.0
-
-[node name="GrappleController" parent="ItemUseHandler" instance=ExtResource("7_qcnyh")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_yhuv5")

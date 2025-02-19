@@ -2,8 +2,8 @@ extends Node3D
 
 const NUM_BOXES: int = 3
 const ITEM_FILE_NAMES: Array[String] = [
-	"res://resources/items/jump_boost.tres",
-	"res://resources/items/speed_boost.tres",
+	#"res://resources/items/jump_boost.tres",
+	#"res://resources/items/speed_boost.tres",
 	"res://resources/items/grappling_hook.tres"
 	]
 const SPAWN_POSITIONS: PackedVector3Array = [

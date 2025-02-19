@@ -1,10 +1,12 @@
 extends Node
 
 @onready var player: CharacterBody3D = $".."
-@onready var camera: Camera3D = $"../Head/Camera"
 @onready var speed_boost_timer: Timer = $SpeedBoostTimer
 @onready var jump_boost_timer: Timer = $JumpBoostTimer
-@onready var grapple_controller: Node = $GrappleController
+@onready var grappling_hook: GrapplingHook = $"../Head/Camera/GrapplingHook"
+
+func _ready() -> void:
+	grappling_hook.player = player
 
 func _on_inventory_use_item(item: Item) -> void:
 	item.is_used = call(item.use_function)
@@ -26,5 +28,5 @@ func _on_jump_boost_timer_timeout() -> void:
 	player.is_jump_boosted = false
 
 func grapple() -> bool:
-	grapple_controller.launch()
-	return grapple_controller.is_launched
+	grappling_hook.launch()
+	return grappling_hook.is_launched

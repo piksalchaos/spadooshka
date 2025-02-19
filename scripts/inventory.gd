@@ -34,8 +34,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_player_interact(target: Object) -> void:
 	if target is LootBox and items.size() < MAX_ITEM_COUNT:
 		items.append(target.obtain_item())
+
 	var fart = []
 	for item: Item in items:
 		fart.append(item.use_function)
-		
 	print(fart)

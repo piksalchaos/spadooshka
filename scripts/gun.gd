@@ -1,8 +1,9 @@
 class_name Gun extends Node
 
 @export var MAG_CAPACITY = 5
-
 @export var num_bullets = MAG_CAPACITY
+
+@export var damage = 20
 @export var is_gun_ready = true
 
 @export var shoot_range = 100
@@ -34,9 +35,12 @@ func shoot():
 	ammo_changed.emit(num_bullets, MAG_CAPACITY)
 
 	if shoot_ray.is_colliding():
-		var target = shoot_ray.get_collider()
+		var target = shoot_ray.get_collider().get_parent()
 		var position = shoot_ray.get_collision_point()
 		var normal = shoot_ray.get_collision_normal()
+		
+		if target.has_method("receive_damage"):
+			target.receive_damage(damage)
 		var random_angle = randf_range(0, PI * 2)
 		var new_bullet_hole = bullet_hole.instantiate()
 		new_bullet_hole.transform = Transform3D(Basis(), position)
@@ -44,7 +48,7 @@ func shoot():
 			new_bullet_hole.transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.FORWARD.rotated(normal, random_angle))
 		else:
 			new_bullet_hole.transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.RIGHT.rotated(normal, random_angle))
-		get_tree().current_scene.add_child(new_bullet_hole)
+		target.add_child(new_bullet_hole)
 	
 	play_shoot_effects()
 	$FireTimer.start()

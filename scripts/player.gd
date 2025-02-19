@@ -7,6 +7,8 @@ class_name Player extends CharacterBody3D
 @onready var dash_cooldown_timer: Timer = $Timers/DashCooldownTimer
 
 @export var equipped_gun: Gun
+@export var health = 100
+@export var max_health = 100
 
 signal interact(target: Object)
 
@@ -106,6 +108,12 @@ func dash():
 	velocity = dash_direction * DASH_SPEED
 	dash_timer.start()
 	can_dash = false
+	
+func receive_damage(damage):
+	health -= damage
+	if health <= 0:
+		health = max_health
+		print("dead")
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false

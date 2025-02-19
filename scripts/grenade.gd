@@ -2,8 +2,10 @@ extends RigidBody3D
 
 @export var max_damage = 100
 @export var max_damage_range = 0.1
+@export var range = 10
 @export var falloff_strength = 2
 
+@export var time_to_explode = 3
 @export var damage_to_force_factor = 5
 
 func calculate_damage(distance) -> float:
@@ -12,7 +14,8 @@ func calculate_damage(distance) -> float:
 	return (max_damage_range/distance) ** falloff_strength * max_damage
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	$ExplodeTimer.wait_time = time_to_explode
+	$ExplosionArea/CollisionShape3D.shape.radius = range
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

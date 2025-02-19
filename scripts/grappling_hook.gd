@@ -3,7 +3,7 @@ class_name GrapplingHook extends Node
 @onready var player: CharacterBody3D 
 @onready var grapple_ray: RayCast3D = $GrappleRay
 
-@export var range: float = 50.0 
+@export var range: float = 50.0
 @export var rest_length: float = 2.0
 @export var stiffness: float = 10.0
 @export var damping: float = 1.0

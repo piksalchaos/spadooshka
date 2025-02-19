@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bapc3bg6tb638"]
+
+[ext_resource type="Script" path="res://scripts/item-scripts/grappling_hook.gd" id="1_teltn"]
+
+[node name="GrapplingHook" type="Node3D"]
+script = ExtResource("1_teltn")
+need_camera = true
+item_name = "Grappling Hook"
+
+[node name="GrappleRay" type="RayCast3D" parent="."]
+target_position = Vector3(0, 0, -50)
+
+[node name="LaunchSFX" type="AudioStreamPlayer" parent="."]
+
+[node name="RetractSFX" type="AudioStreamPlayer" parent="."]
+
+[node name="GrappleSFX" type="AudioStreamPlayer" parent="."]

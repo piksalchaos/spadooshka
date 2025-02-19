@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://c8fxpau6c47ak"]
-
-[ext_resource type="Script" path="res://scripts/item.gd" id="1_nxaxe"]
-
-[resource]
-script = ExtResource("1_nxaxe")
-use_function = "boost_speed"
-release_function = ""

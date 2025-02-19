@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwoph2oeu7412"]
+
+[ext_resource type="Script" path="res://scripts/item-scripts/jump_boost.gd" id="1_3vwcp"]
+
+[node name="JumpBoost" type="Node3D"]
+script = ExtResource("1_3vwcp")
+item_name = "Jump Boost"
+
+[node name="JumpBoostTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="ActivateSFX" type="AudioStreamPlayer" parent="."]
+
+[node name="DeactivateSFX" type="AudioStreamPlayer" parent="."]
+
+[connection signal="timeout" from="JumpBoostTimer" to="." method="_on_jump_boost_timer_timeout"]

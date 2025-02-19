@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="Item" load_steps=2 format=3 uid="uid://bts2oxg27gyvo"]
-
-[ext_resource type="Script" path="res://scripts/item.gd" id="1_xw1eu"]
-
-[resource]
-script = ExtResource("1_xw1eu")
-use_function = "boost_jump"
-is_usable_function = ""

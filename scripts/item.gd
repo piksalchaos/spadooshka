@@ -1,4 +1,11 @@
-class_name Item extends Resource
+class_name Item extends Node3D
 
-@export var use_function: String
-@export var is_used: bool = false
+@onready var player: CharacterBody3D
+@export var need_camera: bool
+@export var item_name: String
+
+func use() -> bool:
+	return true
+
+func _enter_tree() -> void:
+	self.name = item_name

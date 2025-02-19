@@ -96,7 +96,9 @@ func _physics_process(delta: float) -> void:
 		#velocity += get_gravity() * delta
 	
 	move_and_slide()
-	dash_changed.emit(dash_cooldown_timer.wait_time - dash_cooldown_timer.time_left, dash_cooldown_timer.wait_time)
+	#stupid hack to get dash bar to immediately deplete at start of dash
+	var dash_value = dash_cooldown_timer.wait_time - dash_cooldown_timer.time_left if not is_dashing else 0
+	dash_changed.emit(dash_value, dash_cooldown_timer.wait_time)
 	
 func jump():
 	#velocity.y = BOOSTED_JUMP_VELOCITY if is_jump_boosted else DEFAULT_JUMP_VELOCITY
@@ -114,15 +116,6 @@ func dash():
 	dash_timer.start()
 	can_dash = false
 
-@rpc("any_peer")
-func receive_damage(damage):
-	health -= damage
-	health_changed.emit(health, max_health)
-	if health <= 0:
-		health = max_health
-		position = Vector3.ZERO
-		print("dead")
-
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
 	if dash_cooldown_timer.is_stopped() and not can_dash:
@@ -134,3 +127,12 @@ func _on_dash_cooldown_timer_timeout() -> void:
 
 func _on_gun_ammo_changed(num_bullets: int, mag_capacity: int) -> void:
 	ammo_changed.emit(num_bullets, mag_capacity)
+
+@rpc("any_peer")
+func receive_damage(damage):
+	health -= damage
+	health_changed.emit(health, max_health)
+	if health <= 0:
+		health = max_health
+		position = Vector3.ZERO
+		print("dead")

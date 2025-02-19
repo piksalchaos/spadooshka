@@ -4,4 +4,6 @@
 
 [node name="GrenadeItem" type="Node3D"]
 script = ExtResource("1_kx6cr")
+launch_offset = Vector3(0, 2, 0)
+need_camera = true
 item_name = "Grenade"

@@ -8,20 +8,27 @@ extends RigidBody3D
 @export var time_to_explode = 3
 @export var damage_to_force_factor = 5
 
+@export var flashing_frequency_multiplier = 5
+@export var flashing_frequency_exponent = 2 #1 for pure sine wave, >1 for increasing oscillation speed
+
+@onready var explode_timer = $ExplodeTimer
+
+@onready var light_energy = $Light.light_energy
+
 func calculate_damage(distance) -> float:
 	if distance < max_damage_range:
 		return max_damage
 	return (max_damage_range/distance) ** falloff_strength * max_damage
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$ExplodeTimer.wait_time = time_to_explode
-	$ExplosionArea/CollisionShape3D.shape.radius = range
-
+	explode_timer.wait_time = time_to_explode
+	$ExplosionArea/CollisionShape3D.shape.radius = grenade_range
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
-
+	#oscillate light brightness cuz it looks nice
+	#$Light.light_energy = sin(1/(explode_timer.wait_time * flashing_frequency_multiplier))
+	$Light.light_energy = 0.5 * light_energy * (cos(flashing_frequency_multiplier * (time_to_explode - explode_timer.time_left) ** flashing_frequency_exponent) + 1)
 
 func _on_explode_timer_timeout() -> void:
 	var bodies = $ExplosionArea.get_overlapping_bodies()

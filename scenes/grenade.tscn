@@ -17,7 +17,9 @@ radius = 0.1
 radius = 3.0
 
 [node name="Grenade" type="RigidBody3D"]
+mass = 0.1
 script = ExtResource("1_hdmlq")
+falloff_strength = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_csv2h")
@@ -34,6 +36,11 @@ autostart = true
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ExplosionArea"]
+visible = false
 shape = SubResource("SphereShape3D_cvr1g")
+
+[node name="Light" type="OmniLight3D" parent="."]
+light_color = Color(1, 0, 0, 1)
+omni_range = 1.0
 
 [connection signal="timeout" from="ExplodeTimer" to="." method="_on_explode_timer_timeout"]

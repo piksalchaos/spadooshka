@@ -9,12 +9,14 @@ const MOUSE_SENSITIVITY = 0.005
 var DEFAULT_CAMERA_POSITION = Vector3(0.711, 0.431, 2.059)
 
 func _ready() -> void:
+	if not is_multiplayer_authority(): return
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera.position = DEFAULT_CAMERA_POSITION
 	camera_collider.target_position = DEFAULT_CAMERA_POSITION
 	camera_collider.add_exception_rid(player)
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not is_multiplayer_authority(): return
 	if event.is_action_pressed('escape'):
 		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

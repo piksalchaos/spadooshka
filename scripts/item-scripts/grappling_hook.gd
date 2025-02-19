@@ -1,6 +1,5 @@
-class_name GrapplingHook extends Node
+class_name GrapplingHook extends Item
 
-@onready var player: CharacterBody3D 
 @onready var grapple_ray: RayCast3D = $GrappleRay
 
 @export var grapple_range: float = 50.0
@@ -14,6 +13,9 @@ var is_launched: bool = false
 func _ready() -> void:
 	grapple_ray.target_position = Vector3(0, 0, -grapple_range)
 
+func use() -> bool:
+	return launch()
+
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
@@ -21,19 +23,21 @@ func _physics_process(delta: float) -> void:
 		retract()
 	
 	if is_launched:
+		if not $GrappleSFX.playing:
+			$GrappleSFX.play()
 		handle_grapple(delta)
-		if not $GrappleSoundEffect.playing:
-			$GrappleSoundEffect.play()
 
 func launch():
-	$LaunchSoundEffect.play()
+	$LaunchSFX.play()
 	if grapple_ray.is_colliding():
 		target = grapple_ray.get_collision_point()
 		is_launched = true
+	return is_launched
 		
 func retract():
-	$RetractSoundEffect.play()
+	$RetractSFX.play()
 	is_launched = false
+	self.queue_free()
 		
 func handle_grapple(delta):
 	var target_direction = player.global_position.direction_to(target)

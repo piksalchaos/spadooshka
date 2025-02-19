@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxs04app2dspd"]
+
+[ext_resource type="Script" path="res://scripts/item-scripts/speed_boost.gd" id="1_tasm7"]
+
+[node name="SpeedBoost" type="Node3D"]
+script = ExtResource("1_tasm7")
+item_name = "Speed Boost"
+
+[node name="SpeedBoostTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="ActivateSFX" type="AudioStreamPlayer" parent="."]
+
+[node name="DeactivateSFX" type="AudioStreamPlayer" parent="."]
+
+[connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]

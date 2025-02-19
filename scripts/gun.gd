@@ -73,13 +73,13 @@ func reload():
 	is_gun_ready = false
 	is_reloading = true
 	$ReloadTimer.start()
-	$ReloadSoundEffect.play()
+	$ReloadSFX.play()
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("reload")
 	
 func play_shoot_effects():
 	$GunEffects.play_effects()
-	$ShootSoundEffect.play()
+	$ShootSFX.play()
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("shoot")
 

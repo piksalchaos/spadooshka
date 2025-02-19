@@ -83,7 +83,6 @@ func play_shoot_effects():
 	$AnimationPlayer.stop()
 	$AnimationPlayer.play("shoot")
 
-
 func _on_fire_timer_timeout() -> void:
 	is_gun_ready = true
 

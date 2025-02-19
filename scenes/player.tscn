@@ -26,6 +26,7 @@ properties/2/spawn = true
 properties/2/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("equipped_gun")]
+collision_layer = 2
 script = ExtResource("1_2aywh")
 equipped_gun = NodePath("Head/Camera/Gun")
 

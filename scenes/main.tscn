@@ -1,12 +1,25 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2c8wh6k7fca5"]
+[gd_scene load_steps=6 format=3 uid="uid://c2c8wh6k7fca5"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_yci6l"]
 [ext_resource type="PackedScene" uid="uid://vw30uidehup0" path="res://scenes/test_map_for_main.tscn" id="2_grqrh"]
 [ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/hud.tscn" id="3_shkqk"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/main_menu.tscn" id="4_b8hkp"]
+[ext_resource type="PackedScene" uid="uid://g0un4ork14i8" path="res://scenes/lobby_menu.tscn" id="4_jqa32"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_yci6l")
+
+[node name="ClientManager" type="Node" parent="."]
+
+[node name="PlayerManager" type="Node" parent="."]
+
+[node name="ClientSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/client.tscn")
+spawn_path = NodePath("../ClientManager")
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
+spawn_path = NodePath("../PlayerManager")
 
 [node name="Map" parent="." instance=ExtResource("2_grqrh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.744252, 0)
@@ -20,11 +33,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="HUD" parent="GUI" instance=ExtResource("3_shkqk")]
-visible = false
-layout_mode = 1
-mouse_filter = 2
-
 [node name="MainMenu" parent="GUI" instance=ExtResource("4_b8hkp")]
 layout_mode = 1
 offset_left = 385.0
@@ -32,10 +40,17 @@ offset_top = 224.0
 offset_right = -370.0
 offset_bottom = -190.0
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
-spawn_path = NodePath("..")
+[node name="LobbyMenu" parent="GUI" instance=ExtResource("4_jqa32")]
+visible = false
+layout_mode = 1
 
+[node name="HUD" parent="GUI" instance=ExtResource("3_shkqk")]
+visible = false
+layout_mode = 1
+mouse_filter = 2
+
+[connection signal="child_order_changed" from="ClientManager" to="." method="_on_client_manager_child_order_changed"]
+[connection signal="child_entered_tree" from="PlayerManager" to="." method="_on_player_manager_child_entered_tree"]
 [connection signal="host_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_host_button_pressed"]
 [connection signal="join_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_join_button_pressed"]
-[connection signal="spawned" from="MultiplayerSpawner" to="." method="_on_multiplayer_spawner_spawned"]
+[connection signal="ready_button_pressed" from="GUI/LobbyMenu" to="." method="_on_lobby_menu_ready_button_pressed"]

@@ -1,50 +1,65 @@
 extends Node
 
-const PLAYER_SCENE = preload("res://scenes/player.tscn")
+const CLIENT_SCENE = preload("res://scenes/client.tscn")
 
 const PORT = 9999
 
 var enet_peer = ENetMultiplayerPeer.new()
 
+@onready var client_manager: Node = $ClientManager
+@onready var player_manager: Node = $PlayerManager
 @onready var main_menu: PanelContainer = $GUI/MainMenu
+@onready var lobby_menu: Control = $GUI/LobbyMenu
 @onready var hud: HUD = $GUI/HUD
 @onready var map: Node3D = $Map #temporary. later, the game will be able to automatically spawn maps and reference them
+
+@rpc("call_local")
+func prepare_GUI_for_match():
+	lobby_menu.hide()
+	hud.show()
+func add_client(peer_id):
+	var client = CLIENT_SCENE.instantiate()
+	client.name = str(peer_id)
+	client_manager.add_child(client)
+
+func remove_client(peer_id):
+	var client = client_manager.get_node_or_null(str(peer_id))
+	if client:
+		client.queue_free()
 
 func _on_main_menu_host_button_pressed() -> void:
 	enet_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = enet_peer
-	multiplayer.peer_connected.connect(add_player)
-	multiplayer.peer_disconnected.connect(remove_player)
+	#multiplayer.peer_connected.connect(add_player)
+	#multiplayer.peer_disconnected.connect(remove_player)
+	multiplayer.peer_connected.connect(add_client)
+	multiplayer.peer_disconnected.connect(remove_client)
 	
-	add_player(multiplayer.get_unique_id())
-	hud.show()
+	add_client(multiplayer.get_unique_id())
+	lobby_menu.show()
 	#upnp_setup()
 
 func _on_main_menu_join_button_pressed() -> void:
 	#enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
 	enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer
-	hud.show()
+	lobby_menu.show()
 
-func add_player(peer_id):
-	var player = PLAYER_SCENE.instantiate()
-	player.name = str(peer_id)
-	add_child(player)
-	if player.is_multiplayer_authority():
-		player.ammo_changed.connect(hud.update_ammo_display)
-		player.dash_changed.connect(hud.update_dash_display)
-		player.health_changed.connect(hud.update_health_display)
+func _on_lobby_menu_ready_button_pressed() -> void:
+	for client: Client in client_manager.get_children():
+		var player = client.create_player()
+		player_manager.add_child(player)
+	prepare_GUI_for_match.rpc()
 
-func remove_player(peer_id):
-	var player = get_node_or_null(str(peer_id))
-	if player:
-		player.queue_free()
+func _on_client_manager_child_order_changed() -> void:
+	if not is_instance_valid(lobby_menu): return
+	lobby_menu.update_number_of_players(client_manager.get_child_count())
 
-func _on_multiplayer_spawner_spawned(node: Node) -> void:
-	if node.is_multiplayer_authority():
-		node.ammo_changed.connect(hud.update_ammo_display)
-		node.dash_changed.connect(hud.update_dash_display)
-		node.health_changed.connect(hud.update_health_display)
+func _on_player_manager_child_entered_tree(player: Player) -> void:
+	if not player.is_multiplayer_authority(): return
+	player.ammo_changed.connect(hud.update_ammo_display)
+	player.dash_changed.connect(hud.update_dash_display)
+	player.health_changed.connect(hud.update_health_display)
 
 func upnp_setup():
 	var upnp = UPNP.new()

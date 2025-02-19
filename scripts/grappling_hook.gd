@@ -12,7 +12,7 @@ var target: Vector3
 var is_launched: bool = false
 
 func _ready() -> void:
-	grapple_ray.target_position = Vector3(0, 0, -range)
+	grapple_ray.target_position = Vector3(0, 0, -grapple_range)
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return

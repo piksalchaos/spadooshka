@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://vw30uidehup0"]
+
+[ext_resource type="PackedScene" uid="uid://q7llm5mr03ct" path="res://scenes/test_environment.tscn" id="1_we5cu"]
+[ext_resource type="Script" path="res://scripts/loot_box_spawner.gd" id="2_5kqsc"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cbq6g"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_lg7mw"]
+sky_material = SubResource("ProceduralSkyMaterial_cbq6g")
+
+[sub_resource type="Environment" id="Environment_h1gcq"]
+background_mode = 2
+sky = SubResource("Sky_lg7mw")
+tonemap_mode = 2
+
+[node name="Map" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866024, -0.433016, 0.250001, 0, 0.499998, 0.866026, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_h1gcq")
+
+[node name="Test Environment" parent="." instance=ExtResource("1_we5cu")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -1.7389, -2.00995, -3.34783)
+
+[node name="LootBoxSpawner" type="Node3D" parent="."]
+script = ExtResource("2_5kqsc")

@@ -37,9 +37,10 @@ func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready():
+	set_slide_on_ceiling_enabled(false)
+	
 	if not is_multiplayer_authority(): return
 	camera.current = true
-	set_slide_on_ceiling_enabled(false)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return

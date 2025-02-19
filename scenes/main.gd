@@ -1,12 +1,14 @@
 extends Node
 
 const PLAYER_SCENE = preload("res://scenes/player.tscn")
+
 const PORT = 9999
+
 var enet_peer = ENetMultiplayerPeer.new()
 
-#@onready var item_list_label: Label = $CanvasLayer/HUD/ItemListLabel
-@onready var main_menu: PanelContainer = $CanvasLayer/MainMenu
-@onready var hud: Control = $CanvasLayer/HUD
+@onready var main_menu: PanelContainer = $GUI/MainMenu
+@onready var hud: HUD = $GUI/HUD
+@onready var map: Node3D = $Map #temporary. later, the game will be able to automatically spawn maps and reference them
 
 func _on_main_menu_host_button_pressed() -> void:
 	enet_peer.create_server(PORT)
@@ -15,18 +17,18 @@ func _on_main_menu_host_button_pressed() -> void:
 	multiplayer.peer_disconnected.connect(remove_player)
 	
 	add_player(multiplayer.get_unique_id())
-	
 	#upnp_setup()
 
 func _on_main_menu_join_button_pressed() -> void:
-	enet_peer.create_client("localhost", PORT)
 	#enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
+	enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer
 
 func add_player(peer_id):
 	var player = PLAYER_SCENE.instantiate()
 	player.name = str(peer_id)
 	player.ammo_changed.connect(hud.update_ammo_display)
+	print(player.position)
 	add_child(player)
 
 func remove_player(peer_id):

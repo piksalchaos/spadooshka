@@ -3,8 +3,6 @@ class_name Player extends CharacterBody3D
 @onready var head: Node3D = $Head
 @onready var camera: Camera3D = $Head/Camera
 @onready var interact_cast: RayCast3D = $Head/Camera/InteractCast
-@onready var speed_boost_timer: Timer = $Timers/SpeedBoostTimer
-@onready var jump_boost_timer: Timer = $Timers/JumpBoostTimer
 @onready var dash_timer: Timer = $Timers/DashTimer
 @onready var dash_cooldown_timer: Timer = $Timers/DashCooldownTimer
 
@@ -90,23 +88,6 @@ func _physics_process(delta: float) -> void:
 		#velocity += get_gravity() * delta
 	
 	move_and_slide()
-
-func _on_inventory_use_item(item: Item) -> void:
-	call(item.player_function_name)
-
-func boost_speed():
-	speed_boost_timer.start()
-	is_speed_boosted = true
-
-func _on_speed_boost_timer_timeout() -> void:
-	is_speed_boosted = false
-	
-func boost_jump():
-	jump_boost_timer.start()
-	is_jump_boosted = true
-
-func _on_jump_boost_timer_timeout() -> void:
-	is_jump_boosted = false
 	
 func jump():
 	#velocity.y = BOOSTED_JUMP_VELOCITY if is_jump_boosted else DEFAULT_JUMP_VELOCITY

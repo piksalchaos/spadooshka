@@ -1,9 +1,9 @@
 [gd_scene load_steps=9 format=3 uid="uid://bqscg1kjp8p7"]
 
 [ext_resource type="Script" path="res://scripts/test_world_multiplayer.gd" id="1_sv4t1"]
-[ext_resource type="PackedScene" uid="uid://q7llm5mr03ct" path="res://scenes/test_environment.tscn" id="2_vxtl0"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/main_menu.tscn" id="4_70cj1"]
 [ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/hud.tscn" id="5_0mt8n"]
+[ext_resource type="PackedScene" uid="uid://b4ps4vnc5oysg" path="res://scenes/test_environment_2.tscn" id="5_nfrh7"]
 [ext_resource type="Script" path="res://scripts/loot_box_spawner.gd" id="6_nr6q8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cbq6g"]
@@ -23,13 +23,11 @@ script = ExtResource("1_sv4t1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_energy = 0.515
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_h1gcq")
-
-[node name="Test Environment" parent="." instance=ExtResource("2_vxtl0")]
-transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -1.7389, -2.00995, -3.34783)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -44,6 +42,9 @@ spawn_path = NodePath("..")
 
 [node name="LootBoxSpawner" type="Node3D" parent="."]
 script = ExtResource("6_nr6q8")
+
+[node name="TestEnvironment2" parent="." instance=ExtResource("5_nfrh7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.62804, 0)
 
 [connection signal="host_button_pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_host_button_pressed"]
 [connection signal="join_button_pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_join_button_pressed"]

@@ -1,7 +1,7 @@
-extends Node
+class_name GrapplingHook extends Node
 
-@onready var player = $"../.."
-@onready var ray: RayCast3D = $"../../Head/Camera/GrappleRay"
+@onready var player: CharacterBody3D 
+@onready var grapple_ray: RayCast3D = $GrappleRay
 
 const REST_LENGTH: float = 2.0
 const STIFFNESS: float = 10.0
@@ -20,8 +20,8 @@ func _physics_process(delta: float) -> void:
 		handle_grapple(delta)
 
 func launch():
-	if ray.is_colliding():
-		target = ray.get_collision_point()
+	if grapple_ray.is_colliding():
+		target = grapple_ray.get_collision_point()
 		is_launched = true
 		
 func retract():

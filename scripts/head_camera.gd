@@ -14,8 +14,14 @@ func _ready() -> void:
 	camera_collider.target_position = DEFAULT_CAMERA_POSITION
 	camera_collider.add_exception_rid(player)
 
-func _unhandled_input(event: InputEvent) -> void:	
-	if event is InputEventMouseMotion:
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed('escape'):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		player.rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
 		self.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
 		self.rotation_degrees.x = clamp(self.rotation_degrees.x, -60, 60)	

@@ -5,6 +5,4 @@ class_name HUD extends Node
 @onready var dash_bar: ProgressBar = $PlayerStatus/AspectRatioContainer/BarVBoxContainer/DashBar
 
 func update_ammo_display(num_bullets, mag_capacity):
-	print(num_bullets, mag_capacity)
-	print((num_bullets / mag_capacity) * 100)
 	ammo_amount_bar.value = (float(num_bullets) / mag_capacity) * 100

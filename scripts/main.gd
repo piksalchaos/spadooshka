@@ -85,8 +85,7 @@ func _on_lobby_menu_start_button_pressed() -> void:
 	
 	var map: Map = load(MAP_FILE_NAMES.pick_random()).instantiate()
 	multiplayer_container.add_child(map)
-	loot_box_spawner.spawn_positions = map.loot_box_spawn_positions
-	loot_box_spawner.spawn()
+	loot_box_spawner.spawn.rpc(map.loot_box_spawn_positions)
 	player_spawn_positions = map.player_spawn_positions
 
 func _on_multiplayer_container_child_entered_tree(node: Node) -> void:

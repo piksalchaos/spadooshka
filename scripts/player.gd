@@ -123,6 +123,7 @@ func receive_damage(damage):
 		position = Vector3.ZERO
 		print("dead")
 	health_changed.emit(health, max_health)
+	
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false

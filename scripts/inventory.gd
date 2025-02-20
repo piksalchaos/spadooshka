@@ -14,6 +14,7 @@ signal inventory_changed(items: Array[Item], current_item_slot: int)
 func _on_player_interact(target: Object) -> void:
 	if target is LootBox and items.size() < MAX_ITEM_COUNT:
 		var item = target.obtain_item()
+		print("Player %s grabbed %s" % [player.name, item.item_name])
 		item.player = player
 		if item.need_camera:
 			camera.add_child(item)

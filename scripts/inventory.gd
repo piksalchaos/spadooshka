@@ -43,7 +43,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("use_item"):
 		if items[current_item_slot].use():
 			items.pop_at(current_item_slot)
-			inventory_changed.emit(items, current_item_slot)
 	elif event.is_action_pressed("item_slot_left"):
 		current_item_slot -= 1
 	elif event.is_action_pressed("item_slot_right"):

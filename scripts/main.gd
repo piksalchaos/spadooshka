@@ -1,40 +1,37 @@
 extends Node
 
-const CLIENT_SCENE = preload("res://scenes/client.tscn")
+const PLAYER_SCENE = preload("res://scenes/player.tscn")
 
 const PORT = 9999
 
 var enet_peer = ENetMultiplayerPeer.new()
 
-@onready var client_manager: Node = $ClientManager
-@onready var player_manager: Node = $PlayerManager
+@onready var multiplayer_container: Node = $MultiplayerContainer
 @onready var main_menu: PanelContainer = $GUI/MainMenu
 @onready var lobby_menu: Control = $GUI/LobbyMenu
 @onready var hud: HUD = $GUI/HUD
 @onready var map: Node3D = $Map #temporary. later, the game will be able to automatically spawn maps and reference them
 
-var client_ready_states = {}
+var peer_ready_states = {}
 var is_match_ready = false
 
-func add_client(peer_id):
-	var client = CLIENT_SCENE.instantiate()
-	client.name = str(peer_id)
-	client_manager.add_child(client)
+@rpc("call_local")
+func update_number_of_players():
+	if not is_instance_valid(lobby_menu): return
+	lobby_menu.update_number_of_players(multiplayer.get_peers().size() + 1)
 
-func remove_client(peer_id):
-	var client = client_manager.get_node_or_null(str(peer_id))
-	if client:
-		client.queue_free()
+func _on_peer_connected(peer_id):
+	update_number_of_players.rpc()
+func _on_peer_disconnected(peer_id):
+	update_number_of_players.rpc()
 
 func _on_main_menu_host_button_pressed() -> void:
 	enet_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = enet_peer
-	#multiplayer.peer_connected.connect(add_player)
-	#multiplayer.peer_disconnected.connect(remove_player)
-	multiplayer.peer_connected.connect(add_client)
-	multiplayer.peer_disconnected.connect(remove_client)
 	
-	add_client(multiplayer.get_unique_id())
+	multiplayer.peer_connected.connect(_on_peer_connected)
+	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
+	update_number_of_players()
 	lobby_menu.show_host_display()
 	#upnp_setup()
 
@@ -45,45 +42,47 @@ func _on_main_menu_join_button_pressed() -> void:
 	lobby_menu.show_client_display()
 
 @rpc("any_peer", "call_local")
-func update_client_ready_states(peer_id, is_peer_ready):
-	client_ready_states[peer_id] = is_peer_ready
-	var client_ready_count = client_ready_states.values().count(true)
-	if client_ready_count != client_manager.get_child_count(): return
-	
+func update_peer_ready_states(peer_id, is_peer_ready):
+	peer_ready_states[peer_id] = is_peer_ready
+	var peer_ready_count = peer_ready_states.values().count(true)
+	var are_peers_ready = peer_ready_count == multiplayer.get_peers().size()+1
 	if multiplayer.get_unique_id() == 1:
-		lobby_menu.show_start_button()
+		lobby_menu.set_start_button_visibility(are_peers_ready)
 	else:
-		lobby_menu.show_waiting_label()
+		lobby_menu.set_waiting_label_visibility(are_peers_ready)
 
 func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
-	update_client_ready_states.rpc(peer_id, is_ready)
+	update_peer_ready_states.rpc(peer_id, is_ready)
 
 @rpc("call_local")
 func prepare_GUI_for_match():
 	lobby_menu.hide()
 	hud.show()
 
-func begin_match():
-	for client: Client in client_manager.get_children():
-		var player = client.create_player()
-		player_manager.add_child(player)
-	prepare_GUI_for_match.rpc()
+func add_player(peer_id: int):
+	var player = PLAYER_SCENE.instantiate()
+	player.name = str(peer_id)
+	multiplayer_container.add_child(player)
+
+func remove_player(peer_id: int):
+	var player = get_node_or_null(str(peer_id))
+	if player:
+		player.queue_free()
 
 func _on_lobby_menu_start_button_pressed() -> void:
-	for client: Client in client_manager.get_children():
-		var player = client.create_player()
-		player_manager.add_child(player)
+	assert(multiplayer.get_unique_id() == 1, \
+		"wtf, only the host should be able to start the game")
+	for peer_id in multiplayer.get_peers():
+		add_player(peer_id)
+	add_player(1)
 	prepare_GUI_for_match.rpc()
 
-func _on_client_manager_child_order_changed() -> void:
-	if not is_instance_valid(lobby_menu): return
-	lobby_menu.update_number_of_players(client_manager.get_child_count())
-
-func _on_player_manager_child_entered_tree(player: Player) -> void:
-	if not player.is_multiplayer_authority(): return
-	player.ammo_changed.connect(hud.update_ammo_display)
-	player.dash_changed.connect(hud.update_dash_display)
-	player.health_changed.connect(hud.update_health_display)
+func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
+	if node is Player:
+		if not node.is_multiplayer_authority(): return
+		node.ammo_changed.connect(hud.update_ammo_display)
+		node.dash_changed.connect(hud.update_dash_display)
+		node.health_changed.connect(hud.update_health_display)
 
 func upnp_setup():
 	var upnp = UPNP.new()

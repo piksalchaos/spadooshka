@@ -23,11 +23,11 @@ func show_client_display():
 	show()
 	server_state_label.text = "Joined Server"
 
-func show_waiting_label():
-	waiting_for_host_label.show()
+func set_waiting_label_visibility(is_visible: bool):
+	waiting_for_host_label.visible = is_visible
 
-func show_start_button():
-	start_button.show()
+func set_start_button_visibility(is_visible: bool):
+	start_button.visible = is_visible
 
 func _on_ready_button_pressed() -> void:
 	ready_button_pressed.emit(multiplayer.get_unique_id(), ready_button.button_pressed)

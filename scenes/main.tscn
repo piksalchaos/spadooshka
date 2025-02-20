@@ -9,17 +9,11 @@
 [node name="Main" type="Node"]
 script = ExtResource("1_yci6l")
 
-[node name="ClientManager" type="Node" parent="."]
-
-[node name="PlayerManager" type="Node" parent="."]
-
-[node name="ClientSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/client.tscn")
-spawn_path = NodePath("../ClientManager")
-
-[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
-spawn_path = NodePath("../PlayerManager")
+spawn_path = NodePath("../MultiplayerContainer")
+
+[node name="MultiplayerContainer" type="Node" parent="."]
 
 [node name="Map" parent="." instance=ExtResource("2_grqrh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.744252, 0)
@@ -49,8 +43,7 @@ visible = false
 layout_mode = 1
 mouse_filter = 2
 
-[connection signal="child_order_changed" from="ClientManager" to="." method="_on_client_manager_child_order_changed"]
-[connection signal="child_entered_tree" from="PlayerManager" to="." method="_on_player_manager_child_entered_tree"]
+[connection signal="child_entered_tree" from="MultiplayerContainer" to="." method="_on_multiplayer_container_child_entered_tree"]
 [connection signal="host_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_host_button_pressed"]
 [connection signal="join_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_join_button_pressed"]
 [connection signal="ready_button_pressed" from="GUI/LobbyMenu" to="." method="_on_lobby_menu_ready_button_pressed"]

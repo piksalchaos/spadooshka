@@ -9,6 +9,7 @@ const ITEM_FILE_NAMES: PackedStringArray = [
 
 @export var spawn_positions: Array[Node]
 @export var num_boxes: int = 3
+@onready var multiplayer_container: Node = $"../MultiplayerContainer"
 
 var loot_box_scene: PackedScene = load("res://scenes/loot_box.tscn")
 
@@ -23,4 +24,4 @@ func spawn() -> void:
 		loot_box.global_transform = spawn_positions[random_index].global_transform
 		spawn_positions.remove_at(random_index)
 		
-		self.add_child(loot_box)
+		multiplayer_container.add_child(loot_box)

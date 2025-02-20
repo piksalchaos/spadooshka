@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://ooxxqxmb5cvk"]
+[gd_scene load_steps=2 format=3 uid="uid://ooxxqxmb5cvk"]
+
+[ext_resource type="Script" path="res://scripts/inventory_slot.gd" id="1_hgbj8"]
 
 [node name="InventorySlot" type="AspectRatioContainer"]
 custom_minimum_size = Vector2(80, 80)
@@ -8,6 +10,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment_horizontal = 2
 alignment_vertical = 2
+script = ExtResource("1_hgbj8")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 2
@@ -19,7 +22,7 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+[node name="Icon" type="TextureRect" parent="MarginContainer"]
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 expand_mode = 1

@@ -34,7 +34,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if items.size() > 0:
 		if event.is_action_pressed("use_item"):
-			if items[current_item_slot].use(): 
+			if items[current_item_slot].use():
 				items.pop_at(current_item_slot)
 				inventory_changed.emit(items, current_item_slot)
 				return

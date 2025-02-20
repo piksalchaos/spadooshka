@@ -31,24 +31,25 @@ func _on_player_interact(target: Object) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
-	
-	if items.size() > 0:
-		if event.is_action_pressed("use_item"):
-			if items[current_item_slot].use():
-				items.pop_at(current_item_slot)
+	if items.size() == 0:
+		return
+	if event.is_action_pressed("use_item"):
+		if items[current_item_slot].use():
+			items.pop_at(current_item_slot)
+			current_item_slot -= 1
+			inventory_changed.emit(items, current_item_slot)
+			return
+	elif event.is_action_pressed("item_slot_left"):
+		shift_item_slot_left()
+	elif event.is_action_pressed("item_slot_right"):
+		shift_item_slot_right()
+	else:
+		for item_slot in range(3):
+			if event.is_action_pressed(str(item_slot + 1)) and items.size() >= item_slot + 1:
+				current_item_slot = item_slot
+				print(current_item_slot)
 				inventory_changed.emit(items, current_item_slot)
-				return
-		elif event.is_action_pressed("item_slot_left"):
-			shift_item_slot_left()
-		elif event.is_action_pressed("item_slot_right"):
-			shift_item_slot_right()
-		else:
-			for item_slot in range(3):
-				if event.is_action_pressed(str(item_slot + 1)) and items.size() >= item_slot + 1:
-					current_item_slot = item_slot
-					print(current_item_slot)
-					inventory_changed.emit(items, current_item_slot)
-					break
+				break
 
 func shift_item_slot_left():
 	current_item_slot = (current_item_slot + items.size() - 1) % items.size()

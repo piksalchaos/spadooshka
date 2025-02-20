@@ -14,6 +14,7 @@ var enet_peer = ENetMultiplayerPeer.new()
 @onready var map: Node3D = $Map #temporary. later, the game will be able to automatically spawn maps and reference them
 
 var client_ready_states = {}
+var is_match_ready = false
 
 func add_client(peer_id):
 	var client = CLIENT_SCENE.instantiate()
@@ -46,7 +47,13 @@ func _on_main_menu_join_button_pressed() -> void:
 @rpc("any_peer", "call_local")
 func update_client_ready_states(peer_id, is_peer_ready):
 	client_ready_states[peer_id] = is_peer_ready
-	print(client_ready_states)
+	var client_ready_count = client_ready_states.values().count(true)
+	if client_ready_count != client_manager.get_child_count(): return
+	
+	if multiplayer.get_unique_id() == 1:
+		lobby_menu.show_start_button()
+	else:
+		lobby_menu.show_waiting_label()
 
 func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
 	update_client_ready_states.rpc(peer_id, is_ready)
@@ -57,6 +64,12 @@ func prepare_GUI_for_match():
 	hud.show()
 
 func begin_match():
+	for client: Client in client_manager.get_children():
+		var player = client.create_player()
+		player_manager.add_child(player)
+	prepare_GUI_for_match.rpc()
+
+func _on_lobby_menu_start_button_pressed() -> void:
 	for client: Client in client_manager.get_children():
 		var player = client.create_player()
 		player_manager.add_child(player)

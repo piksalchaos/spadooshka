@@ -1,0 +1,53 @@
+[gd_scene load_steps=5 format=3 uid="uid://kbc0otqt5uis"]
+
+[ext_resource type="PackedScene" uid="uid://5cs46ma1usob" path="res://scenes/map-scenes/map.tscn" id="1_mga3u"]
+[ext_resource type="PackedScene" uid="uid://cijdl8txem2ml" path="res://scenes/map-scenes/loot_box_spawn_position.tscn" id="2_ltgr7"]
+[ext_resource type="PackedScene" uid="uid://q7llm5mr03ct" path="res://scenes/test_environment.tscn" id="2_tecsc"]
+[ext_resource type="PackedScene" uid="uid://dkjngpfr7w4qf" path="res://scenes/map-scenes/player_spawn_position.tscn" id="3_wvhep"]
+
+[node name="Map1" instance=ExtResource("1_mga3u")]
+
+[node name="LootBoxSpawnPositions" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.20364, 0)
+
+[node name="SpawnPosition" parent="LootBoxSpawnPositions" index="0" instance=ExtResource("2_ltgr7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.26648, 2.96817, -12.1408)
+
+[node name="SpawnPosition2" parent="LootBoxSpawnPositions" index="1" instance=ExtResource("2_ltgr7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.26648, 2.96817, 10.8097)
+
+[node name="SpawnPosition3" parent="LootBoxSpawnPositions" index="2" instance=ExtResource("2_ltgr7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5219, 3.09438, 10.3029)
+
+[node name="SpawnPosition4" parent="LootBoxSpawnPositions" index="3" instance=ExtResource("2_ltgr7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5219, 3.09438, -9.44)
+
+[node name="SpawnPosition5" parent="LootBoxSpawnPositions" index="4" instance=ExtResource("2_ltgr7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0161318, -1.10767, -0.00553906)
+
+[node name="SpawnPosition6" parent="LootBoxSpawnPositions" index="5" instance=ExtResource("2_ltgr7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.62179, 3.21063, 22.872)
+
+[node name="SpawnPosition7" parent="LootBoxSpawnPositions" index="6" instance=ExtResource("2_ltgr7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.62179, 3.21063, -22.9344)
+
+[node name="PlayerSpawnPosition" parent="PlayerSpawnPositions" index="0" instance=ExtResource("3_wvhep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.7152, 0.3, 16.07)
+
+[node name="PlayerSpawnPosition2" parent="PlayerSpawnPositions" index="1" instance=ExtResource("3_wvhep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.7509, 0.299999, -16.3729)
+
+[node name="PlayerSpawnPosition3" parent="PlayerSpawnPositions" index="2" instance=ExtResource("3_wvhep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.133347, 0.299999, -9.67164)
+
+[node name="PlayerSpawnPosition4" parent="PlayerSpawnPositions" index="3" instance=ExtResource("3_wvhep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.181618, 0.3, 8.43224)
+
+[node name="PlayerSpawnPosition5" parent="PlayerSpawnPositions" index="4" instance=ExtResource("3_wvhep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.5969, 0.3, 15.8896)
+
+[node name="PlayerSpawnPosition6" parent="PlayerSpawnPositions" index="5" instance=ExtResource("3_wvhep")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.9897, 0.3, -15.7451)
+
+[node name="Test Environment" parent="." index="4" instance=ExtResource("2_tecsc")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)

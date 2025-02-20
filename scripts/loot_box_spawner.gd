@@ -1,26 +1,26 @@
-extends Node3D
+class_name LootBoxSpawner extends Node3D
 
-const NUM_BOXES: int = 3
-const ITEM_FILE_NAMES: Array[String] = [
+const ITEM_FILE_NAMES: PackedStringArray = [
 	"res://scenes/item-scenes/speed_boost.tscn",
 	"res://scenes/item-scenes/jump_boost.tscn",
 	"res://scenes/item-scenes/grappling_hook.tscn",
 	"res://scenes/item-scenes/grenade_item.tscn"
 	]
-const SPAWN_POSITIONS: PackedVector3Array = [
-	Vector3(8.338, .5, -2.493),
-	Vector3(8.338, .5, 4.042),
-	Vector3(-3.242, -1.71, 4.042),
-	Vector3(7.323, -1.71, 11.972)
-] # this can change according to map
+
+@export var spawn_positions: Array[Node]
+@export var num_boxes: int = 3
 
 var loot_box_scene: PackedScene = load("res://scenes/loot_box.tscn")
 
-func _ready() -> void:
-	for i in range(NUM_BOXES):
+func spawn() -> void:
+	for i in range(num_boxes):
 		var loot_box = loot_box_scene.instantiate()
-		loot_box.item = load(ITEM_FILE_NAMES.pick_random()).instantiate()
-		var random_pos_index: int = randi_range(0, SPAWN_POSITIONS.size() - 1)
-		loot_box.position = SPAWN_POSITIONS[random_pos_index]
-		SPAWN_POSITIONS.remove_at(random_pos_index)
+		
+		var random_index: int = randi_range(0, ITEM_FILE_NAMES.size() - 1)
+		loot_box.item = load(ITEM_FILE_NAMES[random_index]).instantiate()
+		
+		random_index = randi_range(0, spawn_positions.size() - 1)
+		loot_box.global_transform = spawn_positions[random_index].global_transform
+		spawn_positions.remove_at(random_index)
+		
 		self.add_child(loot_box)

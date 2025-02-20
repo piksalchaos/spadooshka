@@ -115,6 +115,15 @@ func dash():
 	dash_timer.start()
 	can_dash = false
 
+@rpc("any_peer")
+func receive_damage(damage):
+	health -= damage
+	if health <= 0:
+		health = max_health
+		position = Vector3.ZERO
+		print("dead")
+	health_changed.emit(health, max_health)
+
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
 	if dash_cooldown_timer.is_stopped() and not can_dash:
@@ -126,12 +135,3 @@ func _on_dash_cooldown_timer_timeout() -> void:
 
 func _on_gun_ammo_changed(num_bullets: int, mag_capacity: int) -> void:
 	ammo_changed.emit(num_bullets, mag_capacity)
-
-@rpc("any_peer")
-func receive_damage(damage):
-	health -= damage
-	health_changed.emit(health, max_health)
-	if health <= 0:
-		health = max_health
-		position = Vector3.ZERO
-		print("dead")

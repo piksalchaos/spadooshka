@@ -1,0 +1,86 @@
+[gd_scene load_steps=2 format=3 uid="uid://g0un4ork14i8"]
+
+[ext_resource type="Script" path="res://scenes/lobby_menu.gd" id="1_y36gv"]
+
+[node name="LobbyMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y36gv")
+
+[node name="ServerStateLabel" type="Label" parent="."]
+layout_mode = 1
+offset_left = 46.0
+offset_top = 31.0
+offset_right = 160.0
+offset_bottom = 54.0
+text = "Hosting Server"
+
+[node name="PlayerNumberLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -76.0
+offset_top = 223.0
+offset_right = 77.0
+offset_bottom = -459.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Number of Players: 0"
+
+[node name="ReadyButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -67.5
+offset_top = -33.0
+offset_right = 67.5
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+toggle_mode = true
+text = "Ready"
+
+[node name="WaitingForHostLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = 134.0
+offset_right = 69.0
+offset_bottom = 157.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Waiting for host..."
+
+[node name="StartButton" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -66.0
+offset_top = 44.0
+offset_right = 74.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Begin Match!
+"
+
+[connection signal="pressed" from="ReadyButton" to="." method="_on_ready_button_pressed"]
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

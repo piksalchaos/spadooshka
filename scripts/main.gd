@@ -13,10 +13,8 @@ var enet_peer = ENetMultiplayerPeer.new()
 @onready var hud: HUD = $GUI/HUD
 @onready var map: Node3D = $Map #temporary. later, the game will be able to automatically spawn maps and reference them
 
-@rpc("call_local")
-func prepare_GUI_for_match():
-	lobby_menu.hide()
-	hud.show()
+var client_ready_states = {}
+
 func add_client(peer_id):
 	var client = CLIENT_SCENE.instantiate()
 	client.name = str(peer_id)
@@ -36,16 +34,29 @@ func _on_main_menu_host_button_pressed() -> void:
 	multiplayer.peer_disconnected.connect(remove_client)
 	
 	add_client(multiplayer.get_unique_id())
-	lobby_menu.show()
+	lobby_menu.show_host_display()
 	#upnp_setup()
 
 func _on_main_menu_join_button_pressed() -> void:
 	#enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
 	enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer
-	lobby_menu.show()
+	lobby_menu.show_client_display()
 
-func _on_lobby_menu_ready_button_pressed() -> void:
+@rpc("any_peer", "call_local")
+func update_client_ready_states(peer_id, is_peer_ready):
+	client_ready_states[peer_id] = is_peer_ready
+	print(client_ready_states)
+
+func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
+	update_client_ready_states.rpc(peer_id, is_ready)
+
+@rpc("call_local")
+func prepare_GUI_for_match():
+	lobby_menu.hide()
+	hud.show()
+
+func begin_match():
 	for client: Client in client_manager.get_children():
 		var player = client.create_player()
 		player_manager.add_child(player)

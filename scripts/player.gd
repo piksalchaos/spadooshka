@@ -117,11 +117,11 @@ func dash():
 @rpc("any_peer")
 func receive_damage(damage):
 	health -= damage
-	health_changed.emit(health, max_health)
 	if health <= 0:
 		health = max_health
 		position = Vector3.ZERO
 		print("dead")
+	health_changed.emit(health, max_health)
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false

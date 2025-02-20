@@ -46,6 +46,23 @@ offset_right = 67.5
 offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
+toggle_mode = true
 text = "Ready"
+
+[node name="WaitingForHostLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = 134.0
+offset_right = 69.0
+offset_bottom = 157.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Waiting for host..."
 
 [connection signal="pressed" from="ReadyButton" to="." method="_on_ready_button_pressed"]

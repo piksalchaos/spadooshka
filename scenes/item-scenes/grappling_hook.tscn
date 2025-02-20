@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://bapc3bg6tb638"]
+[gd_scene load_steps=5 format=3 uid="uid://bapc3bg6tb638"]
 
 [ext_resource type="Script" path="res://scripts/item-scripts/grappling_hook.gd" id="1_teltn"]
 [ext_resource type="Texture2D" uid="uid://urn0t8itsm0b" path="res://assets/images/grappling_icon_temp.png" id="2_k3jy4"]
+[ext_resource type="Script" path="res://scripts/rope.gd" id="3_0oadq"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_g4ow5"]
+height = 1.0
 
 [node name="GrapplingHook" type="Node3D"]
 script = ExtResource("1_teltn")
@@ -17,3 +21,11 @@ target_position = Vector3(0, 0, -50)
 [node name="RetractSFX" type="AudioStreamPlayer" parent="."]
 
 [node name="GrappleSFX" type="AudioStreamPlayer" parent="."]
+
+[node name="Rope" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.1, 0, 0, 0, -1.245, 0, 0, 0, -0.1, 0, -0.6225, 0)
+visible = false
+mesh = SubResource("CylinderMesh_g4ow5")
+script = ExtResource("3_0oadq")
+end = Vector3(0, -1.245, 0)
+thickness = 0.1

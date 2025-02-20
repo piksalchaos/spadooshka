@@ -1,6 +1,7 @@
 class_name GrapplingHook extends Item
 
 @onready var grapple_ray: RayCast3D = $GrappleRay
+@onready var rope: Rope = $Rope
 
 @export var grapple_range: float = 50.0
 @export var rest_length: float = 2.0
@@ -32,11 +33,14 @@ func launch():
 	if grapple_ray.is_colliding():
 		target = grapple_ray.get_collision_point()
 		is_launched = true
+	rope.reparent(get_tree().current_scene)
+	rope.visible = true
 	return is_launched
 		
 func retract():
 	$RetractSFX.play()
 	is_launched = false
+	rope.queue_free()
 	self.queue_free()
 		
 func handle_grapple(delta):
@@ -56,3 +60,6 @@ func handle_grapple(delta):
 		force = spring_force + damping_force
 		
 	player.velocity += force * delta
+	
+	rope.end = target
+	rope.start = player.position

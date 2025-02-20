@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=3 uid="uid://npixc1rmfud5"]
 
-[ext_resource type="Texture2D" uid="uid://mrfbhfo8fyg3" path="res://assets/images/Bullet_hole_drawing_cosmocurio.jpg" id="1_csy46"]
+[ext_resource type="Texture2D" uid="uid://ddsq86evjhbeq" path="res://assets/images/bullet_hole.png" id="1_ovlw1"]
 [ext_resource type="Script" path="res://scripts/bullet_hole.gd" id="2_vy387"]
 
 [node name="Sprite3D" type="Sprite3D"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
-texture = ExtResource("1_csy46")
+texture = ExtResource("1_ovlw1")
 script = ExtResource("2_vy387")
 
 [node name="CleanupTimer" type="Timer" parent="."]

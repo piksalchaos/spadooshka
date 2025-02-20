@@ -34,8 +34,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
 	if items.size() == 0: return
 	
-	for item_slot in range(MAX_ITEM_COUNT):
-		if event.is_action_pressed(str(item_slot + 1)) and items.size() >= item_slot + 1:
+	for item_slot in range(items.size()):
+		if event.is_action_pressed(str(item_slot + 1)):
 			current_item_slot = item_slot
 			inventory_changed.emit(items, current_item_slot)
 			return

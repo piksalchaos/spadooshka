@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://cb8e0n0a3s68j"]
+[gd_scene load_steps=3 format=3 uid="uid://cb8e0n0a3s68j"]
 
 [ext_resource type="Script" path="res://scripts/grenade_item.gd" id="1_kx6cr"]
+[ext_resource type="Texture2D" uid="uid://bg5cf4xyvoguj" path="res://assets/images/grenade_icon_temp.png" id="2_56k3f"]
 
 [node name="GrenadeItem" type="Node3D"]
 script = ExtResource("1_kx6cr")
 launch_offset = Vector3(0, 2, 0)
 need_camera = true
 item_name = "Grenade"
+hud_icon = ExtResource("2_56k3f")

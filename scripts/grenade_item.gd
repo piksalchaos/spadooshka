@@ -16,3 +16,4 @@ func use():
 	new_grenade_object.add_collision_exception_with(player)
 	get_tree().current_scene.add_child(new_grenade_object)
 	queue_free()
+	return true

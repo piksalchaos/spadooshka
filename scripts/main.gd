@@ -2,13 +2,19 @@ extends Node
 
 const PLAYER_SCENE = preload("res://scenes/player.tscn")
 
+const MAP_FILE_NAMES: Array[String] = [
+	"res://scenes/map-scenes/map_1.tscn"
+]
+
 const PORT = 9999
 
 var enet_peer = ENetMultiplayerPeer.new()
 
 @onready var main_menu: PanelContainer = $GUI/MainMenu
 @onready var hud: HUD = $GUI/HUD
-@onready var map: Node3D = $Map #temporary. later, the game will be able to automatically spawn maps and reference them
+@onready var loot_box_spawner: LootBoxSpawner = $LootBoxSpawner
+
+var player_spawn_positions: Array[Node]
 
 func _on_main_menu_host_button_pressed() -> void:
 	enet_peer.create_server(PORT)
@@ -19,6 +25,12 @@ func _on_main_menu_host_button_pressed() -> void:
 	add_player(multiplayer.get_unique_id())
 	hud.show()
 	#upnp_setup()
+	
+	var map: Map = load(MAP_FILE_NAMES.pick_random()).instantiate()
+	self.add_child(map)
+	loot_box_spawner.spawn_positions = map.loot_box_spawn_positions
+	loot_box_spawner.spawn()
+	player_spawn_positions = map.player_spawn_positions
 
 func _on_main_menu_join_button_pressed() -> void:
 	#enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
@@ -35,6 +47,7 @@ func add_player(peer_id):
 		player.dash_changed.connect(hud.update_dash_display)
 		player.health_changed.connect(hud.update_health_display)
 		player.get_node("Inventory").inventory_changed.connect(hud.update_inventory_icons)
+		
 
 func remove_player(peer_id):
 	var player = get_node_or_null(str(peer_id))

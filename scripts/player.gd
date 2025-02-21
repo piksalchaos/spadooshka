@@ -50,6 +50,7 @@ func _ready():
 func spawn(spawn_position: Vector3):
 	position = spawn_position
 	health = max_health
+	health_changed.emit(health, max_health)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return

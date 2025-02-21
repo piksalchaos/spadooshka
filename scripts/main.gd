@@ -69,6 +69,12 @@ func add_player(peer_id: int):
 	var player = PLAYER_SCENE.instantiate()
 	player.name = str(peer_id)
 	multiplayer_container.add_child(player)
+	
+	var random_index: int = randi_range(0, player_spawn_positions.size() - 1)
+	player.spawn.rpc(player_spawn_positions[random_index].position)
+	player_spawn_positions.remove_at(random_index)
+	
+	print("Player %s spawned at %s!" % [player.name, player.position])
 
 func remove_player(peer_id: int):
 	var player = get_node_or_null(str(peer_id))
@@ -78,15 +84,16 @@ func remove_player(peer_id: int):
 func _on_lobby_menu_start_button_pressed() -> void:
 	assert(multiplayer.get_unique_id() == 1, \
 		"wtf, only the host should be able to start the game")
-	for peer_id in multiplayer.get_peers():
-		add_player(peer_id)
-	add_player(1)
-	prepare_GUI_for_match.rpc()
 	
 	var map: Map = load(MAP_FILE_NAMES.pick_random()).instantiate()
 	multiplayer_container.add_child(map)
-	loot_box_spawner.spawn.rpc(map.loot_box_spawn_positions)
+	loot_box_spawner.spawn(map.loot_box_spawn_positions)
 	player_spawn_positions = map.player_spawn_positions
+	
+	add_player(1)
+	for peer_id in multiplayer.get_peers():
+		add_player(peer_id)
+	prepare_GUI_for_match.rpc()
 
 func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 	if node is Player:

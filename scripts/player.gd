@@ -124,6 +124,10 @@ func receive_damage(damage):
 		print("dead")
 	health_changed.emit(health, max_health)
 	
+@rpc("any_peer", "call_local")
+func spawn(pos: Vector3):
+	position = pos	
+
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false

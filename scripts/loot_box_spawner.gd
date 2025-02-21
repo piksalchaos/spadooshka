@@ -12,7 +12,6 @@ const ITEM_FILE_NAMES: PackedStringArray = [
 
 var loot_box_scene: PackedScene = load("res://scenes/loot_box.tscn")
 
-@rpc("call_local")
 func spawn(spawn_positions: Array[Node]) -> void:
 	spawn_positions = spawn_positions.duplicate()
 	

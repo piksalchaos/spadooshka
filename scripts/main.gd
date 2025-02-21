@@ -71,7 +71,8 @@ func add_player(peer_id: int):
 	multiplayer_container.add_child(player)
 	
 	var random_index: int = randi_range(0, player_spawn_positions.size() - 1)
-	player.spawn.rpc(player_spawn_positions[random_index].position)
+	player.spawn.rpc(player_spawn_positions[random_index].position) 
+	# when we implement rounds, player_spawn_posiitions needs to be assigned a new Array 
 	player_spawn_positions.remove_at(random_index)
 	
 	print("Player %s spawned at %s!" % [player.name, player.position])

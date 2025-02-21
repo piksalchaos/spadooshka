@@ -44,6 +44,10 @@ func _ready():
 	
 	if not is_multiplayer_authority(): return
 	camera.current = true
+	
+@rpc("any_peer", "call_local")
+func spawn(pos: Vector3):
+	position = pos
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
@@ -123,11 +127,6 @@ func receive_damage(damage):
 		position = Vector3.ZERO
 		print("dead")
 	health_changed.emit(health, max_health)
-	
-@rpc("any_peer", "call_local")
-func spawn(pos: Vector3):
-	position = pos	
-
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false

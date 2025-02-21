@@ -1,4 +1,4 @@
-class_name JumpBoost extends Item
+class_name JumpBoost extends EffectItem
 	
 func use() -> bool:
 	return activate()

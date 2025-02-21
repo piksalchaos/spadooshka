@@ -11,5 +11,5 @@ var is_active
 func use() -> bool:
 	activate_sfx.play()
 	queue_free()
-	player.apply_effect(effect)
+	#player.apply_effect(effect)
 	return true

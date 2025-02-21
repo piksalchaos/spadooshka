@@ -1,15 +1,15 @@
-class_name SpeedBoost extends Item
+class_name SpeedBoost extends EffectItem
+
+@onready var speed_boost_timer: Timer = $SpeedBoostTimer
+@onready var activate_sfx: AudioStreamPlayer = $ActivateSFX
+@onready var deactivate_sfx: AudioStreamPlayer = $DeactivateSFX
+
+var is_active
+
+#signal timer_began(timer: Timer)
 
 func use() -> bool:
-	return activate()
-
-func activate():
-	$ActivateSFX.play()
-	$SpeedBoostTimer.start()
-	player.is_speed_boosted = true
+	activate_sfx.play()
+	queue_free()
+	player.apply_effect(effect)
 	return true
-
-func _on_speed_boost_timer_timeout() -> void:
-	$DeactivateSFX.play()
-	player.is_speed_boosted = false
-	self.queue_free()

@@ -1,4 +1,4 @@
-extends Node
+class_name Inventory extends Node
 
 @onready var player: CharacterBody3D = $".."
 @onready var camera: Camera3D = $"../Head/Camera"
@@ -15,6 +15,7 @@ func _on_player_interact(target: Object) -> void:
 	if target is LootBox and items.size() < MAX_ITEM_COUNT:
 		var item = target.obtain_item()
 		item.player = player
+		
 		if item.need_camera:
 			camera.add_child(item)
 		else:
@@ -43,7 +44,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("use_item"):
 		if items[current_item_slot].use():
 			items.pop_at(current_item_slot)
-			inventory_changed.emit(items, current_item_slot)
 	elif event.is_action_pressed("item_slot_left"):
 		current_item_slot -= 1
 	elif event.is_action_pressed("item_slot_right"):

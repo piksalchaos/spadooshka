@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://c17tyt3sc84f4"]
+
+[ext_resource type="PackedScene" uid="uid://deyxgoytnuhu" path="res://scenes/effects/temporary_effect.tscn" id="1_pyuld"]
+[ext_resource type="Texture2D" uid="uid://4avmuvtwmrii" path="res://assets/images/effect_icons/speed_boost_effect_icon.png" id="2_bdbkn"]
+
+[node name="SpeedBoostEffect" instance=ExtResource("1_pyuld")]
+icon = ExtResource("2_bdbkn")
+effect_name = "Speed Boost"

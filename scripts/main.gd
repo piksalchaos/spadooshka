@@ -95,7 +95,11 @@ func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 		node.ammo_changed.connect(hud.update_ammo_display)
 		node.dash_changed.connect(hud.update_dash_display)
 		node.health_changed.connect(hud.update_health_display)
-		node.get_node("Inventory").inventory_changed.connect(hud.update_inventory_icons)
+		
+		var inventory = node.get_node("Inventory")
+		inventory.inventory_changed.connect(hud.update_inventory_icons)
+		var effect_manager = node.get_node("EffectManager")
+		effect_manager.effect_applied.connect(hud.create_effect_display)
 
 func upnp_setup():
 	var upnp = UPNP.new()

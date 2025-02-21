@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://cyxjceb2t4xis"]
+[gd_scene load_steps=10 format=3 uid="uid://cyxjceb2t4xis"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_2aywh"]
 [ext_resource type="Script" path="res://scripts/head_camera.gd" id="2_q7c4t"]
 [ext_resource type="PackedScene" uid="uid://b84jqg6v7ev0v" path="res://scenes/gun.tscn" id="2_wfnaq"]
 [ext_resource type="Script" path="res://scripts/inventory.gd" id="4_iowmg"]
+[ext_resource type="Script" path="res://scenes/effect_manager.gd" id="5_otmhq"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wu3n4"]
 
@@ -68,6 +69,9 @@ one_shot = true
 
 [node name="Inventory" type="Node" parent="."]
 script = ExtResource("4_iowmg")
+
+[node name="EffectManager" type="Node" parent="."]
+script = ExtResource("5_otmhq")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_yhuv5")

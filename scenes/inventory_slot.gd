@@ -1,4 +1,4 @@
-extends AspectRatioContainer
+class_name InventorySlot extends AspectRatioContainer
 
 @onready var texture_rect: TextureRect = $MarginAdjuster/MarginContainer/TextureRect
 

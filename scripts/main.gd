@@ -16,20 +16,11 @@ var enet_peer = ENetMultiplayerPeer.new()
 @onready var hud: HUD = $GUI/HUD
 @onready var loot_box_spawner: LootBoxSpawner = $LootBoxSpawner
 
+var map: Map = preload("res://scenes/map-scenes/map_1.tscn").instantiate()
 var player_spawn_positions: Array[Node]
 
 var peer_ready_states = {}
 var is_match_ready = false
-
-@rpc("call_local")
-func update_number_of_players():
-	if not is_instance_valid(lobby_menu): return
-	lobby_menu.update_number_of_players(multiplayer.get_peers().size() + 1)
-
-func _on_peer_connected(peer_id):
-	update_number_of_players.rpc()
-func _on_peer_disconnected(peer_id):
-	update_number_of_players.rpc()
 
 func _on_main_menu_host_button_pressed() -> void:
 	enet_peer.create_server(PORT)
@@ -47,6 +38,20 @@ func _on_main_menu_join_button_pressed() -> void:
 	multiplayer.multiplayer_peer = enet_peer
 	lobby_menu.show_client_display()
 
+@rpc("call_local")
+func update_number_of_players():
+	if not is_instance_valid(lobby_menu): return
+	lobby_menu.update_number_of_players(multiplayer.get_peers().size() + 1)
+
+func _on_peer_connected(peer_id):
+	update_number_of_players.rpc()
+	update_peer_ready_states(peer_id, false)
+func _on_peer_disconnected(peer_id):
+	update_number_of_players.rpc()
+
+func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
+	update_peer_ready_states.rpc(peer_id, is_ready)
+
 @rpc("any_peer", "call_local")
 func update_peer_ready_states(peer_id, is_peer_ready):
 	peer_ready_states[peer_id] = is_peer_ready
@@ -57,44 +62,76 @@ func update_peer_ready_states(peer_id, is_peer_ready):
 	else:
 		lobby_menu.set_waiting_label_visibility(are_peers_ready)
 
-func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
-	update_peer_ready_states.rpc(peer_id, is_ready)
+func _on_lobby_menu_start_button_pressed() -> void:
+	assert(multiplayer.get_unique_id() == 1, \
+		"wtf, only the host should be able to start the game")
+	
+	#map = load(MAP_FILE_NAMES.pick_random()).instantiate()
+	multiplayer_container.add_child(map)
+	
+	prepare_GUI_for_game.rpc()
+	play_game()
 
 @rpc("call_local")
-func prepare_GUI_for_match():
+func prepare_GUI_for_game():
 	lobby_menu.hide()
 	hud.show()
+	
+func play_game():
+	add_players()
+	play_round()
+	pass
+
+func add_players():
+	add_player(1)
+	for peer_id in multiplayer.get_peers():
+		add_player(peer_id)
 
 func add_player(peer_id: int):
 	var player = PLAYER_SCENE.instantiate()
 	player.name = str(peer_id)
 	multiplayer_container.add_child(player)
-	
-	var random_index: int = randi_range(0, player_spawn_positions.size() - 1)
-	player.spawn.rpc(player_spawn_positions[random_index].position) 
-	# when we implement rounds, player_spawn_posiitions needs to be assigned a new Array 
-	player_spawn_positions.remove_at(random_index)
-	
-	print("Player %s spawned at %s!" % [player.name, player.position])
 
 func remove_player(peer_id: int):
 	var player = get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
+	
+func play_round():
+	spawn_loot_boxes()
+	spawn_players()
 
-func _on_lobby_menu_start_button_pressed() -> void:
-	assert(multiplayer.get_unique_id() == 1, \
-		"wtf, only the host should be able to start the game")
+func end_round(dead_peer_id: int):
+	print("Player %d is dead - from main scene" % dead_peer_id)
+	play_round()
 	
-	var map: Map = load(MAP_FILE_NAMES.pick_random()).instantiate()
-	multiplayer_container.add_child(map)
+func spawn_loot_boxes():
+	#print(map)
+	#
+	#for child in multiplayer_container.get_children():
+		#if child is Map:
+			#map = child
+			#
+	#print(map)
+	
 	loot_box_spawner.spawn(map.loot_box_spawn_positions)
-	player_spawn_positions = map.player_spawn_positions
+
+func spawn_players():
+	var spawn_positions: Array[Node] = map.player_spawn_positions.duplicate()
 	
-	add_player(1)
-	for peer_id in multiplayer.get_peers():
-		add_player(peer_id)
-	prepare_GUI_for_match.rpc()
+	var peer_ids := multiplayer.get_peers()
+	peer_ids.append(1)
+	
+	print(peer_ids)
+	
+	for peer_id in peer_ids:
+		var player: CharacterBody3D = multiplayer_container.get_node(str(peer_id))
+		
+		var random_index: int = randi_range(0, spawn_positions.size() - 1)
+		player.spawn.rpc(spawn_positions[random_index].position) 
+		spawn_positions.remove_at(random_index)
+		
+		print("Player %s spawned at %s!" % [player.name, player.position])
 
 func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 	if node is Player:
@@ -103,6 +140,7 @@ func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 		node.dash_changed.connect(hud.update_dash_display)
 		node.health_changed.connect(hud.update_health_display)
 		node.get_node("Inventory").inventory_changed.connect(hud.update_inventory_icons)
+		node.death.connect(end_round)
 
 func upnp_setup():
 	var upnp = UPNP.new()

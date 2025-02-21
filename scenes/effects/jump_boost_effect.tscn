@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bt74lrtvilps"]
+
+[ext_resource type="PackedScene" uid="uid://deyxgoytnuhu" path="res://scenes/effects/temporary_effect.tscn" id="1_e50v2"]
+[ext_resource type="Texture2D" uid="uid://cvtlixc2ef6v8" path="res://assets/images/effect_icons/jump_boost_effect_icon.png" id="2_tw372"]
+
+[node name="JumpBoostEffect" instance=ExtResource("1_e50v2")]
+icon = ExtResource("2_tw372")
+effect_name = "Jump Boost"

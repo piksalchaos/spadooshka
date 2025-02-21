@@ -4,6 +4,10 @@ class_name GrapplingHook extends Item
 @onready var line_of_sight_ray: RayCast3D = $GrappleLineOfSightCheck
 @onready var rope: Rope = $Rope
 
+@onready var launch_sfx: AudioStreamPlayer = $LaunchSFX
+@onready var retract_sfx: AudioStreamPlayer = $RetractSFX
+@onready var grapple_sfx: AudioStreamPlayer = $GrappleSFX
+
 @export var grapple_range: float = 50.0
 @export var rest_length: float = 2.0
 @export var stiffness: float = 10.0
@@ -24,25 +28,24 @@ func use() -> bool:
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
-	if Input.is_action_just_released("use_item"):
-		retract()
-	
 	if is_launched:
-		if not $GrappleSFX.playing:
-			$GrappleSFX.play()
+		if not grapple_sfx.playing:
+			grapple_sfx.play()
 		handle_grapple(delta)
+		if Input.is_action_just_released("use_item"):
+			retract()
 
 func launch():
-	$LaunchSFX.play()
-	if grapple_ray.is_colliding():
-		target = grapple_ray.get_collision_point()
-		is_launched = true
+	launch_sfx.play()
+	if not grapple_ray.is_colliding(): return false
+	target = grapple_ray.get_collision_point()
+	is_launched = true
 	rope.reparent(get_tree().current_scene)
 	rope.visible = true
-	return is_launched
+	return true
 		
 func retract():
-	$RetractSFX.play()
+	retract_sfx.play()
 	is_launched = false
 	rope.queue_free()
 	self.queue_free()

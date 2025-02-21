@@ -1,19 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://bxs04app2dspd"]
+[gd_scene load_steps=4 format=3 uid="uid://bxs04app2dspd"]
 
-[ext_resource type="Script" path="res://scripts/item-scripts/speed_boost.gd" id="1_tasm7"]
+[ext_resource type="Script" path="res://scenes/item-scenes/effect_item.gd" id="1_isrej"]
 [ext_resource type="Texture2D" uid="uid://b61iyp4uh471f" path="res://assets/images/speedboost_icon_temp.png" id="2_cf7og"]
+[ext_resource type="PackedScene" uid="uid://c17tyt3sc84f4" path="res://scenes/effects/speed_boost_effect.tscn" id="2_sgl41"]
 
 [node name="SpeedBoost" type="Node3D"]
-script = ExtResource("1_tasm7")
+script = ExtResource("1_isrej")
+effect_scene = ExtResource("2_sgl41")
 item_name = "Speed Boost"
 hud_icon = ExtResource("2_cf7og")
-
-[node name="SpeedBoostTimer" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
 
 [node name="ActivateSFX" type="AudioStreamPlayer" parent="."]
 
 [node name="DeactivateSFX" type="AudioStreamPlayer" parent="."]
-
-[connection signal="timeout" from="SpeedBoostTimer" to="." method="_on_speed_boost_timer_timeout"]

@@ -6,7 +6,7 @@ extends Node3D
 
 const MOUSE_SENSITIVITY = 0.005
 
-var DEFAULT_CAMERA_POSITION = Vector3(0.711, 0.431, 2.059)
+var DEFAULT_CAMERA_POSITION = Vector3.ZERO #(0.711, 0.431, 2.059)
 
 func _ready() -> void:
 	if not is_multiplayer_authority(): return

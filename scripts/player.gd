@@ -4,6 +4,8 @@ class_name Player extends CharacterBody3D
 @onready var interact_cast: RayCast3D = $Head/Camera/InteractCast
 @onready var dash_timer: Timer = $Timers/DashTimer
 @onready var dash_cooldown_timer: Timer = $Timers/DashCooldownTimer
+@onready var inventory: Inventory = $Inventory
+@onready var effect_manager: Node = $EffectManager
 
 @export var equipped_gun: Gun
 @export var health = 100
@@ -33,8 +35,8 @@ var is_wall_sliding: bool = false
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
-var is_speed_boosted: bool = false
-var is_jump_boosted: bool = false
+#var is_speed_boosted: bool = false
+#var is_jump_boosted: bool = false
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -65,7 +67,7 @@ func _physics_process(delta: float) -> void:
 	
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	var max_speed := BOOSTED_SPEED if is_speed_boosted else DEFAULT_SPEED
+	var max_speed := BOOSTED_SPEED if is_effect_applied("Speed Boost") else DEFAULT_SPEED
 	var acceleration := ACCELERATION
 	var deceleration := FRICTION if is_on_floor() else IN_AIR_DECELERATION
 	
@@ -100,13 +102,16 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	#stupid hack to get dash bar to immediately deplete at start of dash
-	var dash_value = dash_cooldown_timer.wait_time - dash_cooldown_timer.time_left if not is_dashing else 0.0
+	var dash_value = dash_cooldown_timer.wait_time-dash_cooldown_timer.time_left if not is_dashing else 0.0
 	dash_changed.emit(dash_value, dash_cooldown_timer.wait_time)
 	
 func jump():
 	#velocity.y = BOOSTED_JUMP_VELOCITY if is_jump_boosted else DEFAULT_JUMP_VELOCITY
 	if is_on_floor():
-		velocity.y = BOOSTED_JUMP_VELOCITY if is_jump_boosted else DEFAULT_JUMP_VELOCITY
+		if is_effect_applied("Jump Boost"):
+			velocity.y = BOOSTED_JUMP_VELOCITY
+		else:
+			velocity.y = DEFAULT_JUMP_VELOCITY
 	elif is_wall_sliding:
 		var direction = get_wall_normal() * 0.5
 		direction.y = WALL_JUMP_Y_DIRECTION
@@ -139,3 +144,9 @@ func _on_dash_cooldown_timer_timeout() -> void:
 
 func _on_gun_ammo_changed(num_bullets: int, mag_capacity: int) -> void:
 	ammo_changed.emit(num_bullets, mag_capacity)
+
+func apply_effect(effect: Effect):
+	effect_manager.apply_effect(effect)
+
+func is_effect_applied(effect_name: String):
+	return effect_manager.is_effect_applied(effect_name)

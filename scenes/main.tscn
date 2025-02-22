@@ -46,5 +46,6 @@ multiplayer_container = NodePath("../MultiplayerContainer")
 [connection signal="child_entered_tree" from="MultiplayerContainer" to="." method="_on_multiplayer_container_child_entered_tree"]
 [connection signal="host_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_host_button_pressed"]
 [connection signal="join_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_join_button_pressed"]
+[connection signal="singleplayer_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_singleplayer_button_pressed"]
 [connection signal="ready_button_pressed" from="GUI/LobbyMenu" to="." method="_on_lobby_menu_ready_button_pressed"]
 [connection signal="start_button_pressed" from="GUI/LobbyMenu" to="." method="_on_lobby_menu_start_button_pressed"]

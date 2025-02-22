@@ -39,11 +39,11 @@ func _on_main_menu_host_button_pressed() -> void:
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	update_number_of_players()
 	lobby_menu.show_host_display()
-	#upnp_setup()
+	upnp_setup()
 
 func _on_main_menu_join_button_pressed() -> void:
-	#enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
-	enet_peer.create_client("localhost", PORT)
+	enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
+	#enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer
 	lobby_menu.show_client_display()
 
@@ -56,6 +56,15 @@ func update_peer_ready_states(peer_id, is_peer_ready):
 		lobby_menu.set_start_button_visibility(are_peers_ready)
 	else:
 		lobby_menu.set_waiting_label_visibility(are_peers_ready)
+
+func _on_main_menu_singleplayer_button_pressed() -> void: # temporary code
+	var player = PLAYER_SCENE.instantiate()
+	player.name = "1"
+	multiplayer_container.add_child(player)
+	var map: Map = load(MAP_FILE_NAMES.pick_random()).instantiate()
+	multiplayer_container.add_child(map)
+	prepare_GUI_for_match()
+	loot_box_spawner.spawn(map.loot_box_spawn_positions)
 
 func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
 	update_peer_ready_states.rpc(peer_id, is_ready)
@@ -119,6 +128,6 @@ func upnp_setup():
 	
 	var map_result = upnp.add_port_mapping(PORT)
 	assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \
-		"UPNP Port Mapping Failed! Error $s" % map_result)
+		"UPNP Port Mapping Failed! Error %s" % map_result)
 	
-	print("Success! Join Address: $s" % upnp.query_external_address())
+	print("Success! Join Address: %s" % upnp.query_external_address())

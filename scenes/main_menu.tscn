@@ -39,6 +39,11 @@ text = "Host"
 layout_mode = 2
 text = "Join"
 
+[node name="SingleplayerButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Singleplayer
+"
+
 [node name="AddressEntry" type="LineEdit" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 placeholder_text = "Enter Address to Join Here"
@@ -46,3 +51,4 @@ alignment = 1
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SingleplayerButton" to="." method="_on_singleplayer_button_pressed"]

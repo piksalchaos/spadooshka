@@ -26,7 +26,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		player.rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
 		self.rotate_x(-event.relative.y * MOUSE_SENSITIVITY)
-		self.rotation_degrees.x = clamp(self.rotation_degrees.x, -60, 60)	
+		self.rotation_degrees.x = clamp(self.rotation_degrees.x, -90, 90)
 
 func _physics_process(_delta: float) -> void:
 	if camera_collider.is_colliding():

@@ -61,10 +61,11 @@ shoot_mode = 1
 [node name="Timers" type="Node" parent="."]
 
 [node name="DashTimer" type="Timer" parent="Timers"]
-wait_time = 0.2
+wait_time = 0.08
 one_shot = true
 
 [node name="DashCooldownTimer" type="Timer" parent="Timers"]
+wait_time = 0.8
 one_shot = true
 
 [node name="Inventory" type="Node" parent="."]

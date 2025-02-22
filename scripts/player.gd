@@ -3,6 +3,7 @@ class_name Player extends CharacterBody3D
 @onready var camera: Camera3D = $Head/Camera
 @onready var interact_cast: RayCast3D = $Head/Camera/InteractCast
 @onready var dash_timer: Timer = $Timers/DashTimer
+@onready var post_dash_timer: Timer = $Timers/PostDashTimer
 @onready var dash_cooldown_timer: Timer = $Timers/DashCooldownTimer
 @onready var inventory: Inventory = $Inventory
 @onready var effect_manager: Node = $EffectManager
@@ -13,7 +14,7 @@ class_name Player extends CharacterBody3D
 
 signal interact(target: Object)
 
-const DEFAULT_SPEED: float = 10.0
+const DEFAULT_SPEED: float = 16.0
 const BOOSTED_SPEED: float = 30.0
 const DASH_SPEED: float = 50.0
 
@@ -24,8 +25,8 @@ const WALL_JUMP_VELOCITY: float = 20.0
 const WALL_JUMP_Y_DIRECTION: float = 0.2
 const WALL_SLIDE_GRAVITY: float = -2.0
 
-const ACCELERATION: float = 2.0
-const IN_AIR_DECELERATION: float = 0.5
+const ACCELERATION: float = 4.0
+const IN_AIR_DECELERATION: float = 2
 const FRICTION: float = 10.0
 
 var can_dash: bool = true
@@ -35,8 +36,6 @@ var is_wall_sliding: bool = false
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
-#var is_speed_boosted: bool = false
-#var is_jump_boosted: bool = false
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -56,6 +55,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("jump"):
 		jump()
+	if Input.is_action_pressed("dash") and can_dash:
+		dash()
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
@@ -79,8 +80,9 @@ func _physics_process(delta: float) -> void:
 			velocity.x = lerp(velocity.x, 0.0, deceleration * delta)
 			velocity.z = lerp(velocity.z, 0.0, deceleration * delta)
 	
-	if Input.is_action_just_pressed("dash") and can_dash:
-		dash()
+	if is_on_floor() and dash_timer.is_stopped() \
+	and dash_cooldown_timer.is_stopped() and not can_dash:
+		dash_cooldown_timer.start()
 	
 	# maybe reduce horizontal velocity during wall sliding in the future
 	is_wall_sliding = get_slide_collision_count() == 2 and not is_on_floor()
@@ -100,13 +102,17 @@ func _physics_process(delta: float) -> void:
 	#elif is_wall_sliding and velocity.y > 0: # if sliding + falling back down, have less gravity
 		#velocity += get_gravity() * delta
 	
+	
 	move_and_slide()
 	#stupid hack to get dash bar to immediately deplete at start of dash
-	var dash_value = dash_cooldown_timer.wait_time-dash_cooldown_timer.time_left if not is_dashing else 0.0
+	var dash_value
+	if not can_dash and dash_cooldown_timer.is_stopped():
+		dash_value = 0.0
+	else:
+		dash_value = dash_cooldown_timer.wait_time-dash_cooldown_timer.time_left
 	dash_changed.emit(dash_value, dash_cooldown_timer.wait_time)
-	
+
 func jump():
-	#velocity.y = BOOSTED_JUMP_VELOCITY if is_jump_boosted else DEFAULT_JUMP_VELOCITY
 	if is_on_floor():
 		if is_effect_applied("Jump Boost"):
 			velocity.y = BOOSTED_JUMP_VELOCITY
@@ -119,10 +125,10 @@ func jump():
 	
 func dash():
 	is_dashing = true
+	can_dash = false
 	var dash_direction := camera.global_transform.basis.z * -1
 	velocity = dash_direction * DASH_SPEED
 	dash_timer.start()
-	can_dash = false
 
 @rpc("any_peer")
 func receive_damage(damage):
@@ -135,9 +141,7 @@ func receive_damage(damage):
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
-	if dash_cooldown_timer.is_stopped() and not can_dash:
-		velocity = Vector3.ZERO
-		dash_cooldown_timer.start()
+	velocity = velocity.normalized() * DEFAULT_SPEED
 
 func _on_dash_cooldown_timer_timeout() -> void:
 	can_dash = true

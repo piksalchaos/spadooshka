@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ooxxqxmb5cvk"]
 
-[ext_resource type="Script" path="res://scenes/inventory_slot.gd" id="1_kd2fw"]
+[ext_resource type="Script" path="res://scripts/inventory_slot.gd" id="1_kd2fw"]
 
 [node name="InventorySlot" type="AspectRatioContainer"]
 custom_minimum_size = Vector2(80, 80)

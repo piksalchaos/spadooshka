@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/head_camera.gd" id="2_q7c4t"]
 [ext_resource type="PackedScene" uid="uid://b84jqg6v7ev0v" path="res://scenes/gun.tscn" id="2_wfnaq"]
 [ext_resource type="Script" path="res://scripts/inventory.gd" id="4_iowmg"]
-[ext_resource type="Script" path="res://scenes/effect_manager.gd" id="5_otmhq"]
+[ext_resource type="Script" path="res://scripts/effect_manager.gd" id="5_otmhq"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wu3n4"]
 

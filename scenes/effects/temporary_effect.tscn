@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://deyxgoytnuhu"]
 
-[ext_resource type="Script" path="res://scenes/effects/temporary_effect.gd" id="1_wwgco"]
+[ext_resource type="Script" path="res://scripts/temporary_effect.gd" id="1_wwgco"]
 [ext_resource type="Texture2D" uid="uid://dk3iapofas3pf" path="res://assets/images/effect_icons/effect_placeholder_icon.png" id="2_805fp"]
 
 [node name="TemporaryEffect" type="Node"]

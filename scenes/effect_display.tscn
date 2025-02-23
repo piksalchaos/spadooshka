@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://011ghqijom33"]
 
-[ext_resource type="Script" path="res://scenes/effect_display.gd" id="1_ajjpm"]
+[ext_resource type="Script" path="res://scripts/effect_display.gd" id="1_ajjpm"]
 [ext_resource type="Texture2D" uid="uid://4avmuvtwmrii" path="res://assets/images/effect_icons/speed_boost_effect_icon.png" id="2_daiy0"]
 
 [node name="EffectDisplay" type="VBoxContainer"]

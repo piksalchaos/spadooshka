@@ -6,7 +6,7 @@ class_name Player extends CharacterBody3D
 @onready var dash_cooldown_timer: Timer = $Timers/DashCooldownTimer
 
 @export var equipped_gun: Gun
-@export var health: int
+@export var health: int = 100
 @export var max_health = 100
 
 signal interact(target: Object)
@@ -26,16 +26,16 @@ const ACCELERATION: float = 2.0
 const IN_AIR_DECELERATION: float = 0.5
 const FRICTION: float = 10.0
 
-var can_dash: bool = true
-var is_dashing: bool = false
-var is_wall_sliding: bool = false
+var can_dash: bool
+var is_dashing: bool
+var is_wall_sliding: bool
 
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
 signal death(peer_id: int)
-var is_speed_boosted: bool = false
-var is_jump_boosted: bool = false
+var is_speed_boosted: bool
+var is_jump_boosted: bool
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -45,12 +45,26 @@ func _ready():
 	
 	if not is_multiplayer_authority(): return
 	camera.current = true
-	
+
 @rpc("any_peer", "call_local")
 func spawn(spawn_position: Vector3):
 	position = spawn_position
+	
 	health = max_health
 	health_changed.emit(health, max_health)
+	
+	can_dash = true
+	is_dashing = false
+	dash_timer.stop()
+	dash_cooldown_timer.stop()
+	dash_changed.emit(dash_cooldown_timer.wait_time, dash_cooldown_timer.wait_time)
+	
+	is_wall_sliding = false
+	is_speed_boosted = false
+	is_jump_boosted = false
+	
+	$Inventory.spawn()
+	equipped_gun.spawn()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
@@ -125,8 +139,6 @@ func dash():
 
 @rpc("any_peer")
 func receive_damage(damage):
-	print("Player %d took damage!" % get_multiplayer_authority())
-	
 	health -= damage
 	if health <= 0:
 		death.emit(get_multiplayer_authority())

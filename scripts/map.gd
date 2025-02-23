@@ -1,9 +1,7 @@
 class_name Map extends Node3D
 
 @export var map_name: String
-
 @onready var loot_box_spawner: MultiplayerSpawner = $LootBoxSpawner
-@onready var player_spawner: MultiplayerSpawner = $PlayerSpawner
 
 var players: Array[Player] = []
 
@@ -19,12 +17,6 @@ func get_loot_box_spawn_positions() -> Array[Node]:
 func get_player_spawn_positions() -> Array[Node]:
 	return $PlayerSpawnPositions.get_children()
 
-func get_players() -> Array[Node]:
-	return player_spawner.get_children()
-
-func add_players():
-	player_spawner.add_players()
-
 func spawn_players():
 	var spawn_positions = get_player_spawn_positions()
 	
@@ -36,8 +28,7 @@ func spawn_players():
 		player.spawn.rpc(spawn_position)
 
 func spawn_loot_boxes():
-	$LootBoxSpawner.spawn_loot_boxes(get_loot_box_spawn_positions())
+	loot_box_spawner.spawn_loot_boxes(get_loot_box_spawn_positions())
 
 func despawn_loot_boxes():
-	print(loot_box_spawner)
-	$LootBoxSpawner.despawn_loot_boxes()
+	loot_box_spawner.despawn_loot_boxes()

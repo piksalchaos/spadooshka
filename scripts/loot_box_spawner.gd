@@ -5,6 +5,8 @@ extends MultiplayerSpawner
 var loot_box_scene: PackedScene = preload("res://scenes/loot_box.tscn")
 
 func spawn_loot_boxes(spawn_positions: Array[Node]) -> void:
+	
+	
 	var indices: Array = range(spawn_positions.size())
 	indices.shuffle()
 	

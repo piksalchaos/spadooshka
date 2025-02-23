@@ -99,10 +99,10 @@ func play_round():
 	map.spawn_loot_boxes()
 	map.spawn_players()
 
+@rpc("any_peer")
 func end_round(dead_peer_id: int):
 	print("Player %d is dead - from main scene" % dead_peer_id)
 	map.despawn_loot_boxes()
-	await get_tree().create_timer(2).timeout
 	play_round()
 
 func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
@@ -112,7 +112,7 @@ func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 		node.dash_changed.connect(hud.update_dash_display)
 		node.health_changed.connect(hud.update_health_display)
 		node.get_node("Inventory").inventory_changed.connect(hud.update_inventory_icons)
-		node.death.connect(end_round)
+		node.death.connect(end_round.rpc)
 
 func upnp_setup():
 	var upnp = UPNP.new()

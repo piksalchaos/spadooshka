@@ -110,7 +110,7 @@ reload={
 
 [physics]
 
-3d/default_gravity=18.0
+3d/default_gravity=24.0
 
 [rendering]
 

@@ -53,20 +53,20 @@ func _ready():
 	camera.current = true
 	
 @rpc("any_peer", "call_local")
-func spawn(pos: Vector3):
-	position = pos
+func spawn(spawn_position: Vector3):
+	position = spawn_position
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
 	
 	if event.is_action_pressed("jump"):
+		
 		jump_buffer_timer = JUMP_BUFFER_TIME
 	if Input.is_action_pressed("dash") and can_dash:
 		dash()
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
-	#print(coyote_jump_timer.is_stopped())
 	
 	if interact_cast.is_colliding():
 		var target := interact_cast.get_collider()
@@ -131,6 +131,10 @@ func query_jump():
 	if coyote_timer > 0:
 		coyote_timer = 0
 		jump_buffer_timer = 0
+		if is_dashing:
+			is_dashing = false
+			dash_timer.stop()
+			dash_cooldown_timer.start()
 		if is_effect_applied("Jump Boost"):
 			velocity.y = BOOSTED_JUMP_VELOCITY
 		else:

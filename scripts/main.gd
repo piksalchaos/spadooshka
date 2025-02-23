@@ -29,13 +29,18 @@ func _on_main_menu_host_button_pressed() -> void:
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
 	update_number_of_players()
 	lobby_menu.show_host_display()
-	upnp_setup()
+	#upnp_setup()
 
 func _on_main_menu_join_button_pressed() -> void:
-	enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
-	#enet_peer.create_client("localhost", PORT)
+	#enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
+	enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer
 	lobby_menu.show_client_display()
+
+func _on_main_menu_singleplayer_button_pressed() -> void:
+	multiplayer_container.add_child(map)
+	prepare_GUI_for_game.rpc()
+	play_game()
 
 @rpc("call_local")
 func update_number_of_players():

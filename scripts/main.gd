@@ -101,8 +101,8 @@ func play_round():
 
 @rpc("any_peer", "call_local")
 func end_round(dead_peer_id: int):
-	print("Player %d is dead - from main scene" % dead_peer_id)
 	if not is_multiplayer_authority(): return
+	print("Player %d is dead - from main scene" % dead_peer_id)
 	map.despawn_loot_boxes()
 	play_round()
 

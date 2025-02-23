@@ -1,12 +1,12 @@
 extends RigidBody3D
 
 @export var max_damage = 100
-@export var max_damage_range = 0.1
+@export var max_damage_range = 0.4
 @export var grenade_range = 10
 @export var falloff_strength = 2
 
 @export var time_to_explode = 3
-@export var damage_to_force_factor = 5
+@export var damage_to_force_factor = 1
 
 @export var flashing_frequency_multiplier = 5
 @export var flashing_frequency_exponent = 2 #1 for pure sine wave, >1 for increasing oscillation speed
@@ -38,8 +38,10 @@ func _on_explode_timer_timeout() -> void:
 		var difference_vector = body.position - position
 		var damage = calculate_damage(difference_vector.length())
 		if body is Player:
+			print(damage)
 			body.receive_damage(damage)
-			body.velocity += difference_vector.normalized() * damage * damage_to_force_factor
+			#vector3.up addition is stupid hack bc player's position based on feet
+			body.velocity += (difference_vector + Vector3.UP).normalized() * damage * damage_to_force_factor
 			continue
 		body.apply_impulse(difference_vector.normalized() * damage * damage_to_force_factor)
 	queue_free()

@@ -66,8 +66,7 @@ func _on_lobby_menu_start_button_pressed() -> void:
 	
 	#map = load(MAP_FILE_NAMES.pick_random()).instantiate()
 	multiplayer_container.add_child(map)
-	map.connect_player_signals.connect(connect_player_signals)
-		
+	
 	prepare_GUI_for_game.rpc()
 	play_game()
 
@@ -77,8 +76,19 @@ func prepare_GUI_for_game():
 	hud.show()
 	
 func play_game():
-	map.add_players()
+	add_players()
 	play_round()
+
+func add_players():
+	add_player(1)
+	for peer_id in multiplayer.get_peers():
+		add_player(peer_id)
+
+func add_player(peer_id: int):
+	var player = PLAYER_SCENE.instantiate()
+	player.name = str(peer_id)
+	multiplayer_container.add_child(player)
+	map.players.append(player)
 
 func remove_player(peer_id: int):
 	var player = get_node_or_null(str(peer_id))
@@ -86,9 +96,9 @@ func remove_player(peer_id: int):
 		player.queue_free()
 	
 func play_round():
-	map.spawn_everything()
+	map.spawn_loot_boxes()
+	map.spawn_players()
 
-@rpc("any_peer", "call_local")
 func end_round(dead_peer_id: int):
 	print("Player %d is dead - from main scene" % dead_peer_id)
 	map.despawn_loot_boxes()
@@ -102,16 +112,7 @@ func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 		node.dash_changed.connect(hud.update_dash_display)
 		node.health_changed.connect(hud.update_health_display)
 		node.get_node("Inventory").inventory_changed.connect(hud.update_inventory_icons)
-		node.death.connect(end_round.rpc)
-		
-func connect_player_signals(player: Player):
-	print("Player %d: %s" % [player.get_multiplayer_authority(), player.is_multiplayer_authority()])
-	player.ammo_changed.connect(hud.update_ammo_display)
-	player.dash_changed.connect(hud.update_dash_display)
-	player.health_changed.connect(hud.update_health_display)
-	player.get_node("Inventory").inventory_changed.connect(hud.update_inventory_icons)
-	player.death.connect(end_round.rpc)
-	
+		node.death.connect(end_round)
 
 func upnp_setup():
 	var upnp = UPNP.new()

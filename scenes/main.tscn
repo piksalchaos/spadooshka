@@ -9,7 +9,7 @@
 script = ExtResource("1_yci6l")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/player.tscn", "res://scenes/map-scenes/map_1.tscn", "res://scenes/loot_box.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/player.tscn", "res://scenes/map-scenes/map_1.tscn")
 spawn_path = NodePath("../MultiplayerContainer")
 
 [node name="MultiplayerContainer" type="Node" parent="."]

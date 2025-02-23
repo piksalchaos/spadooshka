@@ -47,7 +47,6 @@ mesh = SubResource("BoxMesh_4d8mm")
 target_position = Vector3(0, 0, 1)
 
 [node name="Camera" type="Camera3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 fov = 90.0
 
 [node name="InteractCast" type="RayCast3D" parent="Head/Camera"]

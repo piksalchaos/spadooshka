@@ -14,7 +14,6 @@ var enet_peer = ENetMultiplayerPeer.new()
 @onready var main_menu: PanelContainer = $GUI/MainMenu
 @onready var lobby_menu: Control = $GUI/LobbyMenu
 @onready var hud: HUD = $GUI/HUD
-@onready var loot_box_spawner: LootBoxSpawner = $LootBoxSpawner
 
 var map: Map = preload("res://scenes/map-scenes/map_1.tscn").instantiate()
 
@@ -67,6 +66,7 @@ func _on_lobby_menu_start_button_pressed() -> void:
 	
 	#map = load(MAP_FILE_NAMES.pick_random()).instantiate()
 	multiplayer_container.add_child(map)
+	map.connect_player_signals.connect(connect_player_signals)
 		
 	prepare_GUI_for_game.rpc()
 	play_game()
@@ -77,19 +77,8 @@ func prepare_GUI_for_game():
 	hud.show()
 	
 func play_game():
-	add_players()
+	map.add_players()
 	play_round()
-	pass
-
-func add_players():
-	add_player(1)
-	for peer_id in multiplayer.get_peers():
-		add_player(peer_id)
-
-func add_player(peer_id: int):
-	var player = PLAYER_SCENE.instantiate()
-	player.name = str(peer_id)
-	multiplayer_container.add_child(player)
 
 func remove_player(peer_id: int):
 	var player = get_node_or_null(str(peer_id))
@@ -97,34 +86,14 @@ func remove_player(peer_id: int):
 		player.queue_free()
 	
 func play_round():
-	spawn_loot_boxes()
-	spawn_players()
+	map.spawn_everything()
 
+@rpc("any_peer", "call_local")
 func end_round(dead_peer_id: int):
-	#print("Player %d is dead - from main scene" % dead_peer_id)
-	despawn_loot_boxes()
+	print("Player %d is dead - from main scene" % dead_peer_id)
+	map.despawn_loot_boxes()
+	await get_tree().create_timer(2).timeout
 	play_round()
-	
-func spawn_loot_boxes():	
-	loot_box_spawner.spawn.rpc(map.get_loot_box_spawn_positions())
-
-func spawn_players():
-	var player_spawn_positions = map.get_player_spawn_positions()
-	
-	var indices: Array = range(player_spawn_positions.size())
-	indices.shuffle()
-	
-	for player: Player in multiplayer_container.get_children().filter(
-		func(node): return node is Player
-	):
-		player.spawn.rpc(player_spawn_positions[indices.pop_back()].position)
-		
-
-func despawn_loot_boxes():
-	for loot_box: LootBox in multiplayer_container.get_children().filter(
-		func(node): return node is LootBox
-	):
-		loot_box.queue_free_for_all_peers()
 
 func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 	if node is Player:
@@ -133,7 +102,16 @@ func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 		node.dash_changed.connect(hud.update_dash_display)
 		node.health_changed.connect(hud.update_health_display)
 		node.get_node("Inventory").inventory_changed.connect(hud.update_inventory_icons)
-		node.death.connect(end_round)
+		node.death.connect(end_round.rpc)
+		
+func connect_player_signals(player: Player):
+	print("Player %d: %s" % [player.get_multiplayer_authority(), player.is_multiplayer_authority()])
+	player.ammo_changed.connect(hud.update_ammo_display)
+	player.dash_changed.connect(hud.update_dash_display)
+	player.health_changed.connect(hud.update_health_display)
+	player.get_node("Inventory").inventory_changed.connect(hud.update_inventory_icons)
+	player.death.connect(end_round.rpc)
+	
 
 func upnp_setup():
 	var upnp = UPNP.new()

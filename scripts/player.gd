@@ -125,9 +125,10 @@ func dash():
 
 @rpc("any_peer")
 func receive_damage(damage):
+	print("Player %d took damage!" % get_multiplayer_authority())
+	
 	health -= damage
 	if health <= 0:
-		#position = Vector3.ZERO
 		death.emit(get_multiplayer_authority())
 		
 	health_changed.emit(health, max_health)

@@ -1,8 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2c8wh6k7fca5"]
+[gd_scene load_steps=5 format=3 uid="uid://c2c8wh6k7fca5"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_yci6l"]
 [ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/hud.tscn" id="3_shkqk"]
-[ext_resource type="PackedScene" uid="uid://cuhms2o6xljlj" path="res://scenes/loot_box_spawner.tscn" id="4_5owya"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/main_menu.tscn" id="4_b8hkp"]
 [ext_resource type="PackedScene" uid="uid://g0un4ork14i8" path="res://scenes/lobby_menu.tscn" id="4_jqa32"]
 
@@ -39,9 +38,6 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 mouse_filter = 2
-
-[node name="LootBoxSpawner" parent="." node_paths=PackedStringArray("multiplayer_container") instance=ExtResource("4_5owya")]
-multiplayer_container = NodePath("../MultiplayerContainer")
 
 [connection signal="child_entered_tree" from="MultiplayerContainer" to="." method="_on_multiplayer_container_child_entered_tree"]
 [connection signal="host_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_host_button_pressed"]

@@ -1,6 +1,3 @@
-[gd_scene load_steps=2 format=3 uid="uid://cuhms2o6xljlj"]
-
-[ext_resource type="Script" path="res://scripts/loot_box_spawner.gd" id="1_m0de7"]
+[gd_scene format=3 uid="uid://cuhms2o6xljlj"]
 
 [node name="LootBoxSpawner" type="Node3D"]
-script = ExtResource("1_m0de7")

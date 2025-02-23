@@ -1,7 +1,6 @@
 class_name GrapplingHook extends Item
 
 @onready var grapple_ray: RayCast3D = $GrappleRay
-@onready var line_of_sight_ray: RayCast3D = $GrappleLineOfSightCheck
 @onready var rope: Rope = $Rope
 
 @onready var launch_sfx: AudioStreamPlayer = $LaunchSFX
@@ -13,14 +12,11 @@ class_name GrapplingHook extends Item
 @export var stiffness: float = 10.0
 @export var damping: float = 1.0
 
-@export var origin_offset: Vector3
-
 var target: Vector3
 var is_launched: bool = false
 
 func _ready() -> void:
 	grapple_ray.target_position = Vector3(0, 0, -grapple_range)
-	line_of_sight_ray.add_exception(player)
 
 func use() -> bool:
 	return launch()
@@ -54,12 +50,13 @@ func handle_grapple(delta):
 	var target_direction = player.global_position.direction_to(target)
 	var target_distance = player.global_position.distance_to(target)
 	
-	line_of_sight_ray.target_position = target
-	line_of_sight_ray.global_position = player.global_position + origin_offset
-	line_of_sight_ray.force_raycast_update()
-	if line_of_sight_ray.is_colliding():
-		print("ahhhh")
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(global_position, target)
+	query.exclude = [player]
+	var result = space_state.intersect_ray(query)
+	if result and result.position.distance_to(target) > 0.1:
 		retract()
+		return
 	var displacement = target_distance - rest_length
 	
 	var force = Vector3.ZERO
@@ -75,4 +72,4 @@ func handle_grapple(delta):
 	player.velocity += force * delta
 	
 	rope.end = target
-	rope.start = player.position + origin_offset
+	rope.start = player.position

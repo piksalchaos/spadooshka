@@ -13,7 +13,6 @@ height = 1.0
 
 [node name="GrapplingHook" type="Node3D"]
 script = ExtResource("1_teltn")
-origin_offset = Vector3(0.5, 1, 0)
 need_camera = true
 item_name = "Grappling Hook"
 hud_icon = ExtResource("2_k3jy4")
@@ -34,5 +33,3 @@ mesh = SubResource("CylinderMesh_g4ow5")
 script = ExtResource("3_0oadq")
 end = Vector3(0, -1.245, 0)
 thickness = 0.1
-
-[node name="GrappleLineOfSightCheck" type="RayCast3D" parent="."]

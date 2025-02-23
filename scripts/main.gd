@@ -17,8 +17,6 @@ var enet_peer = ENetMultiplayerPeer.new()
 @onready var loot_box_spawner: LootBoxSpawner = $LootBoxSpawner
 
 var map: Map = preload("res://scenes/map-scenes/map_1.tscn").instantiate()
-var loot_box_spawn_positions: Array[Node]
-var player_spawn_positions: Array[Node]
 
 var peer_ready_states = {}
 var is_match_ready = false
@@ -69,8 +67,6 @@ func _on_lobby_menu_start_button_pressed() -> void:
 	
 	#map = load(MAP_FILE_NAMES.pick_random()).instantiate()
 	multiplayer_container.add_child(map)
-	player_spawn_positions = map.get_player_spawn_positions()
-	loot_box_spawn_positions = map.get_loot_box_spawn_positions()
 		
 	prepare_GUI_for_game.rpc()
 	play_game()
@@ -109,20 +105,31 @@ func end_round(dead_peer_id: int):
 	play_round()
 	
 func spawn_loot_boxes():	
-	loot_box_spawner.spawn(loot_box_spawn_positions)
+	loot_box_spawner.spawn.rpc(map.get_loot_box_spawn_positions())
 
 func spawn_players():
+	var player_spawn_positions = map.get_player_spawn_positions()
 	
 	var indices: Array = range(player_spawn_positions.size())
 	indices.shuffle()
 	
-	var peer_ids := multiplayer.get_peers()
-	peer_ids.append(1)
-	
-	for peer_id in peer_ids:
-		var player: CharacterBody3D = multiplayer_container.get_node(str(peer_id))
-		
+	for player in multiplayer_container.get_children().filter(
+		func(node): return node is Player
+	):
 		player.spawn.rpc(player_spawn_positions[indices.pop_back()].position)
+		
+	
+	#var peer_ids := multiplayer.get_peers()
+	#peer_ids.append(1)
+	#
+	#for peer_id in peer_ids:
+		#var player: CharacterBody3D = multiplayer_container.get_node(str(peer_id))
+		#
+		#player.spawn.rpc_id(peer_id, player_spawn_positions[indices.pop_back()].position)
+	#
+	#
+	#await get_tree().create_timer(1.0).timeout
+	#print("Spawned in %s ...\n\n" % peer_ids)
 
 func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 	if node is Player:

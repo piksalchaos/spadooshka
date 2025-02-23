@@ -5,7 +5,10 @@ class_name LootBoxSpawner extends Node3D
 
 var loot_box_scene: PackedScene = preload("res://scenes/loot_box.tscn")
 
+@rpc("any_peer", "call_local")
 func spawn(spawn_positions: Array[Node]) -> void:
+	#print(multiplayer_container)
+	
 	var indices: Array = range(spawn_positions.size())
 	indices.shuffle()
 	

@@ -36,8 +36,10 @@ func _on_explode_timer_timeout() -> void:
 		if body is StaticBody3D:
 			continue
 		var difference_vector = body.position - position
-		if body is CharacterBody3D:
-			body.velocity += difference_vector.normalized() * calculate_damage(difference_vector.length()) * damage_to_force_factor
+		var damage = calculate_damage(difference_vector.length())
+		if body is Player:
+			body.receive_damage(damage)
+			body.velocity += difference_vector.normalized() * damage * damage_to_force_factor
 			continue
-		body.apply_impulse(difference_vector.normalized() * calculate_damage(difference_vector.length()) * damage_to_force_factor)
+		body.apply_impulse(difference_vector.normalized() * damage * damage_to_force_factor)
 	queue_free()

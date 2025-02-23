@@ -8,7 +8,7 @@ class_name Player extends CharacterBody3D
 @onready var effect_manager: Node = $EffectManager
 
 @export var equipped_gun: Gun
-@export var health = 100
+@export var health: int
 @export var max_health = 100
 
 signal interact(target: Object)
@@ -35,8 +35,9 @@ var is_wall_sliding: bool = false
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
-#var is_speed_boosted: bool = false
-#var is_jump_boosted: bool = false
+signal death(peer_id: int)
+var is_speed_boosted: bool = false
+var is_jump_boosted: bool = false
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -48,8 +49,10 @@ func _ready():
 	camera.current = true
 	
 @rpc("any_peer", "call_local")
-func spawn(pos: Vector3):
-	position = pos
+func spawn(spawn_position: Vector3):
+	position = spawn_position
+	health = max_health
+	health_changed.emit(health, max_health)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
@@ -124,13 +127,14 @@ func dash():
 	dash_timer.start()
 	can_dash = false
 
+
 @rpc("any_peer")
 func receive_damage(damage):
 	health -= damage
 	if health <= 0:
-		health = max_health
-		position = Vector3.ZERO
-		print("dead")
+		#position = Vector3.ZERO
+		death.emit(get_multiplayer_authority())
+		
 	health_changed.emit(health, max_health)
 
 func _on_dash_timer_timeout() -> void:

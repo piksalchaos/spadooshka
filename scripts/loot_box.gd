@@ -14,9 +14,9 @@ func _ready() -> void:
 	item = load(ITEM_FILE_NAMES[random_index]).instantiate()
 
 func obtain_item() -> Item:
-	free_for_all_peers.rpc()
+	queue_free_for_all_peers.rpc()
 	return item
 
 @rpc("any_peer", "call_local")
-func free_for_all_peers():
+func queue_free_for_all_peers():
 	queue_free()

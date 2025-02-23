@@ -102,6 +102,7 @@ func play_round():
 
 func end_round(dead_peer_id: int):
 	#print("Player %d is dead - from main scene" % dead_peer_id)
+	despawn_loot_boxes()
 	play_round()
 	
 func spawn_loot_boxes():	
@@ -113,23 +114,17 @@ func spawn_players():
 	var indices: Array = range(player_spawn_positions.size())
 	indices.shuffle()
 	
-	for player in multiplayer_container.get_children().filter(
+	for player: Player in multiplayer_container.get_children().filter(
 		func(node): return node is Player
 	):
 		player.spawn.rpc(player_spawn_positions[indices.pop_back()].position)
 		
-	
-	#var peer_ids := multiplayer.get_peers()
-	#peer_ids.append(1)
-	#
-	#for peer_id in peer_ids:
-		#var player: CharacterBody3D = multiplayer_container.get_node(str(peer_id))
-		#
-		#player.spawn.rpc_id(peer_id, player_spawn_positions[indices.pop_back()].position)
-	#
-	#
-	#await get_tree().create_timer(1.0).timeout
-	#print("Spawned in %s ...\n\n" % peer_ids)
+
+func despawn_loot_boxes():
+	for loot_box: LootBox in multiplayer_container.get_children().filter(
+		func(node): return node is LootBox
+	):
+		loot_box.queue_free_for_all_peers()
 
 func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 	if node is Player:

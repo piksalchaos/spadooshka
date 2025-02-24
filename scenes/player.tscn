@@ -47,7 +47,6 @@ mesh = SubResource("BoxMesh_4d8mm")
 target_position = Vector3(0, 0, 1)
 
 [node name="Camera" type="Camera3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 0.995872, 0.0907716, 0, -0.0907716, 0.995872, 0.710775, 0.430636, 2.05939)
 fov = 90.0
 
 [node name="InteractCast" type="RayCast3D" parent="Head/Camera"]
@@ -61,10 +60,15 @@ shoot_mode = 1
 [node name="Timers" type="Node" parent="."]
 
 [node name="DashTimer" type="Timer" parent="Timers"]
-wait_time = 0.2
+wait_time = 0.1
 one_shot = true
 
 [node name="DashCooldownTimer" type="Timer" parent="Timers"]
+wait_time = 0.8
+one_shot = true
+
+[node name="WallJumpCooldownTimer" type="Timer" parent="Timers"]
+wait_time = 0.2
 one_shot = true
 
 [node name="Inventory" type="Node" parent="."]

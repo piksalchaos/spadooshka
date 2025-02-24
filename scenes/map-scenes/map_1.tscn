@@ -7,6 +7,9 @@
 
 [node name="Map1" instance=ExtResource("1_mga3u")]
 
+[node name="DirectionalLight3D" parent="." index="0"]
+sky_mode = 2
+
 [node name="LootBoxSpawnPositions" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.20364, 0)
 

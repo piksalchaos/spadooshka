@@ -3,7 +3,7 @@ class_name LootBox extends StaticBody3D
 const ITEM_FILE_NAMES: PackedStringArray = [
 	"res://scenes/item-scenes/speed_boost.tscn",
 	"res://scenes/item-scenes/jump_boost.tscn",
-	"res://scenes/item-scenes/grappling_hook.tscn",
+	"res://scenes/item-scenes/grappling_hook_item.tscn",
 	"res://scenes/item-scenes/grenade_item.tscn"
 ]
 
@@ -12,6 +12,7 @@ const ITEM_FILE_NAMES: PackedStringArray = [
 func _ready() -> void:
 	var random_index: int = randi_range(0, ITEM_FILE_NAMES.size() - 1)
 	item = load(ITEM_FILE_NAMES[random_index]).instantiate()
+	item = load("res://scenes/item-scenes/grappling_hook_item.tscn").instantiate()
 
 func obtain_item() -> Item:
 	queue_free_for_all_peers.rpc()

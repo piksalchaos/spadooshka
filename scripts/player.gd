@@ -5,7 +5,6 @@ class_name Player extends CharacterBody3D
 @onready var dash_timer: Timer = $Timers/DashTimer
 @onready var dash_cooldown_timer: Timer = $Timers/DashCooldownTimer
 @onready var wall_jump_cooldown_timer: Timer = $Timers/WallJumpCooldownTimer
-@onready var coyote_jump_timer: Timer = $Timers/CoyoteJumpTimer
 @onready var inventory: Inventory = $Inventory
 @onready var effect_manager: Node = $EffectManager
 
@@ -158,7 +157,6 @@ func dash():
 	velocity = dash_direction * DASH_SPEED
 	dash_timer.start()
 
-
 @rpc("any_peer")
 func receive_damage(damage):
 	health -= damage
@@ -168,6 +166,8 @@ func receive_damage(damage):
 		
 	health_changed.emit(health, max_health)
 
+func get_camera_global_basis() -> Basis:
+	return camera.global_basis
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
 	velocity = velocity.normalized() * DEFAULT_SPEED

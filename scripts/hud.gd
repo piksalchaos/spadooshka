@@ -5,6 +5,8 @@ class_name HUD extends Node
 @onready var dash_bar: ProgressBar = $PlayerStatus/AspectRatioContainer/BarVBoxContainer/DashBar
 @onready var inventory_slots: Array[Node] = $Inventory.get_children()
 
+@onready var score_display: PanelContainer = $ScoreDisplay
+
 func update_ammo_display(num_bullets, mag_capacity):
 	ammo_amount_bar.value = float(num_bullets) / mag_capacity
 
@@ -19,3 +21,9 @@ func update_inventory_icons(items: Array[Item], current_item_slot: int):
 		var slot_icon: TextureRect = inventory_slots[i].icon
 		slot_icon.texture = items[i].hud_icon if i < items.size() else null
 		slot_icon.modulate = Color.AQUAMARINE if i == current_item_slot else Color.WHITE
+
+@rpc("any_peer", "call_local")
+func update_score_display(round_number: int, P1_score: int, P2_score: int):
+	score_display.set_round_label(round_number)
+	score_display.set_P1_score_label(P1_score)
+	score_display.set_P2_score_label(P2_score)

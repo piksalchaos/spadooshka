@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2c8wh6k7fca5"]
+[gd_scene load_steps=6 format=3 uid="uid://c2c8wh6k7fca5"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_yci6l"]
 [ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/hud.tscn" id="3_shkqk"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/main_menu.tscn" id="4_b8hkp"]
 [ext_resource type="PackedScene" uid="uid://g0un4ork14i8" path="res://scenes/lobby_menu.tscn" id="4_jqa32"]
+[ext_resource type="PackedScene" uid="uid://dcw5bchdkvdra" path="res://scenes/end_screen.tscn" id="5_t4ul1"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_yci6l")
@@ -38,6 +39,16 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 mouse_filter = 2
+
+[node name="VictoryScreen" parent="GUI" instance=ExtResource("5_t4ul1")]
+visible = false
+layout_mode = 1
+text = "You won!"
+
+[node name="DefeatScreen" parent="GUI" instance=ExtResource("5_t4ul1")]
+visible = false
+layout_mode = 1
+text = "You lost."
 
 [connection signal="child_entered_tree" from="MultiplayerContainer" to="." method="_on_multiplayer_container_child_entered_tree"]
 [connection signal="host_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_host_button_pressed"]

@@ -18,7 +18,15 @@ var enet_peer = ENetMultiplayerPeer.new()
 var map: Map = preload("res://scenes/map-scenes/map_1.tscn").instantiate()
 
 var peer_ready_states = {}
-var is_match_ready = false
+
+const ROUNDS_TO_WIN: int = 3
+var round_number: int = 1
+var rounds_won: int = 0
+
+signal score_changed(round_number: int, P1_score: int, P2_score: int)
+
+func _ready() -> void:
+	score_changed.connect(hud.update_score_display.rpc)
 
 func _on_main_menu_host_button_pressed() -> void:
 	enet_peer.create_server(PORT)
@@ -94,17 +102,35 @@ func remove_player(peer_id: int):
 	var player = get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
-	
+
 func play_round():
+	map.despawn_loot_boxes()
 	map.spawn_loot_boxes()
 	map.spawn_players()
 
 @rpc("any_peer", "call_local")
 func end_round(dead_peer_id: int):
 	if not is_multiplayer_authority(): return
-	print("Player %d is dead - from main scene" % dead_peer_id)
-	map.despawn_loot_boxes()
-	play_round()
+	
+	if dead_peer_id != 1:
+		rounds_won += 1
+	var P1_score: int = rounds_won
+	var P2_score: int = round_number - rounds_won
+	
+	if P1_score < ROUNDS_TO_WIN and P2_score < ROUNDS_TO_WIN:
+		round_number += 1
+		score_changed.emit(round_number, P1_score, P2_score)
+		play_round()
+	else:
+		prepare_GUI_for_end_game.rpc(P1_score == ROUNDS_TO_WIN)
+
+@rpc("call_local")
+func prepare_GUI_for_end_game(P1_won: bool):
+	hud.hide()
+	if is_multiplayer_authority() == P1_won:
+		$GUI/VictoryScreen.show()
+	else:
+		$GUI/DefeatScreen.show()
 
 func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 	if node is Player:

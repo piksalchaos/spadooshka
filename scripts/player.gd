@@ -65,6 +65,10 @@ func spawn(spawn_position: Vector3):
 	
 	$Inventory.spawn()
 	equipped_gun.spawn()
+	
+	for child in get_children():
+		if child is BulletHole:
+			child.queue_free()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return

@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dkjngpfr7w4qf"]
+[gd_scene load_steps=4 format=3 uid="uid://dkjngpfr7w4qf"]
+
+[ext_resource type="Texture2D" uid="uid://0ui551tqi2j6" path="res://icon.svg" id="1_liuyi"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_5edet"]
 
@@ -12,3 +14,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_5edet")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("ORMMaterial3D_n7r5g")
+
+[node name="Sprite3D" type="Sprite3D" parent="MeshInstance3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.616922)
+texture = ExtResource("1_liuyi")

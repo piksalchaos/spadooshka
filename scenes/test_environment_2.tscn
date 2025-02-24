@@ -9,9 +9,6 @@ data = PackedVector3Array(-35.4663, 0.8352, 42.6065, -39.8932, 0.8352, 56.249, -
 
 [node name="map" parent="." instance=ExtResource("1_6c14q")]
 
-[node name="Sun" parent="map" index="1"]
-sky_mode = 2
-
 [node name="StaticBody3D" type="StaticBody3D" parent="map"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="map/StaticBody3D"]

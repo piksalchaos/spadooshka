@@ -56,8 +56,8 @@ func _ready():
 	camera.current = true
 	
 @rpc("any_peer", "call_local")
-func spawn(spawn_position: Vector3):
-	position = spawn_position
+func spawn(spawn_transform: Transform3D):
+	transform = spawn_transform
 	health = max_health
 	health_changed.emit(health, max_health)
 

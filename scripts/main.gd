@@ -16,7 +16,7 @@ var enet_peer = ENetMultiplayerPeer.new()
 @onready var hud: HUD = $GUI/HUD
 @onready var loot_box_spawner: LootBoxSpawner = $LootBoxSpawner
 
-var map: Map = preload("res://scenes/map-scenes/map_1.tscn").instantiate()
+var map: Map = preload("res://scenes/map-scenes/map_2.tscn").instantiate()
 
 var peer_ready_states = {}
 var is_match_ready = false
@@ -122,7 +122,7 @@ func spawn_players():
 	for player: Player in multiplayer_container.get_children().filter(
 		func(node): return node is Player
 	):
-		player.spawn.rpc(player_spawn_positions[indices.pop_back()].position)
+		player.spawn.rpc(player_spawn_positions[indices.pop_back()].transform)
 		
 
 func despawn_loot_boxes():

@@ -37,6 +37,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3378, 1.70191, 4.04229)
 
 [node name="Player" parent="." instance=ExtResource("2_ld57g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.7342, -59.2281)
+health = 100
+max_health = 100
 
 [node name="TestEnvironment2" parent="." instance=ExtResource("6_5ncyn")]
 

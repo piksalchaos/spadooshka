@@ -11,7 +11,7 @@ class_name Player extends CharacterBody3D
 
 @export var equipped_gun: Gun
 @export var health: int = 100
-@export var max_health = 100
+@export var max_health: int = 100
 
 signal interact(target: Object)
 
@@ -75,8 +75,6 @@ func spawn(spawn_position: Vector3):
 	dash_changed.emit(dash_cooldown_timer.wait_time, dash_cooldown_timer.wait_time)
 	
 	is_wall_sliding = false
-	is_speed_boosted = false
-	is_jump_boosted = false
 	
 	$Inventory.spawn()
 	equipped_gun.spawn()

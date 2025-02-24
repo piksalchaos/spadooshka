@@ -4,15 +4,13 @@ extends MultiplayerSpawner
 
 var loot_box_scene: PackedScene = preload("res://scenes/loot_box.tscn")
 
-func spawn_loot_boxes(spawn_positions: Array[Node]) -> void:
-	
-	
-	var indices: Array = range(spawn_positions.size())
+func spawn_loot_boxes(spawn_transforms: Array[Transform3D]) -> void:
+	var indices: Array = range(spawn_transforms.size())
 	indices.shuffle()
 	
 	for i in range(num_boxes):
 		var loot_box: LootBox = loot_box_scene.instantiate()
-		loot_box.global_transform = spawn_positions[indices.pop_back()].global_transform
+		loot_box.global_transform = spawn_transforms[indices.pop_back()]
 		
 		add_child(loot_box, true)
 

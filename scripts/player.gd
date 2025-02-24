@@ -59,10 +59,9 @@ func _ready():
 	camera.current = true
 
 @rpc("any_peer", "call_local")
-func spawn(spawn_position: Vector3):
-	position = spawn_position
-	velocity = Vector3.ZERO
-	
+func spawn(spawn_transform: Transform3D):
+	global_transform = spawn_transform
+
 	coyote_timer = 0.0
 	jump_buffer_timer = 0.0
 	

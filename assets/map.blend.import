@@ -37,6 +37,9 @@ _subresources={
 "generate/physics": true,
 "physics/shape_type": 2
 },
+"PATH:JumpReference": {
+"import/skip_import": true
+},
 "PATH:Reference": {
 "import/skip_import": true
 },

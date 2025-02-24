@@ -32,6 +32,9 @@ const FRICTION: float = 10.0
 const COYOTE_TIME: float = 0.15
 const JUMP_BUFFER_TIME: float = 0.1
 
+const MINIMIZED_SIZE: Vector3 = Vector3(0.5, 0.5, 0.5)
+const RETURN_TO_NORMAL_SIZE: Vector3 = Vector3(1/MINIMIZED_SIZE.x, 1/MINIMIZED_SIZE.y, 1/MINIMIZED_SIZE.z)
+
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
 var can_dash: bool = true
@@ -39,12 +42,12 @@ var is_dashing: bool = false
 var is_wall_sliding: bool = false
 var was_on_floor: bool = false
 
+var minimized = false
+
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
 signal death(peer_id: int)
-var is_speed_boosted: bool = false
-var is_jump_boosted: bool = false
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -77,7 +80,15 @@ func _physics_process(delta: float) -> void:
 		var target := interact_cast.get_collider()
 		if Input.is_action_just_pressed("interact"):
 			interact.emit(target)
-	
+			
+	if is_effect_applied("Minimizer"):
+		if minimized == false:
+			basis = basis.scaled(MINIMIZED_SIZE)
+		minimized = true
+	else:
+		if minimized == true:
+			basis = basis.scaled(RETURN_TO_NORMAL_SIZE)
+		minimized = false
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	var max_speed := BOOSTED_SPEED if is_effect_applied("Speed Boost") else DEFAULT_SPEED
@@ -87,7 +98,7 @@ func _physics_process(delta: float) -> void:
 	if not is_dashing and wall_jump_cooldown_timer.is_stopped():
 		if direction:
 			velocity.x = lerp(velocity.x, direction.x * max_speed, acceleration * delta)
-			velocity.z =  lerp(velocity.z, direction.z * max_speed, acceleration * delta)
+			velocity.z = lerp(velocity.z, direction.z * max_speed, acceleration * delta)
 		else:
 			velocity.x = lerp(velocity.x, 0.0, deceleration * delta)
 			velocity.z = lerp(velocity.z, 0.0, deceleration * delta)

@@ -3,7 +3,8 @@ extends Node
 const PLAYER_SCENE = preload("res://scenes/player.tscn")
 
 const MAP_FILE_NAMES: Array[String] = [
-	"res://scenes/map-scenes/map_1.tscn"
+	"res://scenes/map-scenes/map_1.tscn",
+	"res://scenes/map-scenes/map_2.tscn"
 ]
 
 const PORT = 9999
@@ -15,7 +16,7 @@ var enet_peer = ENetMultiplayerPeer.new()
 @onready var lobby_menu: Control = $GUI/LobbyMenu
 @onready var hud: HUD = $GUI/HUD
 
-var map: Map = preload("res://scenes/map-scenes/map_2.tscn").instantiate()
+var map: Map
 
 var peer_ready_states = {}
 
@@ -45,8 +46,11 @@ func _on_main_menu_join_button_pressed() -> void:
 	lobby_menu.show_client_display()
 
 func _on_main_menu_singleplayer_button_pressed() -> void:
-	multiplayer_container.add_child(map)
-	prepare_GUI_for_game.rpc()
+	play_game()
+
+func _on_lobby_menu_start_button_pressed() -> void:
+	assert(multiplayer.get_unique_id() == 1, \
+		"wtf, only the host should be able to start the game")
 	play_game()
 
 @rpc("call_local")
@@ -73,24 +77,20 @@ func update_peer_ready_states(peer_id, is_peer_ready):
 	else:
 		lobby_menu.set_waiting_label_visibility(are_peers_ready)
 
-func _on_lobby_menu_start_button_pressed() -> void:
-	assert(multiplayer.get_unique_id() == 1, \
-		"wtf, only the host should be able to start the game")
-	
-	#map = load(MAP_FILE_NAMES.pick_random()).instantiate()
-	multiplayer_container.add_child(map)
-	
+func play_game():
 	prepare_GUI_for_game.rpc()
-	play_game()
+	choose_map()
+	add_players()
+	play_round()
 
 @rpc("call_local")
 func prepare_GUI_for_game():
 	lobby_menu.hide()
 	hud.show()
-	
-func play_game():
-	add_players()
-	play_round()
+
+func choose_map():
+	map = load(MAP_FILE_NAMES.pick_random()).instantiate()
+	multiplayer_container.add_child(map)
 
 func add_players():
 	add_player(1)

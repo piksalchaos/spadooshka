@@ -5,9 +5,10 @@
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_n7r5g"]
 albedo_color = Color(0.490196, 0.615686, 1, 1)
 
-[node name="PlayerSpawnPosition" type="Node3D"]
+[node name="PlayerSpawnPosition" type="Marker3D"]
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_5edet")
+skeleton = NodePath("")
 surface_material_override/0 = SubResource("ORMMaterial3D_n7r5g")

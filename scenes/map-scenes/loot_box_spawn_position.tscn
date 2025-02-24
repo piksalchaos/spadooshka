@@ -5,9 +5,10 @@
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_4npmq"]
 albedo_color = Color(1, 0.6, 0.92549, 1)
 
-[node name="LootBoxSpawnPosition" type="Node3D"]
+[node name="LootBoxSpawnPosition" type="Marker3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 mesh = SubResource("BoxMesh_f876c")
+skeleton = NodePath("")
 surface_material_override/0 = SubResource("ORMMaterial3D_4npmq")

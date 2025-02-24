@@ -1,26 +1,33 @@
 class_name Gun extends Node
 
-@export var MAG_CAPACITY = 5
-@export var num_bullets = MAG_CAPACITY
+@export var MAG_CAPACITY: int = 5
+@export var num_bullets: int
 
-@export var damage = 20
-@export var is_gun_ready = true
+@export var damage: int = 20
+@export var is_gun_ready: bool
 
-@export var shoot_range = 100
+@export var shoot_range: int = 100
 
-@onready var shoot_ray = $ShootRay
+@onready var shoot_ray: RayCast3D = $ShootRay
 
 enum ShootMode {AUTO, SEMI}
 @export var shoot_mode: ShootMode
 
 var bullet_hole = preload("res://scenes/bullet_hole.tscn")
-var is_reloading = false
+var is_reloading: bool
 
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	shoot_ray.target_position = Vector3(0, -shoot_range, 0)
+
+func spawn():
+	is_gun_ready = true
+	is_reloading = false
+	num_bullets = MAG_CAPACITY
+	is_reloading = false
+	ammo_changed.emit(num_bullets, MAG_CAPACITY)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return

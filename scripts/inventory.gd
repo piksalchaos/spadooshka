@@ -6,8 +6,7 @@ class_name Inventory extends Node
 const MAX_ITEM_COUNT: int = 3
 
 var items: Array[Item] = []
-var current_item_slot: int = 0
-var is_slot_changed: bool
+var current_item_slot: int
 
 signal inventory_changed(items: Array[Item], current_item_slot: int)
 
@@ -29,7 +28,6 @@ func _on_player_interact(target: Object) -> void:
 	for item in items:
 		fart.append(item.item_name)
 	print(fart)
-	
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
@@ -51,4 +49,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	else: return
 	
 	current_item_slot = clamp(current_item_slot, 0, items.size() - 1)
+	inventory_changed.emit(items, current_item_slot)
+	
+func spawn():
+	current_item_slot = 0
+	
+	for item in items:
+		item.queue_free()
+	items = []
+	
 	inventory_changed.emit(items, current_item_slot)

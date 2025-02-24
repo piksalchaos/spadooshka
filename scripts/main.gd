@@ -14,12 +14,19 @@ var enet_peer = ENetMultiplayerPeer.new()
 @onready var main_menu: PanelContainer = $GUI/MainMenu
 @onready var lobby_menu: Control = $GUI/LobbyMenu
 @onready var hud: HUD = $GUI/HUD
-@onready var loot_box_spawner: LootBoxSpawner = $LootBoxSpawner
 
 var map: Map = preload("res://scenes/map-scenes/map_2.tscn").instantiate()
 
 var peer_ready_states = {}
-var is_match_ready = false
+
+const ROUNDS_TO_WIN: int = 3
+var round_number: int = 1
+var rounds_won: int = 0
+
+signal score_changed(round_number: int, P1_score: int, P2_score: int)
+
+func _ready() -> void:
+	score_changed.connect(hud.update_score_display.rpc)
 
 func _on_main_menu_host_button_pressed() -> void:
 	enet_peer.create_server(PORT)
@@ -72,7 +79,7 @@ func _on_lobby_menu_start_button_pressed() -> void:
 	
 	#map = load(MAP_FILE_NAMES.pick_random()).instantiate()
 	multiplayer_container.add_child(map)
-		
+	
 	prepare_GUI_for_game.rpc()
 	play_game()
 
@@ -84,7 +91,6 @@ func prepare_GUI_for_game():
 func play_game():
 	add_players()
 	play_round()
-	pass
 
 func add_players():
 	add_player(1)
@@ -95,41 +101,41 @@ func add_player(peer_id: int):
 	var player = PLAYER_SCENE.instantiate()
 	player.name = str(peer_id)
 	multiplayer_container.add_child(player)
+	map.players.append(player)
 
 func remove_player(peer_id: int):
 	var player = get_node_or_null(str(peer_id))
 	if player:
 		player.queue_free()
-	
+
 func play_round():
-	spawn_loot_boxes()
-	spawn_players()
+	map.despawn_loot_boxes()
+	map.spawn_loot_boxes()
+	map.spawn_players()
 
+@rpc("any_peer", "call_local")
 func end_round(dead_peer_id: int):
-	#print("Player %d is dead - from main scene" % dead_peer_id)
-	despawn_loot_boxes()
-	play_round()
+	if not is_multiplayer_authority(): return
 	
-func spawn_loot_boxes():	
-	loot_box_spawner.spawn.rpc(map.get_loot_box_spawn_positions())
+	if dead_peer_id != 1:
+		rounds_won += 1
+	var P1_score: int = rounds_won
+	var P2_score: int = round_number - rounds_won
+	
+	if P1_score < ROUNDS_TO_WIN and P2_score < ROUNDS_TO_WIN:
+		round_number += 1
+		score_changed.emit(round_number, P1_score, P2_score)
+		play_round()
+	else:
+		prepare_GUI_for_end_game.rpc(P1_score == ROUNDS_TO_WIN)
 
-func spawn_players():
-	var player_spawn_positions = map.get_player_spawn_positions()
-	
-	var indices: Array = range(player_spawn_positions.size())
-	indices.shuffle()
-	
-	for player: Player in multiplayer_container.get_children().filter(
-		func(node): return node is Player
-	):
-		player.spawn.rpc(player_spawn_positions[indices.pop_back()].transform)
-		
-
-func despawn_loot_boxes():
-	for loot_box: LootBox in multiplayer_container.get_children().filter(
-		func(node): return node is LootBox
-	):
-		loot_box.queue_free_for_all_peers()
+@rpc("call_local")
+func prepare_GUI_for_end_game(P1_won: bool):
+	hud.hide()
+	if is_multiplayer_authority() == P1_won:
+		$GUI/VictoryScreen.show()
+	else:
+		$GUI/DefeatScreen.show()
 
 func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 	if node is Player:
@@ -142,7 +148,7 @@ func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 		inventory.inventory_changed.connect(hud.update_inventory_icons)
 		var effect_manager = node.get_node("EffectManager")
 		effect_manager.effect_applied.connect(hud.create_effect_display)
-		node.death.connect(end_round)
+		node.death.connect(end_round.rpc)
 
 func upnp_setup():
 	var upnp = UPNP.new()

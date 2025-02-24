@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://5cs46ma1usob"]
+[gd_scene load_steps=6 format=3 uid="uid://5cs46ma1usob"]
 
 [ext_resource type="Script" path="res://scripts/map.gd" id="1_c7js5"]
+[ext_resource type="Script" path="res://scripts/loot_box_spawner.gd" id="3_hu4k6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_yqaei"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -27,3 +28,8 @@ environment = SubResource("Environment_u0j8b")
 [node name="LootBoxSpawnPositions" type="Node3D" parent="."]
 
 [node name="PlayerSpawnPositions" type="Node3D" parent="."]
+
+[node name="LootBoxSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/loot_box.tscn")
+spawn_path = NodePath(".")
+script = ExtResource("3_hu4k6")

@@ -10,7 +10,7 @@ class_name Player extends CharacterBody3D
 @onready var effect_manager: Node = $EffectManager
 
 @export var equipped_gun: Gun
-@export var health: int
+@export var health: int = 100
 @export var max_health = 100
 
 signal interact(target: Object)
@@ -57,12 +57,33 @@ func _ready():
 	
 	if not is_multiplayer_authority(): return
 	camera.current = true
-	
+
 @rpc("any_peer", "call_local")
-func spawn(spawn_transform: Transform3D):
-	transform = spawn_transform
+func spawn(spawn_position: Vector3):
+	position = spawn_position
+
+	coyote_timer = 0.0
+	jump_buffer_timer = 0.0
+	
 	health = max_health
 	health_changed.emit(health, max_health)
+	
+	can_dash = true
+	is_dashing = false
+	dash_timer.stop()
+	dash_cooldown_timer.stop()
+	dash_changed.emit(dash_cooldown_timer.wait_time, dash_cooldown_timer.wait_time)
+	
+	is_wall_sliding = false
+	is_speed_boosted = false
+	is_jump_boosted = false
+	
+	$Inventory.spawn()
+	equipped_gun.spawn()
+	
+	for child in get_children():
+		if child is BulletHole:
+			child.queue_free()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
@@ -174,7 +195,6 @@ func dash():
 func receive_damage(damage):
 	health -= damage
 	if health <= 0:
-		#position = Vector3.ZERO
 		death.emit(get_multiplayer_authority())
 		
 	health_changed.emit(health, max_health)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://euhmy40ljoc4"]
+[gd_scene load_steps=10 format=3 uid="uid://euhmy40ljoc4"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_g07d4"]
 [ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="1_n765t"]
 [ext_resource type="Texture2D" uid="uid://cw8qtdr0bp1af" path="res://assets/images/player_icon_temp.png" id="3_xfoq2"]
 [ext_resource type="PackedScene" uid="uid://ooxxqxmb5cvk" path="res://scenes/inventory_slot.tscn" id="4_l8v5w"]
+[ext_resource type="Script" path="res://scripts/score_display.gd" id="4_ldyri"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o11au"]
 bg_color = Color(0.6, 0.6, 0.6, 0.572549)
@@ -124,6 +125,7 @@ anchor_left = 0.3
 anchor_right = 0.7
 anchor_bottom = 0.05
 grow_horizontal = 2
+script = ExtResource("4_ldyri")
 
 [node name="LabelHBoxContainer" type="HBoxContainer" parent="ScoreDisplay"]
 layout_mode = 2

@@ -1,7 +1,7 @@
 extends RigidBody3D
 
 @export var max_damage = 100
-@export var max_damage_range = 0.4
+@export var max_damage_range = 1
 @export var grenade_range = 10
 @export var falloff_strength = 2
 
@@ -38,10 +38,9 @@ func _on_explode_timer_timeout() -> void:
 		var difference_vector = body.position - position
 		var damage = calculate_damage(difference_vector.length())
 		if body is Player:
-			print(damage)
-			body.receive_damage(damage)
 			#vector3.up addition is stupid hack bc player's position based on feet
 			body.velocity += (difference_vector + Vector3.UP).normalized() * damage * damage_to_force_factor
+			body.receive_damage(damage)
 			continue
 		body.apply_impulse(difference_vector.normalized() * damage * damage_to_force_factor)
 	queue_free()

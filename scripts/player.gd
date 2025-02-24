@@ -61,7 +61,8 @@ func _ready():
 @rpc("any_peer", "call_local")
 func spawn(spawn_position: Vector3):
 	position = spawn_position
-
+	velocity = Vector3.ZERO
+	
 	coyote_timer = 0.0
 	jump_buffer_timer = 0.0
 	

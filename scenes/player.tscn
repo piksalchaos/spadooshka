@@ -41,6 +41,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79693, 0)
 script = ExtResource("2_q7c4t")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021379, 2.38419e-07, -0.00500178)
 mesh = SubResource("BoxMesh_4d8mm")
 
 [node name="CameraCollider" type="RayCast3D" parent="Head"]

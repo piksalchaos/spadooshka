@@ -14,11 +14,8 @@ func _on_player_interact(target: Object) -> void:
 	if target is LootBox and items.size() < MAX_ITEM_COUNT:
 		var item = target.obtain_item()
 		item.player = player
+		add_child(item)
 		
-		if item.need_camera:
-			camera.add_child(item)
-		else:
-			self.add_child(item)
 		items.append(item)
 		
 		current_item_slot = items.size() - 1

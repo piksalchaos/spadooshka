@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bapc3bg6tb638"]
+[gd_scene load_steps=5 format=3 uid="uid://bkff0b2bgjip1"]
 
-[ext_resource type="Script" path="res://scripts/item-scripts/grappling_hook.gd" id="1_teltn"]
-[ext_resource type="Texture2D" uid="uid://urn0t8itsm0b" path="res://assets/images/grappling_icon_temp.png" id="2_k3jy4"]
+[ext_resource type="Script" path="res://scripts/grappling_hook.gd" id="1_teltn"]
 [ext_resource type="Script" path="res://scripts/rope.gd" id="3_0oadq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t5ono"]
@@ -13,9 +12,6 @@ height = 1.0
 
 [node name="GrapplingHook" type="Node3D"]
 script = ExtResource("1_teltn")
-need_camera = true
-item_name = "Grappling Hook"
-hud_icon = ExtResource("2_k3jy4")
 
 [node name="GrappleRay" type="RayCast3D" parent="."]
 target_position = Vector3(0, 0, -50)

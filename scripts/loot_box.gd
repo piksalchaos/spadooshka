@@ -3,7 +3,7 @@ class_name LootBox extends StaticBody3D
 const ITEM_FILE_NAMES: PackedStringArray = [
 	"res://scenes/item-scenes/speed_boost.tscn",
 	"res://scenes/item-scenes/jump_boost.tscn",
-	"res://scenes/item-scenes/grappling_hook.tscn",
+	"res://scenes/item-scenes/grappling_hook_item.tscn",
 	"res://scenes/item-scenes/grenade_item.tscn"
 ]
 

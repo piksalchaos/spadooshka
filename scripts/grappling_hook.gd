@@ -1,4 +1,4 @@
-class_name GrapplingHook extends Item
+class_name GrapplingHook extends Node3D
 
 @onready var grapple_ray: RayCast3D = $GrappleRay
 @onready var rope: Rope = $Rope
@@ -12,14 +12,13 @@ class_name GrapplingHook extends Item
 @export var stiffness: float = 10.0
 @export var damping: float = 1.0
 
+var player: Player
 var target: Vector3
 var is_launched: bool = false
 
 func _ready() -> void:
 	grapple_ray.target_position = Vector3(0, 0, -grapple_range)
-
-func use() -> bool:
-	return launch()
+	call_deferred("launch")
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
@@ -33,6 +32,7 @@ func _physics_process(delta: float) -> void:
 
 func launch():
 	launch_sfx.play()
+	
 	if not grapple_ray.is_colliding(): return false
 	target = grapple_ray.get_collision_point()
 	is_launched = true
@@ -73,3 +73,6 @@ func handle_grapple(delta):
 	
 	rope.end = target
 	rope.start = player.position
+
+func set_player(new_player: Player) -> void:
+	player = new_player

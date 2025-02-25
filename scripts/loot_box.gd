@@ -7,7 +7,8 @@ const ITEM_FILE_NAMES: PackedStringArray = [
 	"res://scenes/item-scenes/grenade_item.tscn"
 ]
 
-@export var item: Item 
+@export var item: Item
+@export var interaction_component: InteractionComponent
 
 func _ready() -> void:
 	var random_index: int = randi_range(0, ITEM_FILE_NAMES.size() - 1)

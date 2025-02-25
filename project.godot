@@ -104,6 +104,10 @@ reload={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_2="players"
+
 [physics]
 
 3d/default_gravity=24.0

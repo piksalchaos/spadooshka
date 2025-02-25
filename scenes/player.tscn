@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cyxjceb2t4xis"]
+[gd_scene load_steps=11 format=3 uid="uid://cyxjceb2t4xis"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_2aywh"]
 [ext_resource type="Script" path="res://scripts/head_camera.gd" id="2_q7c4t"]
@@ -13,6 +13,9 @@
 [sub_resource type="BoxMesh" id="BoxMesh_4d8mm"]
 size = Vector3(0.8, 0.8, 0.8)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_2to35"]
+radius = 0.3
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_yhuv5"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = false
@@ -25,6 +28,7 @@ properties/2/spawn = true
 properties/2/replication_mode = 1
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("equipped_gun")]
+collision_layer = 2
 script = ExtResource("1_2aywh")
 equipped_gun = NodePath("Head/Camera/Gun")
 
@@ -50,7 +54,8 @@ target_position = Vector3(0, 0, 1)
 [node name="Camera" type="Camera3D" parent="Head"]
 fov = 90.0
 
-[node name="InteractCast" type="RayCast3D" parent="Head/Camera"]
+[node name="InteractCast" type="ShapeCast3D" parent="Head/Camera"]
+shape = SubResource("SphereShape3D_2to35")
 target_position = Vector3(0, 0, -5)
 
 [node name="Gun" parent="Head/Camera" instance=ExtResource("2_wfnaq")]

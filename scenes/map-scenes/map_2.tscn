@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cs1fjdrayhedp"]
+[gd_scene load_steps=5 format=3 uid="uid://can8wb8hartq6"]
 
 [ext_resource type="PackedScene" uid="uid://5cs46ma1usob" path="res://scenes/map-scenes/map.tscn" id="1_5mt1m"]
 [ext_resource type="PackedScene" uid="uid://cijdl8txem2ml" path="res://scenes/map-scenes/loot_box_spawn_position.tscn" id="2_2h0br"]

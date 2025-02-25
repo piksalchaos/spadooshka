@@ -1,7 +1,7 @@
 class_name Player extends CharacterBody3D
 
 @onready var camera: Camera3D = $Head/Camera
-@onready var interact_cast: RayCast3D = $Head/Camera/InteractCast
+@onready var interact_cast: ShapeCast3D = $Head/Camera/InteractCast
 @onready var dash_timer: Timer = $Timers/DashTimer
 @onready var dash_cooldown_timer: Timer = $Timers/DashCooldownTimer
 @onready var wall_jump_cooldown_timer: Timer = $Timers/WallJumpCooldownTimer
@@ -11,8 +11,6 @@ class_name Player extends CharacterBody3D
 @export var equipped_gun: Gun
 @export var health: int = 100
 @export var max_health: int = 100
-
-signal interact(target: Object)
 
 const DEFAULT_SPEED: float = 16.0
 const BOOSTED_SPEED: float = 30.0
@@ -41,8 +39,10 @@ var is_dashing: bool = false
 var is_wall_sliding: bool = false
 var was_on_floor: bool = false
 
+var selected_body: PhysicsBody3D
 var minimized = false
 
+signal interact(target: Object)
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
@@ -76,7 +76,7 @@ func spawn(spawn_transform: Transform3D):
 	
 	is_wall_sliding = false
 	
-	$Inventory.spawn()
+	inventory.spawn()
 	equipped_gun.spawn()
 	
 	for child in get_children():
@@ -91,15 +91,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		jump_buffer_timer = JUMP_BUFFER_TIME
 	if Input.is_action_pressed("dash") and can_dash:
 		dash()
+	
+	if event.is_action_pressed("interact") and interact_cast.is_colliding():
+		for i in range(interact_cast.get_collision_count()):
+			var target := interact_cast.get_collider(i)
+			interact.emit(target)
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
-	if interact_cast.is_colliding():
-		var target := interact_cast.get_collider()
-		if Input.is_action_just_pressed("interact"):
-			interact.emit(target)
-			
+	check_interact_cast()
+	
 	if is_effect_applied("Minimizer"):
 		if minimized == false:
 			basis = basis.scaled(MINIMIZED_SIZE)
@@ -161,6 +163,51 @@ func _physics_process(delta: float) -> void:
 	else:
 		dash_value = dash_cooldown_timer.wait_time-dash_cooldown_timer.time_left
 	dash_changed.emit(dash_value, dash_cooldown_timer.wait_time)
+
+func check_interact_cast():
+	if not interact_cast.is_colliding():
+		remove_selected_body()
+		return
+	if interact_cast.get_collision_count() == 1:
+		var target: PhysicsBody3D = interact_cast.get_collider(0)
+		if target:
+			set_selected_body(target)
+	else:
+		var closest_selected_body_to_player = get_closest_selected_body_to_player()
+		if closest_selected_body_to_player:
+			set_selected_body(closest_selected_body_to_player)
+
+func get_closest_selected_body_to_player() -> PhysicsBody3D:
+	var closest_target: PhysicsBody3D
+	var closest_target_distance: float = INF
+	for i in range(interact_cast.get_collision_count()):
+		var target: PhysicsBody3D = interact_cast.get_collider(i)
+		if not target: continue
+		var target_distance = position.distance_squared_to(target.position)
+		if target_distance < closest_target_distance:
+			closest_target_distance = target_distance
+			closest_target = target
+	return closest_target
+
+func set_selected_body(new_selected_body: PhysicsBody3D):
+	if selected_body == new_selected_body: return
+	if not selected_body:
+		selected_body = new_selected_body
+		set_body_in_range(selected_body, true)
+		return
+	set_body_in_range(selected_body, false)
+	selected_body = new_selected_body
+	set_body_in_range(selected_body, true)
+
+func remove_selected_body():
+	if selected_body and is_instance_valid(selected_body):
+		set_body_in_range(selected_body, false)
+	selected_body = null
+
+func set_body_in_range(body: PhysicsBody3D, is_in_range: bool):
+	var interaction_component = body.get_node_or_null("InteractionComponent")
+	if interaction_component:
+			interaction_component.set_in_range(is_in_range)
 
 func query_jump():
 	if coyote_timer > 0:

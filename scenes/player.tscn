@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://cyxjceb2t4xis"]
+[gd_scene load_steps=12 format=3 uid="uid://cyxjceb2t4xis"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_2aywh"]
 [ext_resource type="Script" path="res://scripts/head_camera.gd" id="2_q7c4t"]
 [ext_resource type="PackedScene" uid="uid://b84jqg6v7ev0v" path="res://scenes/gun.tscn" id="2_wfnaq"]
+[ext_resource type="Script" path="res://scripts/interact_cast.gd" id="3_midt1"]
 [ext_resource type="Script" path="res://scripts/inventory.gd" id="4_iowmg"]
 [ext_resource type="Script" path="res://scripts/effect_manager.gd" id="5_otmhq"]
 
@@ -57,6 +58,7 @@ fov = 90.0
 [node name="InteractCast" type="ShapeCast3D" parent="Head/Camera"]
 shape = SubResource("SphereShape3D_2to35")
 target_position = Vector3(0, 0, -5)
+script = ExtResource("3_midt1")
 
 [node name="Gun" parent="Head/Camera" instance=ExtResource("2_wfnaq")]
 transform = Transform3D(1, 0, 0, 0, -0.0907717, -0.995872, 0, 0.995872, -0.0907717, 0.5, -0.25, -0.5)

@@ -10,7 +10,7 @@ var current_item_slot: int
 
 signal inventory_changed(items: Array[Item], current_item_slot: int)
 
-func _on_player_interact(target: Object) -> void:
+func _on_interact_cast_interacted(target: PhysicsBody3D) -> void:
 	if target is LootBox and items.size() < MAX_ITEM_COUNT:
 		var item = target.obtain_item()
 		item.player = player

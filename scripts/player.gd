@@ -1,7 +1,6 @@
 class_name Player extends CharacterBody3D
 
 @onready var camera: Camera3D = $Head/Camera
-@onready var interact_cast: ShapeCast3D = $Head/Camera/InteractCast
 @onready var dash_timer: Timer = $Timers/DashTimer
 @onready var dash_cooldown_timer: Timer = $Timers/DashCooldownTimer
 @onready var wall_jump_cooldown_timer: Timer = $Timers/WallJumpCooldownTimer
@@ -42,7 +41,6 @@ var was_on_floor: bool = false
 var selected_body: PhysicsBody3D
 var minimized = false
 
-signal interact(target: Object)
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
@@ -91,16 +89,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		jump_buffer_timer = JUMP_BUFFER_TIME
 	if Input.is_action_pressed("dash") and can_dash:
 		dash()
-	
-	if event.is_action_pressed("interact") and interact_cast.is_colliding():
-		for i in range(interact_cast.get_collision_count()):
-			var target := interact_cast.get_collider(i)
-			interact.emit(target)
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
-	
-	interact_cast.check_interact_cast()
 	
 	if is_effect_applied("Minimizer"):
 		if minimized == false:

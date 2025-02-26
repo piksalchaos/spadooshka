@@ -88,7 +88,7 @@ script = ExtResource("5_otmhq")
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_yhuv5")
 
-[connection signal="interact" from="." to="Inventory" method="_on_player_interact"]
+[connection signal="interacted" from="Head/Camera/InteractCast" to="Inventory" method="_on_interact_cast_interacted"]
 [connection signal="ammo_changed" from="Head/Camera/Gun" to="." method="_on_gun_ammo_changed"]
 [connection signal="timeout" from="Timers/DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="Timers/DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]

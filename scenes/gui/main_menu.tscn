@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4q7skpmltk8l"]
+
+[ext_resource type="Script" path="res://scenes/gui/main_menu.gd" id="1_yla67"]
+
+[node name="MainMenu" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 466.0
+offset_top = 254.0
+offset_right = -466.0
+offset_bottom = -254.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yla67")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Main Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HostButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Host"
+
+[node name="JoinButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Join"
+
+[node name="SingleplayerButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Singleplayer
+"
+
+[node name="AddressEntry" type="LineEdit" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Enter Address to Join Here"
+alignment = 1
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/SingleplayerButton" to="." method="_on_singleplayer_button_pressed"]

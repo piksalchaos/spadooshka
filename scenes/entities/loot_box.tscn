@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://by0mye1dj10gn"]
+
+[ext_resource type="Script" path="res://scenes/entities/loot_box.gd" id="1_6ek3c"]
+[ext_resource type="PackedScene" uid="uid://du0i5cn8athp5" path="res://scenes/components/interaction_component.tscn" id="2_no84u"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_43mc8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xuskm"]
+albedo_color = Color(1, 0.141176, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3xsiv"]
+material = SubResource("StandardMaterial3D_xuskm")
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_edfqg"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="LootBox" type="StaticBody3D" node_paths=PackedStringArray("interaction_component")]
+script = ExtResource("1_6ek3c")
+interaction_component = NodePath("InteractionComponent")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_43mc8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_3xsiv")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_edfqg")
+
+[node name="InteractionComponent" parent="." node_paths=PackedStringArray("mesh_to_highlight") instance=ExtResource("2_no84u")]
+mesh_to_highlight = NodePath("../MeshInstance3D")

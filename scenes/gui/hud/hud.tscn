@@ -1,0 +1,192 @@
+[gd_scene load_steps=10 format=3 uid="uid://euhmy40ljoc4"]
+
+[ext_resource type="Script" path="res://scenes/gui/hud/hud.gd" id="1_8mkb2"]
+[ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="2_yw55s"]
+[ext_resource type="Texture2D" uid="uid://cw8qtdr0bp1af" path="res://assets/images/player_icon_temp.png" id="3_lsk7v"]
+[ext_resource type="Script" path="res://scenes/gui/hud/score_display.gd" id="4_0pm5a"]
+[ext_resource type="PackedScene" uid="uid://ooxxqxmb5cvk" path="res://scenes/gui/hud/inventory_slot.tscn" id="5_ojg8h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o11au"]
+bg_color = Color(0.6, 0.6, 0.6, 0.572549)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ms0f0"]
+bg_color = Color(1, 0.966667, 0, 0.517647)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wln1f"]
+bg_color = Color(0.153453, 0.663559, 0.792775, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glbnf"]
+bg_color = Color(0.261093, 0.704154, 0.344336, 1)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8mkb2")
+
+[node name="Crosshairs" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 512.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.04, 0.04)
+pivot_offset = Vector2(-10.24, -10.24)
+texture = ExtResource("2_yw55s")
+stretch_mode = 5
+
+[node name="AmmoAmountBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 57.0
+offset_top = -37.0
+offset_right = 72.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_o11au")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ms0f0")
+max_value = 1.0
+value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="PlayerStatus" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.88
+anchor_right = 0.315
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_top = -6.10352e-05
+offset_right = -0.200012
+offset_bottom = -14.0
+grow_vertical = 0
+theme_override_constants/separation = 14
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayerIcon" type="TextureRect" parent="PlayerStatus"]
+layout_mode = 2
+texture = ExtResource("3_lsk7v")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="MarginAdjuster" type="Control" parent="PlayerStatus"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BarVBoxContainer" type="VBoxContainer" parent="PlayerStatus/MarginAdjuster"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.15
+anchor_right = 1.0
+anchor_bottom = 0.85
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="DashBar" type="ProgressBar" parent="PlayerStatus/MarginAdjuster/BarVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/fill = SubResource("StyleBoxFlat_wln1f")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="HealthBar" type="ProgressBar" parent="PlayerStatus/MarginAdjuster/BarVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_glbnf")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="ScoreDisplay" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_right = 0.7
+anchor_bottom = 0.05
+grow_horizontal = 2
+script = ExtResource("4_0pm5a")
+
+[node name="LabelHBoxContainer" type="HBoxContainer" parent="ScoreDisplay"]
+layout_mode = 2
+alignment = 1
+
+[node name="P1ScoreLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoundLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Round 1
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P2ScoreLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EffectsDisplay" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.797656
+anchor_top = 0.573611
+anchor_right = 0.914844
+anchor_bottom = 0.969444
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Inventory" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.914438
+anchor_top = 0.550278
+anchor_right = 0.999844
+anchor_bottom = 1.00044
+offset_left = 0.519897
+offset_top = -0.200012
+offset_right = 0.199951
+offset_bottom = -0.320068
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 0
+alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="InventorySlot1" parent="Inventory" instance=ExtResource("5_ojg8h")]
+layout_mode = 2
+
+[node name="InventorySlot2" parent="Inventory" instance=ExtResource("5_ojg8h")]
+layout_mode = 2
+
+[node name="InventorySlot3" parent="Inventory" instance=ExtResource("5_ojg8h")]
+layout_mode = 2

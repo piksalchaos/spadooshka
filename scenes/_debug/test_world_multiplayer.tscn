@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=3 uid="uid://bqscg1kjp8p7"]
+
+[ext_resource type="Script" path="res://scenes/_debug/test_world_multiplayer.gd" id="1_mbw0t"]
+[ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/gui/hud/hud.tscn" id="2_j56a6"]
+[ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/gui/main_menu.tscn" id="3_lrdwg"]
+[ext_resource type="Script" path="res://scenes/maps/base_map/loot_box_spawner.gd" id="4_o1hqn"]
+[ext_resource type="PackedScene" uid="uid://b4ps4vnc5oysg" path="res://scenes/maps/environments/test_environment_2.tscn" id="5_jkpfs"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cbq6g"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_c8opc"]
+sky_material = SubResource("ProceduralSkyMaterial_cbq6g")
+
+[sub_resource type="Environment" id="Environment_h1gcq"]
+background_mode = 2
+sky = SubResource("Sky_c8opc")
+tonemap_mode = 2
+
+[node name="Test World Multiplayer" type="Node"]
+script = ExtResource("1_mbw0t")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+light_energy = 0.515
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_h1gcq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource("2_j56a6")]
+mouse_filter = 2
+
+[node name="MainMenu" parent="CanvasLayer" instance=ExtResource("3_lrdwg")]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+
+[node name="LootBoxSpawner" type="Node3D" parent="."]
+script = ExtResource("4_o1hqn")
+
+[node name="TestEnvironment2" parent="." instance=ExtResource("5_jkpfs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.62804, 0)
+
+[connection signal="host_button_pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_host_button_pressed"]
+[connection signal="join_button_pressed" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_join_button_pressed"]

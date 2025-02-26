@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://jaxhic2my7hg"]
+[gd_scene load_steps=2 format=3 uid="uid://bwvm5rtrmej0x"]
 
 [ext_resource type="PackedScene" uid="uid://deyxgoytnuhu" path="res://scenes/effects/temporary_effect.tscn" id="1_chkiu"]
 

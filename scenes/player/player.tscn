@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=3 uid="uid://cyxjceb2t4xis"]
+
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_yaydr"]
+[ext_resource type="Script" path="res://scenes/player/head_camera.gd" id="2_vfxp5"]
+[ext_resource type="Script" path="res://scenes/player/interact_cast.gd" id="3_1jyis"]
+[ext_resource type="PackedScene" uid="uid://b84jqg6v7ev0v" path="res://scenes/player/gun/gun.tscn" id="4_peur4"]
+[ext_resource type="Script" path="res://scenes/player/inventory.gd" id="5_kr2gg"]
+[ext_resource type="Script" path="res://scenes/player/effect_manager.gd" id="6_6xkkg"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wu3n4"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dqyto"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_4d8mm"]
+size = Vector3(0.8, 0.8, 0.8)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2to35"]
+radius = 0.3
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_yhuv5"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = false
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Head:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("equipped_gun")]
+collision_layer = 2
+script = ExtResource("1_yaydr")
+equipped_gun = NodePath("Head/Camera/Gun")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_wu3n4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_dqyto")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79693, 0)
+script = ExtResource("2_vfxp5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0021379, 2.38419e-07, -0.00500178)
+mesh = SubResource("BoxMesh_4d8mm")
+
+[node name="CameraCollider" type="RayCast3D" parent="Head"]
+target_position = Vector3(0, 0, 1)
+
+[node name="Camera" type="Camera3D" parent="Head"]
+fov = 90.0
+
+[node name="InteractCast" type="ShapeCast3D" parent="Head/Camera"]
+shape = SubResource("SphereShape3D_2to35")
+target_position = Vector3(0, 0, -5)
+script = ExtResource("3_1jyis")
+
+[node name="Gun" parent="Head/Camera" instance=ExtResource("4_peur4")]
+transform = Transform3D(1, 0, 0, 0, -0.0907717, -0.995872, 0, 0.995872, -0.0907717, 0.5, -0.25, -0.5)
+skeleton = NodePath("../../../..")
+shoot_mode = 1
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="DashTimer" type="Timer" parent="Timers"]
+wait_time = 0.1
+one_shot = true
+
+[node name="DashCooldownTimer" type="Timer" parent="Timers"]
+wait_time = 0.8
+one_shot = true
+
+[node name="WallJumpCooldownTimer" type="Timer" parent="Timers"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("5_kr2gg")
+
+[node name="EffectManager" type="Node" parent="."]
+script = ExtResource("6_6xkkg")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_yhuv5")
+
+[connection signal="interacted" from="Head/Camera/InteractCast" to="Inventory" method="_on_interact_cast_interacted"]
+[connection signal="ammo_changed" from="Head/Camera/Gun" to="." method="_on_gun_ammo_changed"]
+[connection signal="timeout" from="Timers/DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="Timers/DashCooldownTimer" to="." method="_on_dash_cooldown_timer_timeout"]

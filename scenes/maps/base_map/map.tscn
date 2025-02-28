@@ -30,5 +30,6 @@ environment = SubResource("Environment_u0j8b")
 [node name="PlayerSpawnPositions" type="Node3D" parent="."]
 
 [node name="LootBoxSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/entities/loot_box.tscn")
 spawn_path = NodePath(".")
 script = ExtResource("3_hu4k6")

@@ -3,14 +3,13 @@
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_yci6l"]
 [ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/gui/hud/hud.tscn" id="3_shkqk"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/gui/main_menu.tscn" id="4_b8hkp"]
-[ext_resource type="PackedScene" uid="uid://g0un4ork14i8" path="res://scenes/gui/lobby_menu.tscn" id="4_jqa32"]
+[ext_resource type="PackedScene" uid="uid://g0un4ork14i8" path="res://scenes/gui/lobby_menu/lobby_menu.tscn" id="4_jqa32"]
 [ext_resource type="PackedScene" uid="uid://dcw5bchdkvdra" path="res://scenes/gui/end_screen.tscn" id="5_t4ul1"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_yci6l")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
 spawn_path = NodePath("../MultiplayerContainer")
 
 [node name="MultiplayerContainer" type="Node" parent="."]

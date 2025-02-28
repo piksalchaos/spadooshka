@@ -13,7 +13,7 @@ var enet_peer = ENetMultiplayerPeer.new()
 
 @onready var multiplayer_container: Node = $MultiplayerContainer
 @onready var main_menu: PanelContainer = $GUI/MainMenu
-@onready var lobby_menu: Control = $GUI/LobbyMenu
+@onready var lobby_menu: LobbyMenu = $GUI/LobbyMenu
 @onready var hud: HUD = $GUI/HUD
 
 var map: Map
@@ -33,36 +33,20 @@ func _on_main_menu_host_button_pressed() -> void:
 	enet_peer.create_server(PORT)
 	multiplayer.multiplayer_peer = enet_peer
 	
-	multiplayer.peer_connected.connect(_on_peer_connected)
-	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
-	update_number_of_players()
-	lobby_menu.show_host_display()
+	multiplayer.peer_connected.connect(lobby_menu.on_peer_connected)
+	multiplayer.peer_disconnected.connect(lobby_menu.on_peer_disconnected)
+	lobby_menu.add_player_display(multiplayer.get_unique_id())
+	lobby_menu.show()
 	#upnp_setup()
 
 func _on_main_menu_join_button_pressed() -> void:
 	#enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
 	enet_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = enet_peer
-	lobby_menu.show_client_display()
+	lobby_menu.show()
 
 func _on_main_menu_singleplayer_button_pressed() -> void:
 	play_game()
-
-func _on_lobby_menu_start_button_pressed() -> void:
-	assert(multiplayer.get_unique_id() == 1, \
-		"wtf, only the host should be able to start the game")
-	play_game()
-
-@rpc("call_local")
-func update_number_of_players():
-	if not is_instance_valid(lobby_menu): return
-	lobby_menu.update_number_of_players(multiplayer.get_peers().size() + 1)
-
-func _on_peer_connected(peer_id):
-	update_number_of_players.rpc()
-	update_peer_ready_states(peer_id, false)
-func _on_peer_disconnected(peer_id):
-	update_number_of_players.rpc()
 
 func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
 	update_peer_ready_states.rpc(peer_id, is_ready)
@@ -76,6 +60,11 @@ func update_peer_ready_states(peer_id, is_peer_ready):
 		lobby_menu.set_start_button_visibility(are_peers_ready)
 	else:
 		lobby_menu.set_waiting_label_visibility(are_peers_ready)
+
+func _on_lobby_menu_start_button_pressed() -> void:
+	assert(multiplayer.get_unique_id() == 1, \
+		"wtf, only the host should be able to start the game")
+	play_game()
 
 func play_game():
 	prepare_GUI_for_game.rpc()

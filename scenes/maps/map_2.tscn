@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://can8wb8hartq6"]
+[gd_scene load_steps=6 format=3 uid="uid://can8wb8hartq6"]
 
 [ext_resource type="PackedScene" uid="uid://5cs46ma1usob" path="res://scenes/maps/base_map/map.tscn" id="1_5mt1m"]
 [ext_resource type="PackedScene" uid="uid://cijdl8txem2ml" path="res://scenes/maps/map_making/loot_box_spawn_position.tscn" id="2_2h0br"]
 [ext_resource type="PackedScene" uid="uid://dkjngpfr7w4qf" path="res://scenes/maps/map_making/player_spawn_position.tscn" id="3_07xul"]
 [ext_resource type="PackedScene" uid="uid://b4ps4vnc5oysg" path="res://scenes/maps/environments/test_environment_2.tscn" id="4_bq1cw"]
+[ext_resource type="PackedScene" uid="uid://bnu4b8te7nrsb" path="res://scenes/entities/launchpad.tscn" id="5_u3i8e"]
 
 [node name="Map1" instance=ExtResource("1_5mt1m")]
 
@@ -62,3 +63,7 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 35.351
 
 [node name="LootBoxSpawner" parent="." index="5"]
 _spawnable_scenes = PackedStringArray()
+
+[node name="Launchpad" parent="." index="6" instance=ExtResource("5_u3i8e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11524, 2.63152, -7.20864)
+strength = 30

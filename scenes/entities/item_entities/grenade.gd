@@ -35,6 +35,7 @@ func _on_explode_timer_timeout() -> void:
 	for body in bodies:
 		if body is StaticBody3D:
 			continue
+		print(body)
 		var difference_vector = body.position - position
 		var damage = calculate_damage(difference_vector.length())
 		if body is Player:

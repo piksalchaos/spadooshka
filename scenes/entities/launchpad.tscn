@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnu4b8te7nrsb"]
+
+[ext_resource type="Script" path="res://scenes/entities/launchpad.gd" id="1_8ahnr"]
+
+[node name="Launchpad" type="Node3D"]
+script = ExtResource("1_8ahnr")

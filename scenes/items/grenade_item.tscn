@@ -1,9 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://cb8e0n0a3s68j"]
+[gd_scene load_steps=7 format=3 uid="uid://cb8e0n0a3s68j"]
 
 [ext_resource type="Script" path="res://scenes/items/grenade_item.gd" id="1_kx6cr"]
 [ext_resource type="Texture2D" uid="uid://bg5cf4xyvoguj" path="res://assets/images/grenade_icon_temp.png" id="2_56k3f"]
+[ext_resource type="PackedScene" uid="uid://chpeu37n1l6iw" path="res://scenes/entities/trajectory.tscn" id="3_1o0dh"]
+[ext_resource type="Shader" path="res://scenes/entities/trajectory.gdshader" id="4_kofis"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hacqh"]
+render_priority = 0
+shader = ExtResource("4_kofis")
+shader_parameter/a = -12.0
+shader_parameter/b = -21.885
+shader_parameter/c = 0.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_78kru"]
+material = SubResource("ShaderMaterial_hacqh")
+size = Vector2(5, 0.1)
+subdivide_width = 100
+center_offset = Vector3(-2.5, 0, 0)
 
 [node name="GrenadeItem" type="Node3D"]
 script = ExtResource("1_kx6cr")
 item_name = "Grenade"
 hud_icon = ExtResource("2_56k3f")
+
+[node name="Trajectory" parent="." instance=ExtResource("3_1o0dh")]
+mesh = SubResource("PlaneMesh_78kru")

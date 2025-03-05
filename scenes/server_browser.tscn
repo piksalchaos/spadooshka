@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://g0lj1aiava1y"]
+
+[ext_resource type="Script" path="res://scenes/server_browser.gd" id="1_hc784"]
+
+[node name="ServerBrowser" type="Node"]
+script = ExtResource("1_hc784")
+
+[node name="BroadcastTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="BroadcastTimer" to="." method="_on_broadcast_timer_timeout"]

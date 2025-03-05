@@ -7,12 +7,14 @@ const MAP_FILE_NAMES: Array[String] = [
 	"res://scenes/maps/map_2.tscn"
 ]
 
-const PORT = 9999
+@export var server_port = 8910
 
 var enet_peer = ENetMultiplayerPeer.new()
+var failed_listen_port_bind = false
 
+@onready var server_browser: ServerBrowser = $ServerBrowser
 @onready var multiplayer_container: Node = $MultiplayerContainer
-@onready var main_menu: PanelContainer = $GUI/MainMenu
+@onready var main_menu: MainMenu = $GUI/MainMenu
 @onready var lobby_menu: LobbyMenu = $GUI/LobbyMenu
 @onready var hud: HUD = $GUI/HUD
 
@@ -27,21 +29,34 @@ var rounds_won: int = 0
 signal score_changed(round_number: int, P1_score: int, P2_score: int)
 
 func _ready() -> void:
+	if failed_listen_port_bind:
+		main_menu.show_listener_failed_label()
+	server_browser.found_server.connect(main_menu.add_server_info_display)
+	server_browser.updated_server.connect(main_menu.update_server_info_display)
+	server_browser.removed_server.connect(main_menu.remove_server_info_display)
+	
 	score_changed.connect(hud.update_score_display.rpc)
 
 func _on_main_menu_host_button_pressed() -> void:
-	enet_peer.create_server(PORT)
+	enet_peer.create_server(server_port)
 	multiplayer.multiplayer_peer = enet_peer
 	
 	multiplayer.peer_connected.connect(lobby_menu.on_peer_connected)
 	multiplayer.peer_disconnected.connect(lobby_menu.on_peer_disconnected)
 	lobby_menu.add_player_display(multiplayer.get_unique_id())
 	lobby_menu.show()
+	
+	server_browser.set_up_broadcast(main_menu.get_name_entry_text())
 	#upnp_setup()
 
 func _on_main_menu_join_button_pressed() -> void:
-	#enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
-	enet_peer.create_client("localhost", PORT)
+	#enet_peer.create_client(main_menu.get_address_entry_text(), server_port)
+	enet_peer.create_client("192.168.56.1", server_port)
+	multiplayer.multiplayer_peer = enet_peer
+	lobby_menu.show()
+
+func join_by_ip(ip_address: String):
+	enet_peer.create_client(ip_address, server_port)
 	multiplayer.multiplayer_peer = enet_peer
 	lobby_menu.show()
 
@@ -148,8 +163,11 @@ func upnp_setup():
 	assert(upnp.get_gateway() and upnp.get_gateway().is_valid_gateway(), \
 		"UPNP Invalid Gateway!")
 	
-	var map_result = upnp.add_port_mapping(PORT)
+	var map_result = upnp.add_port_mapping(server_port)
 	assert(map_result == UPNP.UPNP_RESULT_SUCCESS, \
 		"UPNP Port Mapping Failed! Error %s" % map_result)
 	
 	print("Success! Join Address: %s" % upnp.query_external_address())
+
+func _on_server_browser_failed_listen_port_bind() -> void:
+	failed_listen_port_bind = true

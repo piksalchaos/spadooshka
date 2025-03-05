@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2c8wh6k7fca5"]
+[gd_scene load_steps=7 format=3 uid="uid://c2c8wh6k7fca5"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_yci6l"]
 [ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/gui/hud/hud.tscn" id="3_shkqk"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/gui/main_menu.tscn" id="4_b8hkp"]
 [ext_resource type="PackedScene" uid="uid://g0un4ork14i8" path="res://scenes/gui/lobby_menu/lobby_menu.tscn" id="4_jqa32"]
 [ext_resource type="PackedScene" uid="uid://dcw5bchdkvdra" path="res://scenes/gui/end_screen.tscn" id="5_t4ul1"]
+[ext_resource type="PackedScene" uid="uid://g0lj1aiava1y" path="res://scenes/server_browser.tscn" id="6_7dtkc"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_yci6l")
@@ -26,10 +27,6 @@ mouse_filter = 2
 
 [node name="MainMenu" parent="GUI" instance=ExtResource("4_b8hkp")]
 layout_mode = 1
-offset_left = 385.0
-offset_top = 224.0
-offset_right = -370.0
-offset_bottom = -190.0
 
 [node name="LobbyMenu" parent="GUI" instance=ExtResource("4_jqa32")]
 visible = false
@@ -50,9 +47,13 @@ visible = false
 layout_mode = 1
 text = "You lost."
 
+[node name="ServerBrowser" parent="." instance=ExtResource("6_7dtkc")]
+
 [connection signal="child_entered_tree" from="MultiplayerContainer" to="." method="_on_multiplayer_container_child_entered_tree"]
 [connection signal="host_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_host_button_pressed"]
 [connection signal="join_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_join_button_pressed"]
+[connection signal="ready" from="GUI/MainMenu" to="." method="_on_main_menu_ready"]
 [connection signal="singleplayer_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_singleplayer_button_pressed"]
 [connection signal="ready_button_pressed" from="GUI/LobbyMenu" to="." method="_on_lobby_menu_ready_button_pressed"]
 [connection signal="start_button_pressed" from="GUI/LobbyMenu" to="." method="_on_lobby_menu_start_button_pressed"]
+[connection signal="failed_listen_port_bind" from="ServerBrowser" to="." method="_on_server_browser_failed_listen_port_bind"]

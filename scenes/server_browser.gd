@@ -2,7 +2,7 @@ class_name ServerBrowser extends Node
 
 @export var listen_port: int = 8911
 @export var broadcast_port: int = 8912
-@export var broadcast_address: String = "" #change this to work on any ip
+@export var broadcast_address: String = ""
 
 @onready var broadcast_timer: Timer = $BroadcastTimer
 
@@ -19,8 +19,29 @@ signal found_server(room_name: String, ip: String, player_count: int)
 signal updated_server(room_name: String, ip: String, player_count: int)
 signal removed_server(room_name: String)
 
-func _ready(): #maybe only enable listening after a button is pressed?
+func _ready():
 	set_up_listener()
+	broadcast_address = get_subnet_broadcast()
+
+func get_best_local_ip() -> String:
+	var ips = IP.get_local_addresses()
+	for ip in ips:
+		if ip.begins_with("192."):
+			return ip
+	for ip in ips:
+		if ip.begins_with("10."):
+			return ip
+	for ip in ips:
+		if ip.begins_with("172."):
+			return ip
+	return ""
+
+func get_subnet_broadcast():
+	var local_ip = get_best_local_ip()
+	if local_ip == "":
+		return "255.255.255.255"
+	var parts = local_ip.split(".")
+	return "%s.%s.%s.255" % [parts[0], parts[1], parts[2]] #maybe change to detect subnet mask 
 
 func set_up_listener():
 	listener = PacketPeerUDP.new()

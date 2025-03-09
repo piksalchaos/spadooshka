@@ -38,6 +38,11 @@ var is_dashing: bool = false
 var is_wall_sliding: bool = false
 var was_on_floor: bool = false
 
+var default_fov = 90
+var dash_fov = 100
+var speed_boost_fov = 95
+var fov_decay_rate = 100 #how much fov wil drop by in a second
+
 var selected_body: PhysicsBody3D
 var minimized = false
 
@@ -154,6 +159,8 @@ func _physics_process(delta: float) -> void:
 	else:
 		dash_value = dash_cooldown_timer.wait_time-dash_cooldown_timer.time_left
 	dash_changed.emit(dash_value, dash_cooldown_timer.wait_time)
+	
+	update_fov(delta)
 
 func query_jump():
 	if coyote_timer > 0:
@@ -191,6 +198,15 @@ func receive_damage(damage):
 
 func get_camera_global_basis() -> Basis:
 	return camera.global_basis
+	
+func update_fov(delta):
+	if is_dashing:
+		camera.fov = dash_fov
+		return
+	if is_effect_applied("Speed Boost"):
+		camera.fov = speed_boost_fov
+		return
+	camera.fov = max(default_fov, camera.fov - fov_decay_rate * delta)
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
 	velocity = velocity.normalized() * DEFAULT_SPEED

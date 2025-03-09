@@ -8,11 +8,12 @@ var grenade_object = preload("res://scenes/entities/item_entities/grenade.tscn")
 @onready var trajectory = $Trajectory
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-func _process(float) -> void:
+func _process(_delta: float) -> void:
 	var camera_basis = player.get_camera_global_basis()
 	var launch_vector = camera_basis[2]
+	# speed multipliers to convert from t to x world for parabola thing to work properly
 	trajectory.a = -gravity * 0.5 / (speed ** 2) * (launch_vector.x ** 2 + launch_vector.z ** 2)
-	trajectory.b = launch_vector.y / speed * sqrt(launch_vector.x ** 2 + launch_vector.z ** 2)
+	trajectory.b = launch_vector.y / speed * sqrt(launch_vector.x ** 2 + launch_vector.z ** 2) 
 	trajectory.position = player.position + LAUNCH_OFFSET
 	trajectory.global_basis = Basis(camera_basis[2], Vector3.UP, camera_basis[0]).orthonormalized()
 

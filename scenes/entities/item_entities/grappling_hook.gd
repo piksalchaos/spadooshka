@@ -55,6 +55,7 @@ func handle_grapple(delta):
 	query.exclude = [player]
 	var result = space_state.intersect_ray(query)
 	if result and result.position.distance_to(target) > 0.1:
+		print(result)
 		retract()
 		return
 	var displacement = target_distance - rest_length

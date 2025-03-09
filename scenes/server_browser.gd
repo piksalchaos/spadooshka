@@ -29,10 +29,10 @@ func get_best_local_ip() -> String:
 		if ip.begins_with("192."):
 			return ip
 	for ip in ips:
-		if ip.begins_with("10."):
+		if ip.begins_with("172."):
 			return ip
 	for ip in ips:
-		if ip.begins_with("172."):
+		if ip.begins_with("10."):
 			return ip
 	return ""
 

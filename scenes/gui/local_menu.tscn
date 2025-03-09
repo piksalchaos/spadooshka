@@ -53,7 +53,7 @@ text = "Singleplayer
 
 [node name="JoinLocalhostButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Join Localhost"
+text = "Join Existing Localhost"
 
 [node name="ServerInfoPanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1

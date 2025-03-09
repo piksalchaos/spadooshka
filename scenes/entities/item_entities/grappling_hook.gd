@@ -16,9 +16,11 @@ var player: Player
 var target: Vector3
 var is_launched: bool = false
 
+signal launch_attempt
+
 func _ready() -> void:
 	grapple_ray.target_position = Vector3(0, 0, -grapple_range)
-	call_deferred("launch")
+	#call_deferred("launch")
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
@@ -33,11 +35,14 @@ func _physics_process(delta: float) -> void:
 func launch():
 	launch_sfx.play()
 	
-	if not grapple_ray.is_colliding(): return false
+	if not grapple_ray.is_colliding():
+		launch_attempt.emit(false)
+		return false
 	target = grapple_ray.get_collision_point()
 	is_launched = true
 	rope.reparent(get_tree().current_scene)
 	rope.visible = true
+	launch_attempt.emit(true)
 	return true
 		
 func retract():
@@ -55,6 +60,7 @@ func handle_grapple(delta):
 	query.exclude = [player]
 	var result = space_state.intersect_ray(query)
 	if result and result.position.distance_to(target) > 0.1:
+		print("boo")
 		print(result)
 		retract()
 		return

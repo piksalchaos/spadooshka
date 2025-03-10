@@ -1,12 +1,9 @@
 class_name Gun extends Node
 
-@export var MAG_CAPACITY: int = 5
-@export var num_bullets: int
+@export var stats: GunStats
 
-@export var damage: int = 20
-@export var is_gun_ready: bool
-
-@export var shoot_range: int = 100
+var is_gun_ready: bool
+var num_bullets: int
 
 @onready var shoot_ray: RayCast3D = $ShootRay
 
@@ -18,16 +15,16 @@ var is_reloading: bool
 
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 
-# Called when the node enters the scene tree for the first time.
+# Called when the node enters the scene tree for the first time.da
 func _ready() -> void:
-	shoot_ray.target_position = Vector3(0, -shoot_range, 0)
+	shoot_ray.target_position = Vector3(0, -stats.shoot_range, 0)
 
 func spawn():
 	is_gun_ready = true
 	is_reloading = false
-	num_bullets = MAG_CAPACITY
+	num_bullets = stats.mag_capacity
 	is_reloading = false
-	ammo_changed.emit(num_bullets, MAG_CAPACITY)
+	ammo_changed.emit(num_bullets, stats.mag_capacity)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
@@ -46,7 +43,7 @@ func shoot():
 		return
 	num_bullets -= 1
 	is_gun_ready = false
-	ammo_changed.emit(num_bullets, MAG_CAPACITY)
+	ammo_changed.emit(num_bullets, stats.mag_capacity)
 
 	if shoot_ray.is_colliding():
 		var target = shoot_ray.get_collider()
@@ -54,7 +51,7 @@ func shoot():
 		var normal = shoot_ray.get_collision_normal()
 		
 		if target.has_method("receive_damage"):
-			target.receive_damage.rpc_id(target.get_multiplayer_authority(), damage)
+			target.receive_damage.rpc_id(target.get_multiplayer_authority(), stats.damage)
 		if not target is Player:
 			var random_angle = randf_range(0, PI * 2)
 			var new_bullet_hole = bullet_hole.instantiate()
@@ -96,5 +93,5 @@ func _on_fire_timer_timeout() -> void:
 func _on_reload_timer_timeout() -> void:
 	is_gun_ready = true
 	is_reloading = false
-	num_bullets = MAG_CAPACITY
-	ammo_changed.emit(num_bullets, MAG_CAPACITY)
+	num_bullets = stats.mag_capacity
+	ammo_changed.emit(num_bullets, stats.mag_capacity)

@@ -1,6 +1,11 @@
 extends Node
 
-const PLAYER_SCENE = preload("res://scenes/player/player.tscn")
+const PLAYER_SCENE = preload("res://scenes/player/bob_agent/bob.tscn") #preload("res://scenes/player/player.tscn")
+
+const PLAYER_FILE_NAMES: Array[String] = [
+	"res://scenes/player/bob_agent/bob.tscn",
+	"res://scenes/player/shart_agent/shart.tscn"
+]
 
 const MAP_FILE_NAMES: Array[String] = [
 	"res://scenes/maps/map_1.tscn",
@@ -100,7 +105,9 @@ func add_players():
 		add_player(peer_id)
 
 func add_player(peer_id: int):
-	var player = PLAYER_SCENE.instantiate()
+	var scene = PLAYER_FILE_NAMES.pick_random()
+	print(scene)
+	var player = load(scene).instantiate()
 	player.name = str(peer_id)
 	multiplayer_container.add_child(player)
 	map.players.append(player)
@@ -142,6 +149,7 @@ func prepare_GUI_for_end_game(P1_won: bool):
 func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 	if node is Player:
 		if not node.is_multiplayer_authority(): return
+		node.player_icon_changed.connect(hud.update_player_icon)
 		node.ammo_changed.connect(hud.update_ammo_display)
 		node.dash_changed.connect(hud.update_dash_display)
 		node.health_changed.connect(hud.update_health_display)

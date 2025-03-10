@@ -28,10 +28,9 @@ properties/2/path = NodePath(".:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("equipped_gun")]
+[node name="Player" type="CharacterBody3D"]
 collision_layer = 2
 script = ExtResource("1_yaydr")
-equipped_gun = NodePath("Head/Camera/Gun")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

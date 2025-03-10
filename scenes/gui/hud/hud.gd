@@ -1,10 +1,11 @@
 class_name HUD extends Node
 
-const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
-@onready var effects_display: HBoxContainer = $EffectsDisplay
+@onready var player_icon: TextureRect = $PlayerStatus/PlayerIcon
 @onready var ammo_amount_bar: ProgressBar = $AmmoAmountBar
 @onready var health_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/HealthBar
 @onready var dash_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/DashBar
+const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
+@onready var effects_display: HBoxContainer = $EffectsDisplay
 @onready var inventory_slots: Array[Node] = $Inventory.get_children()
 @onready var low_health_texture = $LowHealthTexture
 @onready var low_health_texture_animation_player = $LowHealthTexture/AnimationPlayer
@@ -13,11 +14,11 @@ const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
 
 @export var low_health_effect_threshold = 0.25
 
+func update_player_icon(image: CompressedTexture2D):
+	player_icon.texture = image
+
 func update_ammo_display(num_bullets, mag_capacity):
 	ammo_amount_bar.value = float(num_bullets) / mag_capacity
-
-func update_dash_display(dash_value, max_dash):
-	dash_bar.value = dash_value / max_dash
 
 func update_health_display(health, max_health):
 	health_bar.value = float(health) / max_health
@@ -29,6 +30,9 @@ func update_health_display(health, max_health):
 		low_health_texture_animation_player.speed_scale = -1
 	low_health_texture_animation_player.play("low_health_show")
 	
+
+func update_dash_display(dash_value, max_dash):
+	dash_bar.value = dash_value / max_dash
 
 func create_effect_display(effect: Effect):
 	var effect_display = EFFECT_DISPLAY_SCENE.instantiate()

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AgentStats" load_steps=3 format=3 uid="uid://bdk4er3x3ossi"]
+
+[ext_resource type="Script" path="res://scenes/player/agent_stats.gd" id="1_842ey"]
+[ext_resource type="Texture2D" uid="uid://dux6o72tfpef2" path="res://assets/images/player_icons/bob_icon.png" id="1_hjthk"]
+
+[resource]
+script = ExtResource("1_842ey")
+max_health = 100
+default_speed = 16.0
+dash_speed = 50.0
+boosted_speed = 30.0
+default_jump_velocity = 11.0
+wall_jump_velocity = 25.0
+boosted_jump_velocity = 18.0
+player_icon = ExtResource("1_hjthk")

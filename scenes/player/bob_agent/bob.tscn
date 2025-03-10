@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://bc08m05xlfwgf"]
+
+[ext_resource type="PackedScene" uid="uid://cyxjceb2t4xis" path="res://scenes/player/player.tscn" id="1_c44cn"]
+[ext_resource type="Resource" uid="uid://bdk4er3x3ossi" path="res://scenes/player/bob_agent/bob_stats.tres" id="2_n57ff"]
+[ext_resource type="Resource" uid="uid://gpxbtt1v2qi5" path="res://scenes/player/bob_agent/bob_gun_stats.tres" id="3_4l2lx"]
+
+[node name="Bob" instance=ExtResource("1_c44cn")]
+stats = ExtResource("2_n57ff")
+
+[node name="Gun" parent="Head/Camera" index="1"]
+transform = Transform3D(1, 0, 0, 0, -0.0907717, -0.995872, 0, 0.995872, -0.0907717, 0.5, -0.25, -0.5)
+stats = ExtResource("3_4l2lx")

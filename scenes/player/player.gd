@@ -6,22 +6,14 @@ class_name Player extends CharacterBody3D
 @onready var wall_jump_cooldown_timer: Timer = $Timers/WallJumpCooldownTimer
 @onready var inventory: Inventory = $Inventory
 @onready var effect_manager: Node = $EffectManager
+@onready var equipped_gun: Gun = $Head/Camera/Gun
 
-@export var equipped_gun: Gun
-@export var health: int = 100
-@export var max_health: int = 100
+@export var stats: AgentStats
 
-const DEFAULT_SPEED: float = 16.0
-const BOOSTED_SPEED: float = 30.0
-const DASH_SPEED: float = 50.0
-
-const DEFAULT_JUMP_VELOCITY: float = 11.0
-const BOOSTED_JUMP_VELOCITY: float = 18.0
-const WALL_JUMP_VELOCITY: float = 25.0
+var health: int
 
 const WALL_JUMP_Y_DIRECTION: float = 0.1
 const WALL_SLIDE_GRAVITY: float = -2.0
-
 const ACCELERATION: float = 4.0
 const IN_AIR_DECELERATION: float = 2
 const FRICTION: float = 10.0
@@ -41,6 +33,7 @@ var was_on_floor: bool = false
 var selected_body: PhysicsBody3D
 var minimized = false
 
+signal player_icon_changed(image: CompressedTexture2D)
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
@@ -59,12 +52,14 @@ func _ready():
 func spawn(spawn_transform: Transform3D):
 	global_transform = spawn_transform
 	velocity = Vector3.ZERO
+	
+	player_icon_changed.emit(stats.player_icon)
 
 	coyote_timer = 0.0
 	jump_buffer_timer = 0.0
 	
-	health = max_health
-	health_changed.emit(health, max_health)
+	health = stats.max_health
+	health_changed.emit(health, stats.max_health)
 	
 	can_dash = true
 	is_dashing = false
@@ -85,8 +80,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
 	
 	if event.is_action_pressed("jump"):
-		
 		jump_buffer_timer = JUMP_BUFFER_TIME
+	
 	if Input.is_action_pressed("dash") and can_dash:
 		dash()
 
@@ -103,7 +98,7 @@ func _physics_process(delta: float) -> void:
 		minimized = false
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	var max_speed := BOOSTED_SPEED if is_effect_applied("Speed Boost") else DEFAULT_SPEED
+	var max_speed := stats.boosted_speed if is_effect_applied("Speed Boost") else stats.default_speed
 	var acceleration := ACCELERATION
 	var deceleration := FRICTION if is_on_floor() else IN_AIR_DECELERATION
 	
@@ -164,13 +159,13 @@ func query_jump():
 			dash_timer.stop()
 			dash_cooldown_timer.start()
 		if is_effect_applied("Jump Boost"):
-			velocity.y = BOOSTED_JUMP_VELOCITY
+			velocity.y = stats.boosted_jump_velocity
 		else:
-			velocity.y = DEFAULT_JUMP_VELOCITY
+			velocity.y = stats.default_jump_velocity
 	elif is_wall_sliding:
 		var direction = get_wall_normal() * 0.5
 		direction.y = WALL_JUMP_Y_DIRECTION
-		velocity = direction * WALL_JUMP_VELOCITY
+		velocity = direction * stats.wall_jump_velocity
 		wall_jump_cooldown_timer.start()
 
 
@@ -178,7 +173,7 @@ func dash():
 	is_dashing = true
 	can_dash = false
 	var dash_direction := camera.global_transform.basis.z * -1
-	velocity = dash_direction * DASH_SPEED
+	velocity = dash_direction * stats.dash_speed
 	dash_timer.start()
 
 @rpc("any_peer")
@@ -187,13 +182,13 @@ func receive_damage(damage):
 	if health <= 0:
 		death.emit(get_multiplayer_authority())
 		
-	health_changed.emit(health, max_health)
+	health_changed.emit(health, stats.max_health)
 
 func get_camera_global_basis() -> Basis:
 	return camera.global_basis
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
-	velocity = velocity.normalized() * DEFAULT_SPEED
+	velocity = velocity.normalized() * stats.default_speed
 
 func _on_dash_cooldown_timer_timeout() -> void:
 	can_dash = true

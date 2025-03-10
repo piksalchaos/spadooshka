@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="GunStats" load_steps=2 format=3 uid="uid://banfjv24s66xd"]
+
+[ext_resource type="Script" path="res://scenes/player/gun_stats.gd" id="1_3j0sl"]
+
+[resource]
+script = ExtResource("1_3j0sl")
+mag_capacity = 10
+damage = 30
+shoot_range = 100

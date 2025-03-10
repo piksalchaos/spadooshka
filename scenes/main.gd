@@ -38,6 +38,7 @@ func _ready() -> void:
 	score_changed.connect(hud.update_score_display.rpc)
 
 func _on_local_menu_host_button_pressed() -> void:
+	
 	enet_peer.create_server(server_port)
 	multiplayer.multiplayer_peer = enet_peer
 	

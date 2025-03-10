@@ -2,7 +2,7 @@ class_name ServerBrowser extends Node
 
 @export var listen_port: int = 8911
 @export var broadcast_port: int = 8912
-@export var broadcast_address: String = ""
+@export var broadcast_address: String = "255.255.255.255"
 
 @onready var broadcast_timer: Timer = $BroadcastTimer
 
@@ -21,27 +21,6 @@ signal removed_server(room_name: String)
 
 func _ready():
 	set_up_listener()
-	broadcast_address = get_subnet_broadcast()
-
-func get_best_local_ip() -> String:
-	var ips = IP.get_local_addresses()
-	for ip in ips:
-		if ip.begins_with("192."):
-			return ip
-	for ip in ips:
-		if ip.begins_with("172."):
-			return ip
-	for ip in ips:
-		if ip.begins_with("10."):
-			return ip
-	return ""
-
-func get_subnet_broadcast():
-	var local_ip = get_best_local_ip()
-	if local_ip == "":
-		return "255.255.255.255"
-	var parts = local_ip.split(".")
-	return "%s.%s.%s.255" % [parts[0], parts[1], parts[2]] #maybe change to detect subnet mask 
 
 func set_up_listener():
 	listener = PacketPeerUDP.new()
@@ -71,7 +50,7 @@ func update_server_list():
 	var data = bytes.get_string_from_utf16()
 	var room_info = JSON.parse_string(data)
 	
-	print(" server IP: " + server_ip + " server port: " + str(server_port) + " room info: " + str(room_info))
+	#print(" server IP: " + server_ip + " server port: " + str(server_port) + " room info: " + str(room_info))
 	if server_info_list.has(room_info.name):
 		server_info_list[room_info.name].player_count = room_info.player_count
 		server_info_list[room_info.name].seconds_since_broadcast = 0.0

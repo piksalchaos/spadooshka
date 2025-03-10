@@ -61,9 +61,6 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 35.351
 
 [node name="TestEnvironment2" parent="." index="4" instance=ExtResource("4_bq1cw")]
 
-[node name="LootBoxSpawner" parent="." index="5"]
-_spawnable_scenes = PackedStringArray()
-
 [node name="Launchpad" parent="." index="6" instance=ExtResource("5_u3i8e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.11524, 2.63152, -7.20864)
 strength = 30

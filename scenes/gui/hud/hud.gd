@@ -6,8 +6,12 @@ const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
 @onready var health_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/HealthBar
 @onready var dash_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/DashBar
 @onready var inventory_slots: Array[Node] = $Inventory.get_children()
+@onready var low_health_texture = $LowHealthTexture
+@onready var low_health_texture_animation_player = $LowHealthTexture/AnimationPlayer
 
 @onready var score_display: PanelContainer = $ScoreDisplay
+
+@export var low_health_effect_threshold = 0.25
 
 func update_ammo_display(num_bullets, mag_capacity):
 	ammo_amount_bar.value = float(num_bullets) / mag_capacity
@@ -17,6 +21,14 @@ func update_dash_display(dash_value, max_dash):
 
 func update_health_display(health, max_health):
 	health_bar.value = float(health) / max_health
+	#if low_health_texture_animation_player.is_playing():
+		#return
+	if float(health) / max_health < low_health_effect_threshold:
+		low_health_texture_animation_player.speed_scale = 1
+	else:
+		low_health_texture_animation_player.speed_scale = -1
+	low_health_texture_animation_player.play("low_health_show")
+	
 
 func create_effect_display(effect: Effect):
 	var effect_display = EFFECT_DISPLAY_SCENE.instantiate()

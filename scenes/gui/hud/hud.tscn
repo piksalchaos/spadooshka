@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://euhmy40ljoc4"]
+[gd_scene load_steps=15 format=3 uid="uid://euhmy40ljoc4"]
 
 [ext_resource type="Script" path="res://scenes/gui/hud/hud.gd" id="1_8mkb2"]
 [ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="2_yw55s"]
@@ -17,6 +17,52 @@ bg_color = Color(0.153453, 0.663559, 0.792775, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glbnf"]
 bg_color = Color(0.261093, 0.704154, 0.344336, 1)
+
+[sub_resource type="Gradient" id="Gradient_gvxgr"]
+offsets = PackedFloat32Array(0.532468, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 0, 0, 0.470588)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4mih1"]
+gradient = SubResource("Gradient_gvxgr")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Animation" id="Animation_r8wlt"]
+resource_name = "low_health_show"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.0333333, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_dv2xh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_caxpl"]
+_data = {
+"RESET": SubResource("Animation_dv2xh"),
+"low_health_show": SubResource("Animation_r8wlt")
+}
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -190,3 +236,18 @@ layout_mode = 2
 
 [node name="InventorySlot3" parent="Inventory" instance=ExtResource("5_ojg8h")]
 layout_mode = 2
+
+[node name="LowHealthTexture" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_4mih1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LowHealthTexture"]
+libraries = {
+"": SubResource("AnimationLibrary_caxpl")
+}

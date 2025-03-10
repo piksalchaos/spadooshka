@@ -1,6 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://ty7aw8t2okli"]
+[gd_scene load_steps=6 format=3 uid="uid://ty7aw8t2okli"]
 
 [ext_resource type="Script" path="res://scenes/entities/item_entities/grenade.gd" id="1_hdmlq"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dlt5l"]
+rough = true
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_uchby"]
 radius = 0.05
@@ -8,13 +11,14 @@ height = 0.2
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dup11"]
 radius = 0.05
-height = 0.1
+height = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cvr1g"]
 radius = 3.0
 
 [node name="Grenade" type="RigidBody3D"]
 mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_dlt5l")
 continuous_cd = true
 script = ExtResource("1_hdmlq")
 falloff_strength = 1

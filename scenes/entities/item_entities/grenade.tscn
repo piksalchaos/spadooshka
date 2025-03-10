@@ -1,17 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://ty7aw8t2okli"]
+[gd_scene load_steps=5 format=3 uid="uid://ty7aw8t2okli"]
 
 [ext_resource type="Script" path="res://scenes/entities/item_entities/grenade.gd" id="1_hdmlq"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p5f04"]
-albedo_color = Color(0.862087, 0.710594, 0.039148, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_csv2h"]
-material = SubResource("StandardMaterial3D_p5f04")
-radius = 0.1
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uchby"]
+radius = 0.05
 height = 0.2
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_1jw8u"]
-radius = 0.1
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dup11"]
+radius = 0.05
+height = 0.1
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cvr1g"]
 radius = 3.0
@@ -23,10 +20,10 @@ script = ExtResource("1_hdmlq")
 falloff_strength = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-mesh = SubResource("SphereMesh_csv2h")
+mesh = SubResource("CapsuleMesh_uchby")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("SphereShape3D_1jw8u")
+shape = SubResource("CapsuleShape3D_dup11")
 
 [node name="ExplodeTimer" type="Timer" parent="."]
 wait_time = 5.0

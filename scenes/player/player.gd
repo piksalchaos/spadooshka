@@ -19,7 +19,7 @@ const DEFAULT_JUMP_VELOCITY: float = 11.0
 const BOOSTED_JUMP_VELOCITY: float = 18.0
 const WALL_JUMP_VELOCITY: float = 25.0
 
-const WALL_JUMP_Y_DIRECTION: float = 0.1
+const WALL_JUMP_Y_DIRECTION: float = 0.5
 const WALL_SLIDE_GRAVITY: float = -2.0
 
 const ACCELERATION: float = 4.0
@@ -177,7 +177,7 @@ func query_jump():
 	elif is_wall_sliding:
 		var direction = get_wall_normal() * 0.5
 		direction.y = WALL_JUMP_Y_DIRECTION
-		velocity = direction * WALL_JUMP_VELOCITY
+		velocity += direction * WALL_JUMP_VELOCITY
 		wall_jump_cooldown_timer.start()
 
 

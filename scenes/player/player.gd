@@ -34,6 +34,7 @@ var is_aiming: bool = false
 var default_fov = 90
 var dash_fov = 100
 var speed_boost_fov = 95
+var aim_fov = 75
 var fov_decay_rate = 100 #how much fov wil drop by in a second
 
 var selected_body: PhysicsBody3D
@@ -213,9 +214,11 @@ func update_fov(delta):
 		camera.fov = speed_boost_fov
 		return
 	if is_aiming:
-		camera.fov = 80
+		camera.fov = move_toward(camera.fov, aim_fov, 4)
 		return
-	camera.fov = max(default_fov, camera.fov - fov_decay_rate * delta)
+	#camera.fov = max(default_fov, camera.fov - fov_decay_rate * delta)
+	camera.fov = move_toward(camera.fov, max(default_fov, camera.fov - fov_decay_rate * delta), 2)
+	
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false

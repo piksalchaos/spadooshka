@@ -29,10 +29,12 @@ var can_dash: bool = true
 var is_dashing: bool = false
 var is_wall_sliding: bool = false
 var was_on_floor: bool = false
+var is_aiming: bool = false
 
 var default_fov = 90
 var dash_fov = 100
 var speed_boost_fov = 95
+var aim_fov = 75
 var fov_decay_rate = 100 #how much fov wil drop by in a second
 
 var selected_body: PhysicsBody3D
@@ -75,6 +77,7 @@ func spawn(spawn_transform: Transform3D):
 	dash_changed.emit(dash_cooldown_timer.wait_time, dash_cooldown_timer.wait_time)
 	
 	is_wall_sliding = false
+	is_aiming = false
 	
 	is_dead = false
 	
@@ -93,6 +96,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if Input.is_action_pressed("dash") and can_dash:
 		dash()
+	
+	if Input.is_action_just_pressed("aim"):
+		is_aiming = true
+	if Input.is_action_just_released("aim"):
+		is_aiming = false
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
@@ -108,6 +116,8 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	var max_speed := stats.boosted_speed if is_effect_applied("Speed Boost") else stats.default_speed
+	if is_aiming: 
+		max_speed *= 0.5
 	var acceleration := ACCELERATION
 	var deceleration := FRICTION if is_on_floor() else IN_AIR_DECELERATION
 	
@@ -208,7 +218,13 @@ func update_fov(delta):
 	if is_effect_applied("Speed Boost"):
 		camera.fov = speed_boost_fov
 		return
-	camera.fov = max(default_fov, camera.fov - fov_decay_rate * delta)
+	if is_aiming:
+		camera.fov = move_toward(camera.fov, aim_fov, 4)
+		return
+	#camera.fov = max(default_fov, camera.fov - fov_decay_rate * delta)
+	camera.fov = move_toward(camera.fov, max(default_fov, camera.fov - fov_decay_rate * delta), 2)
+	
+
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
 	velocity = velocity.normalized() * stats.default_speed

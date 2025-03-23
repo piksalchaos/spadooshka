@@ -31,6 +31,8 @@ const ROUNDS_TO_WIN: int = 3
 var round_number: int = 1
 var rounds_won: int = 0
 
+const HOST_NUMBER = 1
+
 signal score_changed(round_number: int, P1_score: int, P2_score: int)
 
 func _ready() -> void:
@@ -126,7 +128,7 @@ func play_round():
 func end_round(dead_peer_id: int):
 	if not is_multiplayer_authority(): return
 	
-	if dead_peer_id != 1:
+	if dead_peer_id != HOST_NUMBER:
 		rounds_won += 1
 	var P1_score: int = rounds_won
 	var P2_score: int = round_number - rounds_won
@@ -134,9 +136,24 @@ func end_round(dead_peer_id: int):
 	if P1_score < ROUNDS_TO_WIN and P2_score < ROUNDS_TO_WIN:
 		round_number += 1
 		score_changed.emit(round_number, P1_score, P2_score)
+		show_end_round_icon.rpc(dead_peer_id != HOST_NUMBER)
+		await get_tree().create_timer(5).timeout
+		clear_end_round_icon.rpc()
 		play_round()
 	else:
 		prepare_GUI_for_end_game.rpc(P1_score == ROUNDS_TO_WIN)
+
+@rpc("call_local")
+func show_end_round_icon(P1_won: bool):
+	if is_multiplayer_authority() == P1_won:
+		hud.get_node("RoundWonIcon").visible = true #YOU TOO
+	else:
+		hud.get_node("RoundLostIcon").visible = true #I HATE THIS
+		
+@rpc("call_local")
+func clear_end_round_icon():
+	hud.get_node("RoundWonIcon").visible = false
+	hud.get_node("RoundLostIcon").visible = false
 
 @rpc("call_local")
 func prepare_GUI_for_end_game(P1_won: bool):
@@ -159,6 +176,7 @@ func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 		var effect_manager = node.get_node("EffectManager")
 		effect_manager.effect_applied.connect(hud.create_effect_display)
 		node.death.connect(end_round.rpc)
+		
 
 func upnp_setup():
 	var upnp = UPNP.new()

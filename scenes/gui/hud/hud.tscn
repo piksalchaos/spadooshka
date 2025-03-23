@@ -1,10 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://euhmy40ljoc4"]
+[gd_scene load_steps=17 format=3 uid="uid://euhmy40ljoc4"]
 
 [ext_resource type="Script" path="res://scenes/gui/hud/hud.gd" id="1_8mkb2"]
 [ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="2_yw55s"]
 [ext_resource type="Texture2D" uid="uid://cw8qtdr0bp1af" path="res://assets/images/player_icon_temp.png" id="3_lsk7v"]
 [ext_resource type="Script" path="res://scenes/gui/hud/score_display.gd" id="4_0pm5a"]
 [ext_resource type="PackedScene" uid="uid://ooxxqxmb5cvk" path="res://scenes/gui/hud/inventory_slot.tscn" id="5_ojg8h"]
+[ext_resource type="Texture2D" uid="uid://die8f8s7a6i8a" path="res://assets/images/round_won_icon.png" id="6_mlg6x"]
+[ext_resource type="Texture2D" uid="uid://choc1obf6wea5" path="res://assets/images/round_lost_icon.png" id="7_oxhew"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o11au"]
 bg_color = Color(0.6, 0.6, 0.6, 0.572549)
@@ -27,6 +29,21 @@ gradient = SubResource("Gradient_gvxgr")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="Animation" id="Animation_dv2xh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_r8wlt"]
 resource_name = "low_health_show"
 length = 0.5
@@ -41,21 +58,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_dv2xh"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:self_modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_caxpl"]
@@ -238,6 +240,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="LowHealthTexture" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0)
 z_index = -1
 layout_mode = 1
 anchors_preset = 15
@@ -251,3 +254,37 @@ texture = SubResource("GradientTexture2D_4mih1")
 libraries = {
 "": SubResource("AnimationLibrary_caxpl")
 }
+
+[node name="RoundWonIcon" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -195.0
+offset_top = -195.0
+offset_right = 195.0
+offset_bottom = 195.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_mlg6x")
+
+[node name="RoundLostIcon" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -202.0
+offset_top = -202.0
+offset_right = 202.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_oxhew")

@@ -12,7 +12,11 @@ const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
 
 @onready var score_display: PanelContainer = $ScoreDisplay
 
+@onready var win_icon = $RoundWonIcon
+@onready var lost_icon = $RoundLostIcon
+
 @export var low_health_effect_threshold = 0.25
+var is_low_health = false
 
 func update_player_icon(image: CompressedTexture2D):
 	player_icon.texture = image
@@ -24,11 +28,14 @@ func update_health_display(health, max_health):
 	health_bar.value = float(health) / max_health
 	#if low_health_texture_animation_player.is_playing():
 		#return
-	if float(health) / max_health < low_health_effect_threshold:
+	if float(health) / max_health < low_health_effect_threshold and is_low_health == false:
+		is_low_health = true
 		low_health_texture_animation_player.speed_scale = 1
-	else:
+		low_health_texture_animation_player.play("low_health_show")
+	elif is_low_health == true:
+		is_low_health = false
 		low_health_texture_animation_player.speed_scale = -1
-	low_health_texture_animation_player.play("low_health_show")
+		low_health_texture_animation_player.play("low_health_show")
 	
 
 func update_dash_display(dash_value, max_dash):
@@ -50,3 +57,13 @@ func update_score_display(round_number: int, P1_score: int, P2_score: int):
 	score_display.set_round_label(round_number)
 	score_display.set_P1_score_label(P1_score)
 	score_display.set_P2_score_label(P2_score)
+	
+func update_win_lost_display(is_win: bool):
+	if is_win == null:
+		win_icon.visible = false
+		lost_icon.visible = false
+		return
+	if is_win:
+		win_icon.visible = true
+	else:
+		lost_icon.visible = true

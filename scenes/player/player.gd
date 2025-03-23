@@ -38,6 +38,8 @@ var fov_decay_rate = 100 #how much fov wil drop by in a second
 var selected_body: PhysicsBody3D
 var minimized = false
 
+var is_dead = true
+
 signal player_icon_changed(image: CompressedTexture2D)
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 signal dash_changed(dash_value: int, max_dash: int)
@@ -73,6 +75,8 @@ func spawn(spawn_transform: Transform3D):
 	dash_changed.emit(dash_cooldown_timer.wait_time, dash_cooldown_timer.wait_time)
 	
 	is_wall_sliding = false
+	
+	is_dead = false
 	
 	inventory.spawn()
 	equipped_gun.spawn()
@@ -185,8 +189,11 @@ func dash():
 
 @rpc("any_peer")
 func receive_damage(damage):
+	if is_dead == true:
+		return
 	health -= damage
 	if health <= 0:
+		die()
 		death.emit(get_multiplayer_authority())
 		
 	health_changed.emit(health, stats.max_health)
@@ -217,3 +224,6 @@ func apply_effect(effect: Effect):
 
 func is_effect_applied(effect_name: String):
 	return effect_manager.is_effect_applied(effect_name)
+	
+func die():
+	is_dead = true

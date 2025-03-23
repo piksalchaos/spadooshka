@@ -1,91 +1,13 @@
-[gd_scene load_steps=10 format=3 uid="uid://b84jqg6v7ev0v"]
+[gd_scene load_steps=4 format=3 uid="uid://b84jqg6v7ev0v"]
 
 [ext_resource type="Script" path="res://scenes/player/gun/gun.gd" id="1_51xk5"]
 [ext_resource type="PackedScene" uid="uid://cca6nf5b5ckt4" path="res://scenes/player/gun/gun_effects.tscn" id="2_1lasm"]
+[ext_resource type="PackedScene" uid="uid://bnmehxycglo2" path="res://assets/models/guns/colt_python.blend" id="3_rkq8b"]
 
-[sub_resource type="CylinderMesh" id="CylinderMesh_v0qj0"]
-top_radius = 0.1
-bottom_radius = 0.1
-height = 1.0
-
-[sub_resource type="Animation" id="Animation_q7oej"]
-length = 0.001
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5)
-
-[sub_resource type="Animation" id="Animation_gds7w"]
-resource_name = "idle"
-length = 3.0
-loop_mode = 1
-
-[sub_resource type="Animation" id="Animation_cowen"]
-resource_name = "move"
-loop_mode = 1
-step = 0.25
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5, 0.5, 1, 0.5, -0.1, -0.5, 1, 1, 0.5, -0.25, -0.5)
-
-[sub_resource type="Animation" id="Animation_0syds"]
-resource_name = "reload"
-step = 0.1
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5, 0.5, 1, 0.215158, -0.25, -0.5, 1, 1, 0.5, -0.25, -0.5)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0.707107, 0, 0, 0.707107, 0.5, 1, 0.664345, 0.242169, -0.242169, 0.664345, 1, 1, 0.707107, 0, 0, 0.707107)
-
-[sub_resource type="Animation" id="Animation_6fh3t"]
-resource_name = "shoot"
-length = 0.4
-step = 0.1
-tracks/0/type = "rotation_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.707108, 0, 0, 0.707106, 0.1, 1, 0.84209, 0, 0, 0.539337, 0.4, 1, 0.707108, 0, 0, 0.707106)
-tracks/1/type = "position_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0.5, -0.25, -0.5, 0.1, 1, 0.5, -0.18589, -0.5, 0.4, 1, 0.5, -0.25, -0.5)
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_tx8a1"]
-_data = {
-"RESET": SubResource("Animation_q7oej"),
-"idle": SubResource("Animation_gds7w"),
-"move": SubResource("Animation_cowen"),
-"reload": SubResource("Animation_0syds"),
-"shoot": SubResource("Animation_6fh3t")
-}
-
-[node name="Gun" type="MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.5, -0.25, -0.5)
-mesh = SubResource("CylinderMesh_v0qj0")
-skeleton = NodePath("../..")
+[node name="Gun" type="Node3D" node_paths=PackedStringArray("gun_model")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.25, -0.5)
 script = ExtResource("1_51xk5")
+gun_model = NodePath("ColtPython")
 
 [node name="FireTimer" type="Timer" parent="."]
 wait_time = 0.4
@@ -93,13 +15,6 @@ one_shot = true
 
 [node name="ReloadTimer" type="Timer" parent="."]
 one_shot = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_tx8a1")
-}
-autoplay = "idle"
-playback_default_blend_time = 1.0
 
 [node name="ShootSFX" type="AudioStreamPlayer" parent="."]
 
@@ -110,9 +25,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -0.25)
 target_position = Vector3(0, -2, 0)
 collision_mask = 3
 
-[node name="GunEffects" parent="." instance=ExtResource("2_1lasm")]
-transform = Transform3D(-1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 0, 1, 0, -0.548936, 2.98023e-08)
-visible = false
+[node name="ColtPython" parent="." instance=ExtResource("3_rkq8b")]
+transform = Transform3D(8.74228e-08, -4.37114e-08, -1, 1, 4.37114e-08, 8.74228e-08, 4.37114e-08, -1, 4.37114e-08, 0, 0, 0)
+
+[node name="GunEffects" parent="ColtPython" instance=ExtResource("2_1lasm")]
+transform = Transform3D(-4.37114e-09, -0.1, 4.37114e-09, 0, -4.37114e-09, -0.1, 0.1, -4.37114e-09, 1.91069e-16, -0.172402, 0.160341, -1.19209e-07)
 
 [connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]

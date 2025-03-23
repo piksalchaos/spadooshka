@@ -1,11 +1,14 @@
 class_name Gun extends Node
 
 @export var stats: GunStats
+@export var gun_model: Node3D
 
 var is_gun_ready: bool
 var num_bullets: int
 
 @onready var shoot_ray: RayCast3D = $ShootRay
+@onready var animation_player: AnimationPlayer = gun_model.get_node("AnimationPlayer")
+@onready var gun_effects = gun_model.get_node("GunEffects")
 
 enum ShootMode {AUTO, SEMI}
 @export var shoot_mode: ShootMode
@@ -13,6 +16,7 @@ enum ShootMode {AUTO, SEMI}
 var bullet_hole = preload("res://scenes/entities/bullet_hole.tscn")
 var is_reloading: bool
 var is_aiming: bool
+
 
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 
@@ -95,14 +99,14 @@ func reload():
 	is_reloading = true
 	$ReloadTimer.start()
 	$ReloadSFX.play()
-	$AnimationPlayer.stop()
-	$AnimationPlayer.play("reload")
+	animation_player.stop()
+	animation_player.play("reload")
 	
 func play_shoot_effects():
-	$GunEffects.play_effects()
+	gun_effects.play_effects()
 	$ShootSFX.play()
-	$AnimationPlayer.stop()
-	$AnimationPlayer.play("shoot")
+	animation_player.stop()
+	animation_player.play("shoot")
 
 func _on_fire_timer_timeout() -> void:
 	is_gun_ready = true

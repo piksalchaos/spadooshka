@@ -8,4 +8,5 @@
 stats = ExtResource("2_n57ff")
 
 [node name="Gun" parent="Head/Camera" index="1"]
+transform = Transform3D(1, 0, 0, 0, -0.0907717, -0.995872, 0, 0.995872, -0.0907717, 0.5, -0.25, -0.5)
 stats = ExtResource("3_4l2lx")

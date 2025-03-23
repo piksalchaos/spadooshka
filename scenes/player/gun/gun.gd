@@ -12,6 +12,7 @@ enum ShootMode {AUTO, SEMI}
 
 var bullet_hole = preload("res://scenes/entities/bullet_hole.tscn")
 var is_reloading: bool
+var is_aiming: bool
 
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 
@@ -24,6 +25,7 @@ func spawn():
 	is_reloading = false
 	num_bullets = stats.mag_capacity
 	is_reloading = false
+	is_aiming = false
 	ammo_changed.emit(num_bullets, stats.mag_capacity)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -32,6 +34,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		shoot()
 	if event.is_action_pressed("reload"):
 		reload()
+	
+	if Input.is_action_just_pressed("aim"):
+		is_aiming = true
+	if Input.is_action_just_released("aim"):
+		is_aiming = false
+	
 
 func _process(_delta) -> void:
 	if Input.is_action_pressed("shoot") and shoot_mode == ShootMode.AUTO:
@@ -44,7 +52,16 @@ func shoot():
 	num_bullets -= 1
 	is_gun_ready = false
 	ammo_changed.emit(num_bullets, stats.mag_capacity)
-
+	
+	var rot_x = stats.rot_x
+	var rot_z = stats.rot_z
+	if is_aiming:
+		rot_x = 0.2
+		rot_z = 0.2
+		
+	shoot_ray.rotation_degrees.x = randf_range(-rot_x, rot_x)
+	shoot_ray.rotation_degrees.z = randf_range(-rot_z, rot_z)
+	
 	if shoot_ray.is_colliding():
 		var target = shoot_ray.get_collider()
 		var position = shoot_ray.get_collision_point()

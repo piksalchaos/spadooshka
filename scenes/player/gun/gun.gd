@@ -53,14 +53,14 @@ func shoot():
 	is_gun_ready = false
 	ammo_changed.emit(num_bullets, stats.mag_capacity)
 	
-	var rot_x = stats.rot_x
-	var rot_z = stats.rot_z
+	var random_rot_x = stats.random_rot_x
+	var random_rot_z = stats.random_rot_z
 	if is_aiming:
-		rot_x = 0.2
-		rot_z = 0.2
+		random_rot_x = 0.2
+		random_rot_z = 0.2
 		
-	shoot_ray.rotation_degrees.x = randf_range(-rot_x, rot_x)
-	shoot_ray.rotation_degrees.z = randf_range(-rot_z, rot_z)
+	shoot_ray.rotation_degrees.x = randf_range(-random_rot_x, random_rot_x)
+	shoot_ray.rotation_degrees.z = randf_range(-random_rot_z, random_rot_z)
 	
 	if shoot_ray.is_colliding():
 		var target = shoot_ray.get_collider()

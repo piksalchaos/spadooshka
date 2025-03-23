@@ -5,5 +5,5 @@ class_name GunStats extends Resource
 @export var damage: int = 20
 @export var shoot_range: int = 100
 
-@export var rot_x = .6
-@export var rot_z = .9
+@export var random_rot_x = .6
+@export var random_rot_z = .9

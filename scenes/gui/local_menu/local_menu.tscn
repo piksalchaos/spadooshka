@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c4q7skpmltk8l"]
 
-[ext_resource type="Script" path="res://scenes/gui/local_menu.gd" id="1_yla67"]
+[ext_resource type="Script" path="res://scenes/gui/local_menu/local_menu.gd" id="1_yla67"]
 
 [node name="LocalMenu" type="Control"]
 layout_mode = 3

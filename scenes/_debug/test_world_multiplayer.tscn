@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/_debug/test_world_multiplayer.gd" id="1_mbw0t"]
 [ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/gui/hud/hud.tscn" id="2_j56a6"]
-[ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/gui/local_menu.tscn" id="3_lrdwg"]
+[ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/gui/local_menu/local_menu.tscn" id="3_lrdwg"]
 [ext_resource type="Script" path="res://scenes/maps/base_map/loot_box_spawner.gd" id="4_o1hqn"]
 [ext_resource type="PackedScene" uid="uid://b4ps4vnc5oysg" path="res://scenes/maps/environments/test_environment_2.tscn" id="5_jkpfs"]
 

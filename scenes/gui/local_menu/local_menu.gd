@@ -1,6 +1,6 @@
 class_name LocalMenu extends Control
 
-const SERVER_INFO_DISPLAY_SCENE = preload("res://scenes/gui/server_info_display.tscn")
+const SERVER_INFO_DISPLAY_SCENE = preload("res://scenes/gui/local_menu/server_info_display.tscn")
 
 @onready var listener_failed_label: Label = $ListenerFailedLabel
 @onready var server_info_container: VBoxContainer = $ServerInfoPanelContainer/ServerInfoContainer

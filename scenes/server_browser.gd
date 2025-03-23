@@ -89,11 +89,14 @@ func _on_broadcast_timer_timeout() -> void:
 func update_local_room_player_count():
 	local_room_info.player_count = multiplayer.get_peers().size() + 1
 
-func clean_up():
-	listener.close()
+func clean_up_broadcaster():
 	broadcast_timer.stop()
 	if broadcaster != null:
 		broadcaster.close()
+
+func clean_up():
+	listener.close()
+	clean_up_broadcaster()
 
 func _exit_tree():
 	clean_up()

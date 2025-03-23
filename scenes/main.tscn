@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://c2c8wh6k7fca5"]
+[gd_scene load_steps=8 format=3 uid="uid://c2c8wh6k7fca5"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_yci6l"]
+[ext_resource type="PackedScene" uid="uid://c6j0xtac0l3pd" path="res://scenes/gui/title_screen.tscn" id="2_v7p2d"]
+[ext_resource type="PackedScene" uid="uid://hmxe78pntojx" path="res://scenes/gui/main_menu.tscn" id="3_82cjl"]
 [ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/gui/hud/hud.tscn" id="3_shkqk"]
-[ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/gui/local_menu.tscn" id="4_b8hkp"]
+[ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/gui/local_menu/local_menu.tscn" id="4_b8hkp"]
 [ext_resource type="PackedScene" uid="uid://g0un4ork14i8" path="res://scenes/gui/lobby_menu/lobby_menu.tscn" id="4_jqa32"]
 [ext_resource type="PackedScene" uid="uid://dcw5bchdkvdra" path="res://scenes/gui/end_screen.tscn" id="5_t4ul1"]
-[ext_resource type="PackedScene" uid="uid://g0lj1aiava1y" path="res://scenes/server_browser.tscn" id="6_7dtkc"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_yci6l")
@@ -25,7 +26,15 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="TitleScreen" parent="GUI" instance=ExtResource("2_v7p2d")]
+layout_mode = 1
+
+[node name="MainMenu" parent="GUI" instance=ExtResource("3_82cjl")]
+visible = false
+layout_mode = 1
+
 [node name="LocalMenu" parent="GUI" instance=ExtResource("4_b8hkp")]
+visible = false
 layout_mode = 1
 
 [node name="LobbyMenu" parent="GUI" instance=ExtResource("4_jqa32")]
@@ -47,13 +56,13 @@ visible = false
 layout_mode = 1
 text = "You lost."
 
-[node name="ServerBrowser" parent="." instance=ExtResource("6_7dtkc")]
-
 [connection signal="child_entered_tree" from="MultiplayerContainer" to="." method="_on_multiplayer_container_child_entered_tree"]
+[connection signal="exit_button_pressed" from="GUI/TitleScreen" to="." method="_on_title_screen_exit_button_pressed"]
+[connection signal="start_button_pressed" from="GUI/TitleScreen" to="." method="_on_title_screen_start_button_pressed"]
+[connection signal="local_game_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_local_game_button_pressed"]
 [connection signal="host_button_pressed" from="GUI/LocalMenu" to="." method="_on_local_menu_host_button_pressed"]
 [connection signal="join_button_pressed" from="GUI/LocalMenu" to="." method="_on_local_menu_join_button_pressed"]
 [connection signal="ready" from="GUI/LocalMenu" to="." method="_on_main_menu_ready"]
 [connection signal="singleplayer_button_pressed" from="GUI/LocalMenu" to="." method="_on_local_menu_singleplayer_button_pressed"]
 [connection signal="ready_button_pressed" from="GUI/LobbyMenu" to="." method="_on_lobby_menu_ready_button_pressed"]
 [connection signal="start_button_pressed" from="GUI/LobbyMenu" to="." method="_on_lobby_menu_start_button_pressed"]
-[connection signal="failed_listen_port_bind" from="ServerBrowser" to="." method="_on_server_browser_failed_listen_port_bind"]

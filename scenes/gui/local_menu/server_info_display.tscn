@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://chodaasqqr3r6"]
 
-[ext_resource type="Script" path="res://scenes/gui/server_info_display.gd" id="1_mhptv"]
+[ext_resource type="Script" path="res://scenes/gui/local_menu/server_info_display.gd" id="1_mhptv"]
 
 [node name="ServerInfoDisplay" type="HBoxContainer"]
 script = ExtResource("1_mhptv")

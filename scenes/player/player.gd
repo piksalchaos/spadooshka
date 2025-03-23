@@ -94,10 +94,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		dash()
 	
 	if Input.is_action_just_pressed("aim"):
-		print('aiming')
 		is_aiming = true
 	if Input.is_action_just_released("aim"):
-		print('not aiming anymore')
 		is_aiming = false
 
 func _physics_process(delta: float) -> void:

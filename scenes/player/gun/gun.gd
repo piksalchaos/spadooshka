@@ -13,7 +13,6 @@ var num_bullets: int
 var bullet_hole = preload("res://scenes/entities/bullet_hole.tscn")
 var is_reloading: bool
 var is_aiming: bool
-#var is_revved: bool
 var is_revving: bool
 var need_to_rev: bool
 
@@ -30,7 +29,6 @@ func _ready() -> void:
 func spawn():
 	is_gun_ready = true
 	is_revving = false
-	#is_revved = false
 	is_reloading = false
 	num_bullets = stats.mag_capacity
 	is_reloading = false

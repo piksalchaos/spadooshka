@@ -62,7 +62,6 @@ script = ExtResource("3_1jyis")
 [node name="Gun" parent="Head/Camera" instance=ExtResource("4_peur4")]
 transform = Transform3D(1, 0, 0, 0, -0.0907717, -0.995872, 0, 0.995872, -0.0907717, 0.5, -0.25, -0.5)
 skeleton = NodePath("../../../..")
-shoot_mode = 1
 
 [node name="Timers" type="Node" parent="."]
 

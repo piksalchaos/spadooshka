@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="GunStats" load_steps=2 format=3 uid="uid://gpxbtt1v2qi5"]
-
-[ext_resource type="Script" path="res://scenes/player/gun_stats.gd" id="1_xs8wd"]
-
-[resource]
-script = ExtResource("1_xs8wd")
-mag_capacity = 5
-damage = 20
-shoot_range = 100

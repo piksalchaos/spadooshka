@@ -3,15 +3,15 @@ extends Node
 const SERVER_BROWSER_SCENE = preload("res://scenes/server_browser.tscn")
 
 const PLAYER_FILE_NAMES: Array[String] = [
-	#"res://scenes/agents/bunny/bunny.tscn",
-	#"res://scenes/agents/catboy/catboy.tscn",
-	#"res://scenes/agents/madoka/madoka.tscn",
+	"res://scenes/agents/bunny/bunny.tscn",
+	"res://scenes/agents/catboy/catboy.tscn",
+	"res://scenes/agents/madoka/madoka.tscn",
 	"res://scenes/agents/sandy/sandy.tscn"
 ]
 
 const MAP_FILE_NAMES: Array[String] = [
 	"res://scenes/maps/map_1.tscn",
-	#"res://scenes/maps/map_2.tscn"
+	"res://scenes/maps/map_2.tscn"
 ]
 
 @export var server_port = 8910

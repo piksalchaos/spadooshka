@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://00yi6jl0g32m"]
 
 [ext_resource type="PackedScene" uid="uid://cyxjceb2t4xis" path="res://scenes/player/player.tscn" id="1_yy0df"]
-[ext_resource type="Resource" uid="uid://bwwhkhjookvw8" path="res://scenes/player/shart_agent/shart_stats.tres" id="2_npico"]
-[ext_resource type="Resource" uid="uid://banfjv24s66xd" path="res://scenes/player/shart_agent/shart_gun_stats.tres" id="3_lgkjd"]
+[ext_resource type="Resource" uid="uid://bwwhkhjookvw8" path="res://scenes/agents/shart_agent/shart_stats.tres" id="2_npico"]
+[ext_resource type="Resource" uid="uid://banfjv24s66xd" path="res://scenes/agents/shart_agent/shart_gun_stats.tres" id="3_lgkjd"]
 
 [node name="Shart" instance=ExtResource("1_yy0df")]
 stats = ExtResource("2_npico")

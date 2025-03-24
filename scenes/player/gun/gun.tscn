@@ -94,6 +94,9 @@ one_shot = true
 [node name="ReloadTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="RevTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_tx8a1")
@@ -116,3 +119,4 @@ visible = false
 
 [connection signal="timeout" from="FireTimer" to="." method="_on_fire_timer_timeout"]
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
+[connection signal="timeout" from="RevTimer" to="." method="_on_rev_timer_timeout"]

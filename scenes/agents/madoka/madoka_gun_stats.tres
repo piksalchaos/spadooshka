@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="GunStats" load_steps=2 format=3 uid="uid://ckair8j43qvu3"]
+
+[ext_resource type="Script" path="res://scenes/player/gun_stats.gd" id="1_lq2ex"]
+
+[resource]
+script = ExtResource("1_lq2ex")
+shoot_mode = 0
+fire_time = 0.25
+reload_time = 2.0
+rev_time = 1.0
+mag_capacity = 50
+damage = 8
+shoot_range = 100
+bullet_trajectory_rot_x = 2.0
+bullet_trajectory_rot_z = 2.0
+aim_bullet_trajectory_rot_x = 1.0
+aim_bullet_trajectory_rot_z = 1.0

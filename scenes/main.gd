@@ -78,19 +78,19 @@ func _on_local_menu_singleplayer_button_pressed() -> void:
 func _on_lobby_menu_start_button_pressed() -> void:
 	assert(multiplayer.get_unique_id() == 1, \
 		"wtf, only the host should be able to start the game")
-	play_game()
-
-func play_game():
-	gui.prepare_for_game.rpc()
 	close_server_browser.rpc()
-	choose_map()
-	add_players()
-	play_round()
+	#play_game()
 
 @rpc("call_local")
 func close_server_browser():
 	if server_browser:
 		server_browser.queue_free()
+
+func play_game():
+	gui.prepare_for_game.rpc()
+	choose_map()
+	add_players()
+	play_round()
 
 func choose_map():
 	map = load(MAP_FILE_NAMES.pick_random()).instantiate()

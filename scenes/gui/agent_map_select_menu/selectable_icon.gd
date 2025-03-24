@@ -2,6 +2,7 @@ class_name SelectableIcon extends TextureButton
 
 signal selected(icon_name: String)
 
-func _on_toggled(toggled_on: bool) -> void:
-	if toggled_on:
-		selected.emit(name)
+func _on_pressed() -> void:
+	selected.emit(name)
+	if button_pressed == false:
+		button_pressed = true

@@ -1,14 +1,18 @@
 extends Control
 
-@onready var agent_icon_container = $RotationContainer/PanelContainer/MarginContainer/AgentIconContainer
+var selected_agent_name: String
+var selected_map_name: String
 
-func _ready() -> void:
-	for agent_icon in agent_icon_container.get_children():
-		agent_icon.selected.connect(_on_agent_select_icon_selected)
+@onready var ready_button: TextureButton = $ReadyButton
 
-func _on_agent_select_icon_selected(agent_name: String):
-	print(agent_name)
-	for agent_icon in agent_icon_container.get_children():
-		if agent_icon.name == agent_name:
-			continue
-		agent_icon.button_pressed = false
+func _on_agent_icon_container_icon_selected(icon_name: String) -> void:
+	selected_agent_name = icon_name
+	print(icon_name)
+	check_for_ready_button()
+
+func _on_map_icon_container_icon_selected(icon_name: String) -> void:
+	selected_map_name = icon_name
+	check_for_ready_button()
+
+func check_for_ready_button():
+	ready_button.disabled = not (selected_agent_name and selected_map_name)

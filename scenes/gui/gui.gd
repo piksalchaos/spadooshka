@@ -4,6 +4,7 @@ extends Control
 @onready var main_menu: Control = $MainMenu
 @onready var local_menu: LocalMenu = $LocalMenu
 @onready var lobby_menu: LobbyMenu = $LobbyMenu
+@onready var agent_map_select_menu: Control = $AgentMapSelectMenu
 @onready var hud: HUD = $HUD
 @onready var victory_screen: Control = $VictoryScreen
 @onready var defeat_screen: Control = $DefeatScreen
@@ -37,6 +38,14 @@ func update_peer_ready_states(peer_id, is_peer_ready):
 		lobby_menu.set_start_button_visibility(are_peers_ready)
 	else:
 		lobby_menu.set_waiting_label_visibility(are_peers_ready)
+
+func _on_lobby_menu_start_button_pressed() -> void:
+	begin_agent_map_selection.rpc()
+
+@rpc("call_local")
+func begin_agent_map_selection():
+	lobby_menu.hide()
+	agent_map_select_menu.show()
 
 @rpc("call_local")
 func prepare_for_game():

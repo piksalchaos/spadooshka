@@ -5,13 +5,15 @@ extends Container
 @export var columns: int = 2
 @export var inner_margin_pixels: int = 10
 
+signal icon_selected(icon_name: String)
+
 func _ready():
 	sort_children()
 	for selectable_icon in get_children():
 		selectable_icon.selected.connect(_on_selectable_icon_selected)
 
 func _on_selectable_icon_selected(icon_name: String):
-	print(icon_name)
+	icon_selected.emit(icon_name)
 	for icon in get_children():
 		if icon.name == icon_name: continue
 		icon.button_pressed = false

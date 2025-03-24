@@ -60,6 +60,7 @@ func _process(_delta) -> void:
 	if Input.is_action_just_released("shoot") and need_to_rev:
 		is_gun_ready = false
 		is_revving = false
+		$RevTimer.stop()
 
 func shoot():
 	if not is_gun_ready or num_bullets == 0:

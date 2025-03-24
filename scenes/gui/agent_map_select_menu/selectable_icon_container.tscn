@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c20gsp31nhvle"]
+
+[ext_resource type="Script" path="res://scenes/gui/agent_map_select_menu/selectable_icon_container.gd" id="1_f0klk"]
+
+[node name="SelectableIconContainer" type="Container"]
+script = ExtResource("1_f0klk")

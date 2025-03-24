@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://d3kokyyr1wofd"]
+
+[ext_resource type="Texture2D" uid="uid://mtt6v7jsbw1k" path="res://assets/images/agent_select_border_temp.png" id="1_lo40u"]
+[ext_resource type="Texture2D" uid="uid://cnm0cts5ebab6" path="res://assets/images/agent_select_border_pressed_temp.png" id="2_vcxe6"]
+[ext_resource type="Texture2D" uid="uid://qmdobwgxcvm2" path="res://assets/images/agent_select_border_hover_temp.png" id="3_nw35b"]
+[ext_resource type="Script" path="res://scenes/gui/agent_map_select_menu/selectable_icon.gd" id="4_keplk"]
+
+[node name="SelectableIcon" type="TextureButton"]
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+toggle_mode = true
+texture_normal = ExtResource("1_lo40u")
+texture_pressed = ExtResource("2_vcxe6")
+texture_hover = ExtResource("3_nw35b")
+ignore_texture_size = true
+stretch_mode = 0
+script = ExtResource("4_keplk")
+
+[connection signal="toggled" from="." to="." method="_on_toggled"]

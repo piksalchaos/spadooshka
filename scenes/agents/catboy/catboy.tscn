@@ -1,0 +1,11 @@
+[gd_scene load_steps=4 format=3 uid="uid://dekfj0hpnsafn"]
+
+[ext_resource type="PackedScene" uid="uid://cyxjceb2t4xis" path="res://scenes/player/player.tscn" id="1_xp6hw"]
+[ext_resource type="Resource" uid="uid://ek2dnvqo41qh" path="res://scenes/agents/catboy/catboy_stats.tres" id="2_xgmxp"]
+[ext_resource type="Resource" uid="uid://duquckgt0a22f" path="res://scenes/agents/catboy/catboy_gun_stats.tres" id="3_sbr1w"]
+
+[node name="Player" instance=ExtResource("1_xp6hw")]
+stats = ExtResource("2_xgmxp")
+
+[node name="Gun" parent="Head/Camera" index="1"]
+stats = ExtResource("3_sbr1w")

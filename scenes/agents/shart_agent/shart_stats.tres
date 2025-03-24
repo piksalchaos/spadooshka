@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AgentStats" load_steps=3 format=3 uid="uid://bwwhkhjookvw8"]
 
-[ext_resource type="Texture2D" uid="uid://ecmsy1mgpexj" path="res://assets/images/player_icons/shart_icon.png" id="1_1jrmk"]
+[ext_resource type="Texture2D" uid="uid://ecmsy1mgpexj" path="res://assets/images/player_icons/catboy_icon.png" id="1_1jrmk"]
 [ext_resource type="Script" path="res://scenes/player/agent_stats.gd" id="1_hekt7"]
 
 [resource]

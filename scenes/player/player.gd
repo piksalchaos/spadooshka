@@ -30,6 +30,7 @@ var is_dashing: bool = false
 var is_wall_sliding: bool = false
 var was_on_floor: bool = false
 var is_aiming: bool = false
+var is_shooting: bool = false
 
 var default_fov = 90
 var dash_fov = 100
@@ -78,6 +79,7 @@ func spawn(spawn_transform: Transform3D):
 	
 	is_wall_sliding = false
 	is_aiming = false
+	is_shooting = false
 	
 	is_dead = false
 	
@@ -97,10 +99,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_pressed("dash") and can_dash:
 		dash()
 	
-	if Input.is_action_just_pressed("aim"):
-		is_aiming = true
-	if Input.is_action_just_released("aim"):
-		is_aiming = false
+	is_aiming = Input.is_action_pressed("aim")
+	is_shooting = Input.is_action_pressed("shoot")
+
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
@@ -116,7 +117,8 @@ func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	var max_speed := stats.boosted_speed if is_effect_applied("Speed Boost") else stats.default_speed
-	if is_aiming: 
+	
+	if is_aiming or (is_shooting and stats.is_slow_while_shooting): 
 		max_speed *= 0.5
 	var acceleration := ACCELERATION
 	var deceleration := FRICTION if is_on_floor() else IN_AIR_DECELERATION

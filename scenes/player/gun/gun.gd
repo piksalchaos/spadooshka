@@ -10,31 +10,38 @@ var num_bullets: int
 @onready var animation_player: AnimationPlayer = gun_model.get_node("AnimationPlayer")
 @onready var gun_effects = gun_model.get_node("GunEffects")
 
-enum ShootMode {AUTO, SEMI}
-@export var shoot_mode: ShootMode
-
 var bullet_hole = preload("res://scenes/entities/bullet_hole.tscn")
 var is_reloading: bool
 var is_aiming: bool
+#var is_revved: bool
+var is_revving: bool
+var need_to_rev: bool
 
 
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 
-# Called when the node enters the scene tree for the first time.da
 func _ready() -> void:
 	shoot_ray.target_position = Vector3(0, -stats.shoot_range, 0)
+	$FireTimer.wait_time = stats.fire_time
+	$ReloadTimer.wait_time = stats.reload_time
+	$RevTimer.wait_time = stats.rev_time
+	need_to_rev = stats.rev_time != 0
 
 func spawn():
 	is_gun_ready = true
+	is_revving = false
+	#is_revved = false
 	is_reloading = false
 	num_bullets = stats.mag_capacity
 	is_reloading = false
 	is_aiming = false
 	ammo_changed.emit(num_bullets, stats.mag_capacity)
+	
+	reload()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority(): return
-	if event.is_action_pressed("shoot") and shoot_mode == ShootMode.SEMI:
+	if event.is_action_pressed("shoot") and stats.shoot_mode == GunStats.ShootMode.SEMI:
 		shoot()
 	if event.is_action_pressed("reload"):
 		reload()
@@ -43,28 +50,29 @@ func _unhandled_input(event: InputEvent) -> void:
 		is_aiming = true
 	if Input.is_action_just_released("aim"):
 		is_aiming = false
-	
 
 func _process(_delta) -> void:
-	if Input.is_action_pressed("shoot") and shoot_mode == ShootMode.AUTO:
+	if Input.is_action_pressed("shoot") and stats.shoot_mode == GunStats.ShootMode.AUTO:
+		if need_to_rev and not is_gun_ready and not is_revving:
+			is_revving = true
+			$RevTimer.start()
 		shoot()
+	if Input.is_action_just_released("shoot") and need_to_rev:
+		is_gun_ready = false
+		is_revving = false
+		$RevTimer.stop()
+
 func shoot():
-	if not is_gun_ready:
-		return
-	if num_bullets == 0:
+	if not is_gun_ready or num_bullets == 0:
 		return
 	num_bullets -= 1
 	is_gun_ready = false
 	ammo_changed.emit(num_bullets, stats.mag_capacity)
 	
-	var random_rot_x = stats.random_rot_x
-	var random_rot_z = stats.random_rot_z
-	if is_aiming:
-		random_rot_x = 0.2
-		random_rot_z = 0.2
-		
-	shoot_ray.rotation_degrees.x = randf_range(-random_rot_x, random_rot_x)
-	shoot_ray.rotation_degrees.z = randf_range(-random_rot_z, random_rot_z)
+	var bullet_trajectory_rot_x = stats.aim_bullet_trajectory_rot_x if is_aiming else stats.bullet_trajectory_rot_x
+	var bullet_trajectory_rot_z = stats.aim_bullet_trajectory_rot_z if is_aiming else stats.bullet_trajectory_rot_z
+	shoot_ray.rotation_degrees.x = randf_range(-bullet_trajectory_rot_x, bullet_trajectory_rot_x)
+	shoot_ray.rotation_degrees.z = randf_range(-bullet_trajectory_rot_z, bullet_trajectory_rot_z)
 	
 	if shoot_ray.is_colliding():
 		var target = shoot_ray.get_collider()
@@ -85,13 +93,14 @@ func shoot():
 				new_bullet_hole.global_transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.RIGHT.rotated(normal, random_angle))
 			new_bullet_hole.global_transform = new_bullet_hole.global_transform.scaled_local(scale)
 	
-	play_shoot_effects()
+	#play_shoot_effects()
 	$FireTimer.start()
 	if num_bullets == 0:
 		await $FireTimer.timeout
 		reload()
 	else:
 		pass
+
 func reload():
 	if is_reloading:
 		return
@@ -112,7 +121,11 @@ func _on_fire_timer_timeout() -> void:
 	is_gun_ready = true
 
 func _on_reload_timer_timeout() -> void:
-	is_gun_ready = true
+	is_gun_ready = not need_to_rev
 	is_reloading = false
 	num_bullets = stats.mag_capacity
 	ammo_changed.emit(num_bullets, stats.mag_capacity)
+
+func _on_rev_timer_timeout() -> void:
+	is_gun_ready = true
+	is_revving = false

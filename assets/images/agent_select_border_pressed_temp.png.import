@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ecmsy1mgpexj"
-path="res://.godot/imported/shart_icon.png-6a18b67c238bec4ea7a37d4d4ec33a38.ctex"
+uid="uid://cnm0cts5ebab6"
+path="res://.godot/imported/agent_select_border_pressed_temp.png-498c9fa4b18c72767a3a1608699fadc9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/player_icons/shart_icon.png"
-dest_files=["res://.godot/imported/shart_icon.png-6a18b67c238bec4ea7a37d4d4ec33a38.ctex"]
+source_file="res://assets/images/agent_select_border_pressed_temp.png"
+dest_files=["res://.godot/imported/agent_select_border_pressed_temp.png-498c9fa4b18c72767a3a1608699fadc9.ctex"]
 
 [params]
 

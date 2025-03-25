@@ -27,7 +27,7 @@ func sort_children():
 		var icon_width = (size.x - inner_margin_pixels*(columns-1))/columns
 		var icon_height = icon_width / height_to_width_ratio
 		var icon_x = (i % columns) * (icon_width + inner_margin_pixels)
-		var icon_y = floorf(i/columns) * (icon_height + inner_margin_pixels)
+		var icon_y = floorf(float(i)/columns) * (icon_height + inner_margin_pixels)
 		
 		fit_child_in_rect(
 			get_child(i),

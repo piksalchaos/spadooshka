@@ -19,8 +19,8 @@ func _on_main_menu_host_button_pressed() -> void:
 	#upnp_setup()
 
 func _on_main_menu_join_button_pressed() -> void:
-	enet_peer.create_client("localhost", PORT)
-	#enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
+	#enet_peer.create_client("localhost", PORT)
+	enet_peer.create_client(main_menu.get_address_entry_text(), PORT)
 	multiplayer.multiplayer_peer = enet_peer
 
 func add_player(peer_id):

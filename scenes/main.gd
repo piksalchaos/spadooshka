@@ -48,7 +48,7 @@ func _on_title_screen_exit_button_pressed() -> void:
 func _on_main_menu_local_game_button_pressed() -> void:
 	set_up_server_browser()
 
-func _on_local_menu_host_button_pressed() -> void:
+func _on_local_menu_host_button_pressed(room_name: String) -> void:
 	enet_peer.create_server(server_port)
 	multiplayer.multiplayer_peer = enet_peer
 	
@@ -56,7 +56,7 @@ func _on_local_menu_host_button_pressed() -> void:
 	multiplayer.peer_disconnected.connect(lobby_menu.on_peer_disconnected)
 	
 	if server_browser:
-		server_browser.set_up_broadcast("placeholder username")
+		server_browser.set_up_broadcast(room_name)
 
 func set_up_server_browser():
 	server_browser = SERVER_BROWSER_SCENE.instantiate()

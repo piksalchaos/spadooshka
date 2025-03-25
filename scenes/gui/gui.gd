@@ -19,11 +19,11 @@ func _on_main_menu_local_game_button_pressed() -> void:
 	main_menu.hide()
 	local_menu.show()
 
-func _on_local_menu_host_button_pressed() -> void:
+func _on_local_menu_host_button_pressed(_room_name: String) -> void:
 	lobby_menu.add_player_display(multiplayer.get_unique_id())
 	lobby_menu.show()
 
-func _on_local_menu_join_button_pressed(ip_address: String) -> void:
+func _on_local_menu_join_button_pressed(_ip_address: String) -> void:
 	lobby_menu.show()
 
 func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:

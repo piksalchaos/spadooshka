@@ -13,10 +13,8 @@ var num_bullets: int
 var bullet_hole = preload("res://scenes/entities/bullet_hole.tscn")
 var is_reloading: bool
 var is_aiming: bool
-#var is_revved: bool
-var is_revving: bool
 var need_to_rev: bool
-
+var is_revving: bool
 
 signal ammo_changed(num_bullets: int, mag_capacity: int)
 
@@ -30,7 +28,6 @@ func _ready() -> void:
 func spawn():
 	is_gun_ready = true
 	is_revving = false
-	#is_revved = false
 	is_reloading = false
 	num_bullets = stats.mag_capacity
 	is_reloading = false
@@ -46,24 +43,19 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("reload"):
 		reload()
 	
-	if Input.is_action_just_pressed("aim"):
-		is_aiming = true
-	if Input.is_action_just_released("aim"):
-		is_aiming = false
+	is_aiming = event.is_action_pressed("aim")
 
 func _process(_delta) -> void:
 	if Input.is_action_pressed("shoot") and stats.shoot_mode == GunStats.ShootMode.AUTO:
-		if need_to_rev and not is_gun_ready and not is_revving:
-			is_revving = true
-			$RevTimer.start()
 		shoot()
+	
+	if Input.is_action_just_pressed("shoot") and need_to_rev:
+		rev()
 	if Input.is_action_just_released("shoot") and need_to_rev:
-		is_gun_ready = false
-		is_revving = false
-		$RevTimer.stop()
+		unrev()
 
 func shoot():
-	if not is_gun_ready or num_bullets == 0:
+	if not is_gun_ready or num_bullets == 0: 
 		return
 	num_bullets -= 1
 	is_gun_ready = false
@@ -110,7 +102,19 @@ func reload():
 	$ReloadSFX.play()
 	animation_player.stop()
 	animation_player.play("reload")
-	
+
+func rev():
+	if is_gun_ready or is_revving:
+		return
+	$UnrevTimer.stop()
+	$RevTimer.start()
+	$RevTimer.paused = false
+	is_revving = true
+
+func unrev():
+	$RevTimer.paused = true
+	$UnrevTimer.start($RevTimer.wait_time - $RevTimer.time_left)
+
 func play_shoot_effects():
 	gun_effects.play_effects()
 	$ShootSFX.play()
@@ -128,4 +132,11 @@ func _on_reload_timer_timeout() -> void:
 
 func _on_rev_timer_timeout() -> void:
 	is_gun_ready = true
+	is_revving = false
+
+func _on_unrev_timer_timeout() -> void:
+	$FireTimer.stop()
+	$RevTimer.start()
+	$RevTimer.stop()
+	is_gun_ready = false
 	is_revving = false

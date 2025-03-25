@@ -25,7 +25,7 @@ func _ready() -> void:
 	$ExplosionArea/CollisionShape3D.shape.radius = grenade_range
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	#oscillate light brightness cuz it looks nice
 	#$Light.light_energy = sin(1/(explode_timer.wait_time * flashing_frequency_multiplier))
 	$Light.light_energy = 0.5 * light_energy * (cos(flashing_frequency_multiplier * (time_to_explode - explode_timer.time_left) ** flashing_frequency_exponent) + 1)

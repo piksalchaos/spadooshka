@@ -5,6 +5,7 @@ extends Control
 @onready var local_menu: LocalMenu = $LocalMenu
 @onready var lobby_menu: LobbyMenu = $LobbyMenu
 @onready var agent_map_select_menu: Control = $AgentMapSelectMenu
+@onready var preliminary_screen: Control = $PreliminaryScreen
 @onready var hud: HUD = $HUD
 @onready var victory_screen: Control = $VictoryScreen
 @onready var defeat_screen: Control = $DefeatScreen
@@ -19,11 +20,11 @@ func _on_main_menu_local_game_button_pressed() -> void:
 	main_menu.hide()
 	local_menu.show()
 
-func _on_local_menu_host_button_pressed() -> void:
+func _on_local_menu_host_button_pressed(_room_name: String) -> void:
 	lobby_menu.add_player_display(multiplayer.get_unique_id())
 	lobby_menu.show()
 
-func _on_local_menu_join_button_pressed(ip_address: String) -> void:
+func _on_local_menu_join_button_pressed(_ip_address: String) -> void:
 	lobby_menu.show()
 
 func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
@@ -47,9 +48,22 @@ func begin_agent_map_selection():
 	lobby_menu.hide()
 	agent_map_select_menu.show()
 
+func _on_agent_map_select_menu_finished_selection(
+		_peer_id: int, _agent_name: String, _map_name: String
+	) -> void:
+	agent_map_select_menu.hide()
+	preliminary_screen.show()
+
+func _on_preliminary_screen_back_button_pressed() -> void:
+	preliminary_screen.hide()
+	agent_map_select_menu.show()
+
+func _on_preliminary_screen_begin_button_pressed() -> void:
+	prepare_for_game.rpc()
+
 @rpc("call_local")
 func prepare_for_game():
-	lobby_menu.hide()
+	preliminary_screen.hide()
 	hud.show()
 
 @rpc("call_local")

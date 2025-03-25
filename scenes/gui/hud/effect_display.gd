@@ -10,7 +10,7 @@ func _ready():
 	texture_rect.texture = effect.icon
 	effect.tree_exited.connect(_on_effect_tree_exited)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if effect is TemporaryEffect:
 		progress_bar.value = effect.timer.time_left / effect.timer.wait_time * 100
 

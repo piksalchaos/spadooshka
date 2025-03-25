@@ -47,6 +47,9 @@ func begin_agent_map_selection():
 	lobby_menu.hide()
 	agent_map_select_menu.show()
 
+func _on_agent_map_select_menu_finished_selection(agent_name: String, map_name: String) -> void:
+	pass
+
 @rpc("call_local")
 func prepare_for_game():
 	lobby_menu.hide()

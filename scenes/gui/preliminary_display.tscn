@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://svo1j1xxwq0w"]
+
+[ext_resource type="Texture2D" uid="uid://c4y4e2nfxgikt" path="res://assets/images/versus_temp.png" id="1_m2x31"]
+
+[node name="PreliminaryDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.406
+anchor_top = 0.321
+anchor_right = 0.594
+anchor_bottom = 0.679
+offset_left = 0.319946
+offset_top = -0.12001
+offset_right = -0.320068
+offset_bottom = 0.119995
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_m2x31")
+expand_mode = 1
+stretch_mode = 5

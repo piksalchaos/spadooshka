@@ -1,13 +1,14 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2c8wh6k7fca5"]
+[gd_scene load_steps=10 format=3 uid="uid://c2c8wh6k7fca5"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_yci6l"]
-[ext_resource type="Script" path="res://scenes/gui.gd" id="2_t0ryy"]
+[ext_resource type="Script" path="res://scenes/gui/gui.gd" id="2_t0ryy"]
 [ext_resource type="PackedScene" uid="uid://c6j0xtac0l3pd" path="res://scenes/gui/title_screen.tscn" id="2_v7p2d"]
 [ext_resource type="PackedScene" uid="uid://hmxe78pntojx" path="res://scenes/gui/main_menu.tscn" id="3_82cjl"]
 [ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/gui/hud/hud.tscn" id="3_shkqk"]
 [ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/gui/local_menu/local_menu.tscn" id="4_b8hkp"]
 [ext_resource type="PackedScene" uid="uid://g0un4ork14i8" path="res://scenes/gui/lobby_menu/lobby_menu.tscn" id="4_jqa32"]
 [ext_resource type="PackedScene" uid="uid://dcw5bchdkvdra" path="res://scenes/gui/end_screen.tscn" id="5_t4ul1"]
+[ext_resource type="PackedScene" uid="uid://bmx0b2qjwg5qs" path="res://scenes/gui/agent_map_select_menu/agent_map_select_menu.tscn" id="9_5hn2l"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_yci6l")
@@ -40,6 +41,10 @@ visible = false
 layout_mode = 1
 
 [node name="LobbyMenu" parent="GUI" instance=ExtResource("4_jqa32")]
+visible = false
+layout_mode = 1
+
+[node name="AgentMapSelectMenu" parent="GUI" instance=ExtResource("9_5hn2l")]
 visible = false
 layout_mode = 1
 

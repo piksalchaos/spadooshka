@@ -9,8 +9,9 @@ signal icon_selected(icon_name: String)
 
 func _ready():
 	sort_children()
-	for selectable_icon in get_children():
-		selectable_icon.selected.connect(_on_selectable_icon_selected)
+	if not Engine.is_editor_hint():
+		for selectable_icon in get_children():
+			selectable_icon.selected.connect(_on_selectable_icon_selected)
 
 func _on_selectable_icon_selected(icon_name: String):
 	icon_selected.emit(icon_name)

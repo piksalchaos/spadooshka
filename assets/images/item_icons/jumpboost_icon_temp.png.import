@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4y4e2nfxgikt"
-path="res://.godot/imported/versus_temp.png-6fabdf2a45a9c91b39984de2883d737b.ctex"
+uid="uid://cl8ppircs332s"
+path="res://.godot/imported/jumpboost_icon_temp.png-cfcee32e5361d798d10f91afd589ea6e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/versus_temp.png"
-dest_files=["res://.godot/imported/versus_temp.png-6fabdf2a45a9c91b39984de2883d737b.ctex"]
+source_file="res://assets/images/item_icons/jumpboost_icon_temp.png"
+dest_files=["res://.godot/imported/jumpboost_icon_temp.png-cfcee32e5361d798d10f91afd589ea6e.ctex"]
 
 [params]
 

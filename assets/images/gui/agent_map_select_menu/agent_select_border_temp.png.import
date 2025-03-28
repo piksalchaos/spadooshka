@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dbkss1yxgkmpw"
-path="res://.godot/imported/exit_button_temp.png-0dfa4b46c811aeba6a64c00c26267842.ctex"
+uid="uid://mtt6v7jsbw1k"
+path="res://.godot/imported/agent_select_border_temp.png-e8ac248fcb85ab36df04b8813192877f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/exit_button_temp.png"
-dest_files=["res://.godot/imported/exit_button_temp.png-0dfa4b46c811aeba6a64c00c26267842.ctex"]
+source_file="res://assets/images/gui/agent_map_select_menu/agent_select_border_temp.png"
+dest_files=["res://.godot/imported/agent_select_border_temp.png-e8ac248fcb85ab36df04b8813192877f.ctex"]
 
 [params]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://qmdobwgxcvm2"
-path="res://.godot/imported/agent_select_border_hover_temp.png-c2c1b28c56e8ccfcf8cc44fdeef6a7d3.ctex"
+path="res://.godot/imported/agent_select_border_hover_temp.png-0b64c70d053679c04dd31a6542a4dc65.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/agent_select_border_hover_temp.png"
-dest_files=["res://.godot/imported/agent_select_border_hover_temp.png-c2c1b28c56e8ccfcf8cc44fdeef6a7d3.ctex"]
+source_file="res://assets/images/gui/agent_map_select_menu/agent_select_border_hover_temp.png"
+dest_files=["res://.godot/imported/agent_select_border_hover_temp.png-0b64c70d053679c04dd31a6542a4dc65.ctex"]
 
 [params]
 

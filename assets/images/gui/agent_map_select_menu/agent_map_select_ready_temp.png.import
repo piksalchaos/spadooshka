@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://devc5v28gymsd"
-path="res://.godot/imported/minimizer_icon_temp.png-73533863ad66a1db2c225a1f99e1ee5f.ctex"
+uid="uid://58yiomfwk20f"
+path="res://.godot/imported/agent_map_select_ready_temp.png-3f239d9c6578999fcd5e1a3366865265.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/minimizer_icon_temp.png"
-dest_files=["res://.godot/imported/minimizer_icon_temp.png-73533863ad66a1db2c225a1f99e1ee5f.ctex"]
+source_file="res://assets/images/gui/agent_map_select_menu/agent_map_select_ready_temp.png"
+dest_files=["res://.godot/imported/agent_map_select_ready_temp.png-3f239d9c6578999fcd5e1a3366865265.ctex"]
 
 [params]
 

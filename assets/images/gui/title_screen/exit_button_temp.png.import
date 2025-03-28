@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bg5cf4xyvoguj"
-path="res://.godot/imported/grenade_icon_temp.png-d0ca939b6388aceb30305afa3d0c9c98.ctex"
+uid="uid://dbkss1yxgkmpw"
+path="res://.godot/imported/exit_button_temp.png-270d6b7627630ff853c8eda6bd82c3c5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/grenade_icon_temp.png"
-dest_files=["res://.godot/imported/grenade_icon_temp.png-d0ca939b6388aceb30305afa3d0c9c98.ctex"]
+source_file="res://assets/images/gui/title_screen/exit_button_temp.png"
+dest_files=["res://.godot/imported/exit_button_temp.png-270d6b7627630ff853c8eda6bd82c3c5.ctex"]
 
 [params]
 

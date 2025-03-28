@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://58yiomfwk20f"
-path="res://.godot/imported/agent_map_select_ready_temp.png-a6558b5f68ef07fb82af2830e5c1e205.ctex"
+uid="uid://dnen6ckq0k0si"
+path="res://.godot/imported/agent_map_select_ready_disabled_temp.png-f7770822675fe95fb9af9e23be79aa6e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/agent_map_select_ready_temp.png"
-dest_files=["res://.godot/imported/agent_map_select_ready_temp.png-a6558b5f68ef07fb82af2830e5c1e205.ctex"]
+source_file="res://assets/images/gui/agent_map_select_menu/agent_map_select_ready_disabled_temp.png"
+dest_files=["res://.godot/imported/agent_map_select_ready_disabled_temp.png-f7770822675fe95fb9af9e23be79aa6e.ctex"]
 
 [params]
 

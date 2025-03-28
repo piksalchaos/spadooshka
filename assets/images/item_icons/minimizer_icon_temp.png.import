@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b61iyp4uh471f"
-path="res://.godot/imported/speedboost_icon_temp.png-acd8d00f7a8cc060464659cfa84772c0.ctex"
+uid="uid://devc5v28gymsd"
+path="res://.godot/imported/minimizer_icon_temp.png-dd2d177104303a6761a85e4357dff911.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/speedboost_icon_temp.png"
-dest_files=["res://.godot/imported/speedboost_icon_temp.png-acd8d00f7a8cc060464659cfa84772c0.ctex"]
+source_file="res://assets/images/item_icons/minimizer_icon_temp.png"
+dest_files=["res://.godot/imported/minimizer_icon_temp.png-dd2d177104303a6761a85e4357dff911.ctex"]
 
 [params]
 

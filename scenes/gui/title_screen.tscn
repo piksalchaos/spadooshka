@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://c6j0xtac0l3pd"]
 
 [ext_resource type="Script" path="res://scenes/gui/title_screen.gd" id="1_p4ppl"]
-[ext_resource type="Texture2D" uid="uid://dfuw6c7nhgoui" path="res://assets/images/title_temp.png" id="1_vsh7l"]
-[ext_resource type="Texture2D" uid="uid://b214543836tkk" path="res://assets/images/start_button_temp.png" id="2_bm2mf"]
-[ext_resource type="Texture2D" uid="uid://dbkss1yxgkmpw" path="res://assets/images/exit_button_temp.png" id="3_2xasn"]
+[ext_resource type="Texture2D" uid="uid://dfuw6c7nhgoui" path="res://assets/images/gui/title_screen/title_temp.png" id="1_vsh7l"]
+[ext_resource type="Texture2D" uid="uid://b214543836tkk" path="res://assets/images/gui/title_screen/start_button_temp.png" id="2_bm2mf"]
+[ext_resource type="Texture2D" uid="uid://dbkss1yxgkmpw" path="res://assets/images/gui/title_screen/exit_button_temp.png" id="3_2xasn"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3

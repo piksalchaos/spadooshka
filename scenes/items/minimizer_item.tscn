@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/items/minimizer_item.gd" id="1_xmy0g"]
 [ext_resource type="PackedScene" uid="uid://bwvm5rtrmej0x" path="res://scenes/effects/minimizer_effect.tscn" id="2_rcwoq"]
-[ext_resource type="Texture2D" uid="uid://devc5v28gymsd" path="res://assets/images/minimizer_icon_temp.png" id="3_j4fay"]
+[ext_resource type="Texture2D" uid="uid://devc5v28gymsd" path="res://assets/images/item_icons/minimizer_icon_temp.png" id="3_j4fay"]
 
 [node name="Minimizer" type="Node3D"]
 script = ExtResource("1_xmy0g")

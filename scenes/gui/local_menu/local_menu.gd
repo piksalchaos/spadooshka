@@ -51,7 +51,7 @@ func on_server_info_display_join_button_pressed(ip_address: String):
 
 func _on_singleplayer_button_pressed() -> void:
 	hide()
-	singleplayer_button_pressed.emit()
+	host_button_pressed.emit("lmao it isn't actually singleplayer")
 
 func _on_join_localhost_button_pressed() -> void:
 	hide()

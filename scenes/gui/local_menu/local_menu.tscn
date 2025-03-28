@@ -107,10 +107,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="JoinMenu" type="VBoxContainer" parent="."]
 layout_mode = 2
-offset_left = 907.0
-offset_top = 84.0
-offset_right = 1224.0
-offset_bottom = 185.0
+anchor_left = 0.709
+anchor_top = 0.117
+anchor_right = 0.956
+anchor_bottom = 0.257
+offset_left = -0.520081
+offset_top = -0.240005
+offset_right = 0.319946
+offset_bottom = -0.0399933
 size_flags_horizontal = 3
 size_flags_vertical = 4
 

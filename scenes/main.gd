@@ -119,7 +119,7 @@ func choose_map():
 	var map_votes = []
 	for peer_choice in peer_selection_choices.values():
 		map_votes.append(peer_choice["map_name"])
-	var chosen_map_name = map_votes.pick_random()
+	var chosen_map_name = "map_1" if map_votes.is_empty() else map_votes.pick_random()
 	map = load(MAP_FILE_NAMES[chosen_map_name]).instantiate()
 	multiplayer_container.add_child(map)
 

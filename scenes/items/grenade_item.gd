@@ -18,11 +18,15 @@ func _process(_delta: float) -> void:
 	trajectory.global_basis = Basis(camera_basis[2], Vector3.UP, camera_basis[0]).orthonormalized()
 
 func use():
-	var new_grenade_object: RigidBody3D = grenade_object.instantiate()
-	new_grenade_object.position = LAUNCH_OFFSET + player.position
-	new_grenade_object.linear_velocity = speed * -player.get_camera_global_basis()[2]
-	new_grenade_object.add_collision_exception_with(player)
-	#get_tree().current_scene.add_child(new_grenade_object)
-	SpawnerManager.add_child_to_multiplayer_container(new_grenade_object)
+	SpawnerManager.spawn_with_data({
+		"path": "res://scenes/entities/item_entities/grenade.tscn",
+		"props": {
+			"position": LAUNCH_OFFSET + player.position,
+			"linear_velocity": speed * -player.get_camera_global_basis()[2]
+		},
+		"methods": {
+			"add_collision_exception_with": [player]
+		}
+	})
 	queue_free()
 	return true

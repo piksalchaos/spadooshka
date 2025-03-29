@@ -1,0 +1,1 @@
+class_name BilliardBall extends RigidBody3D

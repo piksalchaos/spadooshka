@@ -1,9 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://dx6iv2xfdq55p"]
-
-[ext_resource type="Script" path="res://scenes/items/building_blocks_item.gd" id="1_fo5ow"]
-[ext_resource type="Texture2D" uid="uid://heny0o6u412f" path="res://assets/images/item_icons/building_blocks_icon_temp.png" id="2_rn4c4"]
-
-[node name="BuildingBlocksItem" type="Node3D"]
-script = ExtResource("1_fo5ow")
-item_name = "Building Blocks"
-hud_icon = ExtResource("2_rn4c4")

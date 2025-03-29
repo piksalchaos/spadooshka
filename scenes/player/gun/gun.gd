@@ -71,7 +71,7 @@ func shoot():
 		var position = shoot_ray.get_collision_point()
 		var normal = shoot_ray.get_collision_normal()
 		
-		if target.has_method("receive_damage"):
+		if target.has_method("receive_damage") and target != self:
 			target.receive_damage.rpc_id(target.get_multiplayer_authority(), stats.damage)
 		if not target is Player:
 			var random_angle = randf_range(0, PI * 2)

@@ -10,6 +10,7 @@ class_name Player extends CharacterBody3D
 
 @export var stats: AgentStats
 @export var health: int
+@export var mass_kg: float = 80.0
 
 const WALL_JUMP_Y_DIRECTION: float = 0.5
 const WALL_SLIDE_GRAVITY: float = -2.0
@@ -57,7 +58,7 @@ func _ready():
 	if not is_multiplayer_authority(): return
 	camera.current = true
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func spawn(spawn_transform: Transform3D):
 	global_transform = spawn_transform
 	velocity = Vector3.ZERO
@@ -161,6 +162,8 @@ func _physics_process(delta: float) -> void:
 		query_jump()
 		jump_buffer_timer -= delta
 	
+	
+	#push_away_rigid_bodies()
 	move_and_slide()
 	#stupid hack to get dash bar to immediately deplete at start of dash
 	var dash_value
@@ -172,6 +175,25 @@ func _physics_process(delta: float) -> void:
 	
 	update_fov(delta)
 
+func push_away_rigid_bodies():
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider is not RigidBody3D: continue
+		
+		var push_direction = -collision.get_normal()
+		var velocity_difference = max(
+			0.0,
+			velocity.dot(push_direction)-collider.linear_velocity.dot(push_direction)
+		)
+		push_direction.y = 0
+		var mass_ratio = min(1.0, 80.0 / collider.mass)
+		var push_force = mass_ratio * 5.0
+		
+		collider.apply_impulse(
+			push_direction * velocity_difference * push_force,
+			collision.get_position() - collider.global_position
+		)
 func query_jump():
 	if coyote_timer > 0:
 		coyote_timer = 0
@@ -198,7 +220,7 @@ func dash():
 	velocity = dash_direction * stats.dash_speed
 	dash_timer.start()
 
-@rpc("call_local", "any_peer")
+@rpc("call_local", "any_peer", "reliable")
 func receive_damage(damage):
 	if is_dead == true:
 		return
@@ -209,7 +231,7 @@ func receive_damage(damage):
 		
 	health_changed.emit(health, stats.max_health)
 
-@rpc("call_local", "any_peer")
+@rpc("call_local", "any_peer", "reliable")
 func apply_impulse(impulse_vector):
 	velocity += impulse_vector
 

@@ -46,9 +46,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	is_aiming = event.is_action_pressed("aim")
 
 func _process(_delta) -> void:
+	if not is_multiplayer_authority(): return
 	if Input.is_action_pressed("shoot") and stats.shoot_mode == GunStats.ShootMode.AUTO:
 		shoot()
-	
 	if Input.is_action_just_pressed("shoot") and need_to_rev:
 		rev()
 	if Input.is_action_just_released("shoot") and need_to_rev:

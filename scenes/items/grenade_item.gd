@@ -22,6 +22,7 @@ func use():
 	new_grenade_object.position = LAUNCH_OFFSET + player.position
 	new_grenade_object.linear_velocity = speed * -player.get_camera_global_basis()[2]
 	new_grenade_object.add_collision_exception_with(player)
-	get_tree().current_scene.add_child(new_grenade_object)
+	#get_tree().current_scene.add_child(new_grenade_object)
+	SpawnerManager.add_child_to_multiplayer_container(new_grenade_object)
 	queue_free()
 	return true

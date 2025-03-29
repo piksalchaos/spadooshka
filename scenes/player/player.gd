@@ -9,8 +9,7 @@ class_name Player extends CharacterBody3D
 @onready var equipped_gun: Gun = $Head/Camera/Gun
 
 @export var stats: AgentStats
-
-var health: int
+@export var health: int
 
 const WALL_JUMP_Y_DIRECTION: float = 0.5
 const WALL_SLIDE_GRAVITY: float = -2.0
@@ -209,6 +208,10 @@ func receive_damage(damage):
 		death.emit(get_multiplayer_authority())
 		
 	health_changed.emit(health, stats.max_health)
+
+@rpc("any_peer")
+func apply_impulse(impulse_vector):
+	velocity += impulse_vector
 
 func get_camera_global_basis() -> Basis:
 	return camera.global_basis

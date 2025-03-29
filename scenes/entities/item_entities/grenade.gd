@@ -33,15 +33,19 @@ func _process(_delta: float) -> void:
 func _on_explode_timer_timeout() -> void:
 	var bodies = $ExplosionArea.get_overlapping_bodies()
 	for body in bodies:
-		if body is StaticBody3D:
+		if body is StaticBody3D or body == self:
 			continue
 		print(body)
 		var difference_vector = body.position - position
 		var damage = calculate_damage(difference_vector.length())
 		if body is Player:
+			print("this is a player!")
 			#vector3.up addition is stupid hack bc player's position based on feet
-			body.velocity += (difference_vector + Vector3.UP).normalized() * damage * damage_to_force_factor
-			body.receive_damage(damage)
+			body.apply_impulse.rpc_id(
+				body.get_multiplayer_authority(),
+				(difference_vector + Vector3.UP).normalized() * damage * damage_to_force_factor
+			)
+			body.receive_damage.rpc_id(body.get_multiplayer_authority(), damage)
 			continue
 		body.apply_impulse(difference_vector.normalized() * damage * damage_to_force_factor)
 	queue_free()

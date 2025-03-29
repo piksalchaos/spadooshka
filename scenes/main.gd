@@ -42,6 +42,7 @@ const HOST_NUMBER = 1
 signal score_changed(round_number: int, P1_score: int, P2_score: int)
 
 func _ready() -> void:
+	SpawnerManager.multiplayer_container = multiplayer_container
 	score_changed.connect(hud.update_score_display.rpc)
 
 func _on_title_screen_exit_button_pressed() -> void:

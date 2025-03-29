@@ -198,7 +198,7 @@ func dash():
 	velocity = dash_direction * stats.dash_speed
 	dash_timer.start()
 
-@rpc("any_peer")
+@rpc("call_local", "any_peer")
 func receive_damage(damage):
 	if is_dead == true:
 		return
@@ -209,7 +209,7 @@ func receive_damage(damage):
 		
 	health_changed.emit(health, stats.max_health)
 
-@rpc("any_peer")
+@rpc("call_local", "any_peer")
 func apply_impulse(impulse_vector):
 	velocity += impulse_vector
 

@@ -125,7 +125,7 @@ func _on_fire_timer_timeout() -> void:
 	is_gun_ready = true
 
 func _on_reload_timer_timeout() -> void:
-	is_gun_ready = not need_to_rev
+	is_gun_ready = true
 	is_reloading = false
 	num_bullets = stats.mag_capacity
 	ammo_changed.emit(num_bullets, stats.mag_capacity)

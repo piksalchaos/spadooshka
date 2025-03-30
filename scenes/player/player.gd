@@ -96,7 +96,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
 	
-	if Input.is_action_pressed("dash") and can_dash:
+	if Input.is_action_pressed("dash") and can_dash and not is_aiming:
 		dash()
 	
 	is_aiming = Input.is_action_pressed("aim")
@@ -114,12 +114,14 @@ func _physics_process(delta: float) -> void:
 		if minimized == true:
 			basis = basis.scaled(RETURN_TO_NORMAL_SIZE)
 		minimized = false
+	
 	var input_dir := Input.get_vector("left", "right", "forward", "backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	var max_speed := stats.boosted_speed if is_effect_applied("Speed Boost") else stats.default_speed
 	
 	if is_aiming or (is_shooting and stats.is_slow_while_shooting): 
 		max_speed *= 0.5
+	
 	var acceleration := ACCELERATION
 	var deceleration := FRICTION if is_on_floor() else IN_AIR_DECELERATION
 	

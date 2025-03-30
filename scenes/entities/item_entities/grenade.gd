@@ -38,8 +38,9 @@ func _on_explode_timer_timeout() -> void:
 		print(body)
 		var difference_vector = body.position - position
 		var damage = calculate_damage(difference_vector.length())
+		if body.has_method("receive_damage"):
+			body.receive_damage.rpc_id(body.get_multiplayer_authority(), damage)
 		if body is Player:
-			print("this is a player!")
 			#vector3.up addition is stupid hack bc player's position based on feet
 			body.apply_impulse.rpc_id(
 				body.get_multiplayer_authority(),

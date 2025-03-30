@@ -2,36 +2,47 @@ class_name BilliardBomb extends RigidBody3D
 
 const BILLIARD_BALL = preload("res://scenes/entities/item_entities/billiard_ball.tscn")
 const NUMBER_OF_BALLS = 15
-const BALL_SPEED = 16.0
-const BALL_DISTANCE_FROM_ORIGIN = 3.0
+const BALL_SPEED = 18.0
+const BALL_DISTANCE_FROM_ORIGIN = 1.0
 
 var enabled = false
 
 func _on_enable_timer_timeout() -> void:
 	enabled = true
-	if get_contact_count() > 0:
-		explode()
+	#if get_contact_count() > 0:
+		#explode()
+	
+#func _on_body_entered(_body: Node) -> void:
+	#if enabled:
+		#explode()
 
-func _on_body_entered(_body: Node) -> void:
-	if enabled:
-		explode()
-
-func explode():
+func explode(vector_direction: Vector3):
 	for i in NUMBER_OF_BALLS:
-		var vector_direction = get_random_upward_unit_vector()
+		#var vector_direction = get_random_upward_unit_vector()
+		var offset_vector_direction = get_randomly_offset_vector(vector_direction, PI/3)
+		print("offset vector dir: ", offset_vector_direction)
 		SpawnerManager.spawn_with_data({
 			"path": "res://scenes/entities/item_entities/billiard_ball.tscn",
 			"props": {
-				"position": position + vector_direction * BALL_DISTANCE_FROM_ORIGIN,
-				"linear_velocity": vector_direction * BALL_SPEED
+				"position": position + offset_vector_direction * BALL_DISTANCE_FROM_ORIGIN,
+				"linear_velocity": offset_vector_direction * BALL_SPEED
 			}
 		})
+		
 	queue_free()
 
-func get_random_upward_unit_vector():
-	var theta = randf_range(0, TAU)
-	var y = randf_range(0.0, 1.0)
-	var r = sqrt(1.0 - y * y)
-	var x = r * cos(theta)
-	var z = r * sin(theta)
-	return Vector3(x, y, z)
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	if not enabled: return
+	for i in range(state.get_contact_count()):
+		var normal = state.get_contact_local_normal(i)
+		explode(normal)
+		print("Collision normal at contact ", i, ": ", normal)
+
+func get_randomly_offset_vector(vector: Vector3, max_angle: float) -> Vector3:
+	var rotation_x = get_randomly_rotated_quat(Vector3.RIGHT, max_angle)
+	var rotation_y = get_randomly_rotated_quat(Vector3.UP, max_angle)
+	var rotation_z = get_randomly_rotated_quat(Vector3.BACK, max_angle)
+	return (vector * rotation_x * rotation_y * rotation_z).normalized()
+
+func get_randomly_rotated_quat(axis, max_angle):
+	return Quaternion(axis, randf_range(-max_angle/2, max_angle/2))

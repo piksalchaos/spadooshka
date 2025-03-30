@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bv7elyfmyxmu2"
-path="res://.godot/imported/map_4.png-385589af6d756075d6fb4637b2f15bfa.ctex"
+uid="uid://b214543836tkk"
+path="res://.godot/imported/start_button_temp.png-af525b5c17c7ca703749c37915ea314c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/map_icons/map_4.png"
-dest_files=["res://.godot/imported/map_4.png-385589af6d756075d6fb4637b2f15bfa.ctex"]
+source_file="res://assets/images/gui/title_screen/start_button_temp.png"
+dest_files=["res://.godot/imported/start_button_temp.png-af525b5c17c7ca703749c37915ea314c.ctex"]
 
 [params]
 

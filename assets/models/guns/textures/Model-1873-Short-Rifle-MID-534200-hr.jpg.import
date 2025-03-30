@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnm0cts5ebab6"
-path="res://.godot/imported/agent_select_border_pressed_temp.png-498c9fa4b18c72767a3a1608699fadc9.ctex"
+uid="uid://bvne0i18tunfj"
+path="res://.godot/imported/Model-1873-Short-Rifle-MID-534200-hr.jpg-69728170c30f3bc00fa7dc3eaa63d3ea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/agent_select_border_pressed_temp.png"
-dest_files=["res://.godot/imported/agent_select_border_pressed_temp.png-498c9fa4b18c72767a3a1608699fadc9.ctex"]
+source_file="res://assets/models/guns/textures/Model-1873-Short-Rifle-MID-534200-hr.jpg"
+dest_files=["res://.godot/imported/Model-1873-Short-Rifle-MID-534200-hr.jpg-69728170c30f3bc00fa7dc3eaa63d3ea.ctex"]
 
 [params]
 

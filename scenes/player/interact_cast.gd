@@ -3,7 +3,7 @@ class_name InteractCast extends ShapeCast3D
 var target_body: PhysicsBody3D
 signal interacted(target: PhysicsBody3D)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not is_colliding():
 		remove_target_body()
 		return

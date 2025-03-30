@@ -105,47 +105,65 @@ grow_vertical = 2
 text = "Join by address:"
 metadata/_edit_use_anchors_ = true
 
-[node name="JoinMenu" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.708594
-anchor_top = 0.116667
-anchor_right = 0.957031
-anchor_bottom = 0.208333
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="VBoxContainer" type="VBoxContainer" parent="JoinMenu"]
+[node name="JoinMenu" type="VBoxContainer" parent="."]
 layout_mode = 2
+anchor_left = 0.709
+anchor_top = 0.117
+anchor_right = 0.956
+anchor_bottom = 0.257
+offset_left = -0.520081
+offset_top = -0.240005
+offset_right = 0.319946
+offset_bottom = -0.0399933
 size_flags_horizontal = 3
 size_flags_vertical = 4
 
-[node name="AddressEntry" type="LineEdit" parent="JoinMenu/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="JoinMenu"]
 layout_mode = 2
-placeholder_text = "IP address"
+metadata/_edit_use_anchors_ = true
 
-[node name="PortEntry" type="LineEdit" parent="JoinMenu/VBoxContainer"]
+[node name="AddressEntry" type="LineEdit" parent="JoinMenu/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "IP address"
+max_length = 15
+
+[node name="PortEntry" type="LineEdit" parent="JoinMenu/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
 placeholder_text = "Port (Optional)"
 
 [node name="JoinGoButton" type="Button" parent="JoinMenu"]
 layout_mode = 2
+disabled = true
 text = "    Go     "
 
-[node name="HostButton" type="Button" parent="."]
+[node name="HostMenu" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0578125
-anchor_top = 0.111111
-anchor_right = 0.227344
-anchor_bottom = 0.180556
+anchor_left = 0.0445312
+anchor_top = 0.1125
+anchor_right = 0.228125
+anchor_bottom = 0.219444
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="RoomNameEntry" type="LineEdit" parent="HostMenu"]
+layout_mode = 2
+placeholder_text = "enter room name"
+max_length = 20
+
+[node name="HostButton" type="Button" parent="HostMenu"]
+layout_mode = 2
+disabled = true
 text = "Host LAN Server"
 metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/SingleplayerButton" to="." method="_on_singleplayer_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/JoinLocalhostButton" to="." method="_on_join_localhost_button_pressed"]
+[connection signal="text_changed" from="JoinMenu/HBoxContainer/AddressEntry" to="." method="_on_address_entry_text_changed"]
 [connection signal="pressed" from="JoinMenu/JoinGoButton" to="." method="_on_join_go_button_pressed"]
-[connection signal="pressed" from="HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="text_changed" from="HostMenu/RoomNameEntry" to="." method="_on_room_name_entry_text_changed"]
+[connection signal="pressed" from="HostMenu/HostButton" to="." method="_on_host_button_pressed"]

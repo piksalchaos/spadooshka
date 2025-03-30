@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cw8qtdr0bp1af"
-path="res://.godot/imported/player_icon_temp.png-dc4268dda49314ef0b38cc6b64624ac6.ctex"
+uid="uid://urn0t8itsm0b"
+path="res://.godot/imported/grappling_icon_temp.png-53f36d1bffc9d3fb9250cc3a454a08b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/player_icon_temp.png"
-dest_files=["res://.godot/imported/player_icon_temp.png-dc4268dda49314ef0b38cc6b64624ac6.ctex"]
+source_file="res://assets/images/item_icons/grappling_icon_temp.png"
+dest_files=["res://.godot/imported/grappling_icon_temp.png-53f36d1bffc9d3fb9250cc3a454a08b9.ctex"]
 
 [params]
 

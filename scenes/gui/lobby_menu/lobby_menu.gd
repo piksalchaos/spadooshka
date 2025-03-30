@@ -49,11 +49,11 @@ func _on_ready_button_pressed() -> void:
 	ready_button_pressed.emit(peer_id, is_ready)
 	set_player_is_ready.rpc(peer_id, is_ready)
 
-func set_waiting_label_visibility(is_visible: bool):
-	waiting_label.visible = is_visible
+func set_waiting_label_visibility(is_label_visible: bool):
+	waiting_label.visible = is_label_visible
 
-func set_start_button_visibility(is_visible: bool):
-	start_button.visible = is_visible
+func set_start_button_visibility(is_button_visible: bool):
+	start_button.visible = is_button_visible
 
 func _on_start_button_pressed() -> void:
 	start_button_pressed.emit()

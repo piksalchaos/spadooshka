@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mtt6v7jsbw1k"
-path="res://.godot/imported/agent_select_border_temp.png-605931a96aca1fd37df084d876da714f.ctex"
+uid="uid://bg5cf4xyvoguj"
+path="res://.godot/imported/grenade_icon_temp.png-f741359419a3d58240fefc56305b5b0e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/agent_select_border_temp.png"
-dest_files=["res://.godot/imported/agent_select_border_temp.png-605931a96aca1fd37df084d876da714f.ctex"]
+source_file="res://assets/images/item_icons/grenade_icon_temp.png"
+dest_files=["res://.godot/imported/grenade_icon_temp.png-f741359419a3d58240fefc56305b5b0e.ctex"]
 
 [params]
 

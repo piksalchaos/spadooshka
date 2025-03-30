@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/gui/hud/hud.gd" id="1_8mkb2"]
 [ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="2_yw55s"]
-[ext_resource type="Texture2D" uid="uid://cw8qtdr0bp1af" path="res://assets/images/player_icon_temp.png" id="3_lsk7v"]
+[ext_resource type="Texture2D" uid="uid://cw8qtdr0bp1af" path="res://assets/images/player_icons/player_icon_temp.png" id="3_lsk7v"]
 [ext_resource type="Script" path="res://scenes/gui/hud/score_display.gd" id="4_0pm5a"]
 [ext_resource type="PackedScene" uid="uid://ooxxqxmb5cvk" path="res://scenes/gui/hud/inventory_slot.tscn" id="5_ojg8h"]
 [ext_resource type="Texture2D" uid="uid://die8f8s7a6i8a" path="res://assets/images/round_won_icon.png" id="6_mlg6x"]

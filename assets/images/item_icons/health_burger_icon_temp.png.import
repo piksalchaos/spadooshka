@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cl8ppircs332s"
-path="res://.godot/imported/jumpboost_icon_temp.png-bfef5c0ad99e18b725611b94afc4f5cc.ctex"
+uid="uid://c2l4172uyo0u2"
+path="res://.godot/imported/health_burger_icon_temp.png-e130db2c56c6843b5b6b9a1941b81e67.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/jumpboost_icon_temp.png"
-dest_files=["res://.godot/imported/jumpboost_icon_temp.png-bfef5c0ad99e18b725611b94afc4f5cc.ctex"]
+source_file="res://assets/images/item_icons/health_burger_icon_temp.png"
+dest_files=["res://.godot/imported/health_burger_icon_temp.png-e130db2c56c6843b5b6b9a1941b81e67.ctex"]
 
 [params]
 

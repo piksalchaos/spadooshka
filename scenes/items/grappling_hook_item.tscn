@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bapc3bg6tb638"]
 
 [ext_resource type="Script" path="res://scenes/items/grappling_hook_item.gd" id="1_fvdyy"]
-[ext_resource type="Texture2D" uid="uid://urn0t8itsm0b" path="res://assets/images/grappling_icon_temp.png" id="2_j7ttr"]
+[ext_resource type="Texture2D" uid="uid://urn0t8itsm0b" path="res://assets/images/item_icons/grappling_icon_temp.png" id="2_j7ttr"]
 
 [node name="GrapplingHookItem" type="Node3D"]
 script = ExtResource("1_fvdyy")

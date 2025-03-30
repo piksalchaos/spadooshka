@@ -45,7 +45,7 @@ func cleanup_server_list(delta: float):
 
 func update_server_list():
 	var server_ip = listener.get_packet_ip()
-	var server_port = listener.get_packet_port()
+	#var server_port = listener.get_packet_port()
 	var bytes = listener.get_packet()
 	var data = bytes.get_string_from_utf16()
 	var room_info = JSON.parse_string(data)
@@ -63,8 +63,8 @@ func update_server_list():
 		}
 		found_server.emit(room_info.name, server_ip, room_info.player_count)
 
-func set_up_broadcast(name):
-	local_room_info.name = name
+func set_up_broadcast(room_name):
+	local_room_info.name = room_name
 	update_local_room_player_count()
 	
 	broadcaster = PacketPeerUDP.new()

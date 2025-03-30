@@ -2,17 +2,17 @@ extends Node
 
 const SERVER_BROWSER_SCENE = preload("res://scenes/server_browser.tscn")
 
-const PLAYER_FILE_NAMES: Array[String] = [
-	"res://scenes/agents/bunny/bunny.tscn",
-	"res://scenes/agents/catboy/catboy.tscn",
-	"res://scenes/agents/madoka/madoka.tscn",
-	"res://scenes/agents/sandy/sandy.tscn"
-]
+const PLAYER_FILE_NAMES = { # godot 4.4 is actually adding typed arrays, so this can be typed later
+	"bunny": "res://scenes/agents/bunny/bunny.tscn",
+	"catboy": "res://scenes/agents/catboy/catboy.tscn",
+	"madoka": "res://scenes/agents/madoka/madoka.tscn",
+	"sandy": "res://scenes/agents/sandy/sandy.tscn"
+}
 
-const MAP_FILE_NAMES: Array[String] = [
-	"res://scenes/maps/map_1.tscn",
-	"res://scenes/maps/map_2.tscn"
-]
+const MAP_FILE_NAMES = {
+	"map_1" = "res://scenes/maps/map_1.tscn",
+	"map_2" = "res://scenes/maps/map_2.tscn"
+}
 
 @export var server_port = 8910
 
@@ -25,11 +25,13 @@ var server_browser: ServerBrowser
 @onready var multiplayer_container: Node = $MultiplayerContainer
 @onready var local_menu: LocalMenu = $GUI/LocalMenu
 @onready var lobby_menu: LobbyMenu = $GUI/LobbyMenu
+@onready var preliminary_screen: Control = $GUI/PreliminaryScreen
 @onready var hud: HUD = $GUI/HUD
 
 var map: Map
 
 var peer_ready_states = {}
+var peer_selection_choices = {}
 
 const ROUNDS_TO_WIN: int = 3
 var round_number: int = 1
@@ -48,7 +50,7 @@ func _on_title_screen_exit_button_pressed() -> void:
 func _on_main_menu_local_game_button_pressed() -> void:
 	set_up_server_browser()
 
-func _on_local_menu_host_button_pressed() -> void:
+func _on_local_menu_host_button_pressed(room_name: String) -> void:
 	enet_peer.create_server(server_port)
 	multiplayer.multiplayer_peer = enet_peer
 	
@@ -56,7 +58,7 @@ func _on_local_menu_host_button_pressed() -> void:
 	multiplayer.peer_disconnected.connect(lobby_menu.on_peer_disconnected)
 	
 	if server_browser:
-		server_browser.set_up_broadcast("placeholder username")
+		server_browser.set_up_broadcast(room_name)
 
 func set_up_server_browser():
 	server_browser = SERVER_BROWSER_SCENE.instantiate()
@@ -77,15 +79,35 @@ func _on_local_menu_singleplayer_button_pressed() -> void:
 	play_game()
 
 func _on_lobby_menu_start_button_pressed() -> void:
-	assert(multiplayer.get_unique_id() == 1, \
+	assert(multiplayer.get_unique_id() == HOST_NUMBER, \
 		"wtf, only the host should be able to start the game")
-	close_server_browser.rpc()
-	#play_game()
+	close_server_browser.rpc() 
 
 @rpc("call_local")
 func close_server_browser():
 	if server_browser:
 		server_browser.queue_free()
+
+func _on_agent_map_select_menu_finished_selection(
+		peer_id: int, agent_name: String, map_name: String
+	) -> void:
+	record_peer_selection_choice.rpc(peer_id, agent_name, map_name)
+
+func _on_preliminary_screen_cancelled_selection(peer_id: int) -> void:
+	remove_peer_selection_choice.rpc(peer_id)
+
+@rpc("call_local", "any_peer")
+func record_peer_selection_choice(peer_id: int, agent_name: String, map_name: String):
+	peer_selection_choices[peer_id] = {"agent_name": agent_name, "map_name": map_name} 
+	preliminary_screen.update_with_peer_selection_choices(peer_selection_choices)
+
+@rpc("call_local", "any_peer")
+func remove_peer_selection_choice(peer_id):
+	peer_selection_choices.erase(peer_id)
+	preliminary_screen.update_with_peer_selection_choices(peer_selection_choices)
+
+func _on_preliminary_screen_begin_button_pressed() -> void:
+	play_game()
 
 func play_game():
 	gui.prepare_for_game.rpc()
@@ -94,7 +116,11 @@ func play_game():
 	play_round()
 
 func choose_map():
-	map = load(MAP_FILE_NAMES.pick_random()).instantiate()
+	var map_votes = []
+	for peer_choice in peer_selection_choices.values():
+		map_votes.append(peer_choice["map_name"])
+	var chosen_map_name = "map_1" if map_votes.is_empty() else map_votes.pick_random()
+	map = load(MAP_FILE_NAMES[chosen_map_name]).instantiate()
 	multiplayer_container.add_child(map)
 
 func add_players():
@@ -103,8 +129,7 @@ func add_players():
 		add_player(peer_id)
 
 func add_player(peer_id: int):
-	var scene = PLAYER_FILE_NAMES.pick_random()
-	print(scene)
+	var scene = PLAYER_FILE_NAMES[peer_selection_choices[peer_id]["agent_name"]]
 	var player = load(scene).instantiate()
 	player.name = str(peer_id)
 	multiplayer_container.add_child(player)
@@ -150,7 +175,6 @@ func show_end_round_icon(P1_won: bool):
 func clear_end_round_icon():
 	hud.get_node("RoundWonIcon").visible = false
 	hud.get_node("RoundLostIcon").visible = false
-
 
 func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 	if node is Player:

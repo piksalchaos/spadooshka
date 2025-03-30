@@ -1,0 +1,97 @@
+[gd_scene load_steps=3 format=3 uid="uid://svo1j1xxwq0w"]
+
+[ext_resource type="Texture2D" uid="uid://c4y4e2nfxgikt" path="res://assets/images/gui/preliminary_screen/versus_temp.png" id="1_hygjt"]
+[ext_resource type="Script" path="res://scenes/gui/preliminary_screen.gd" id="1_q8k6l"]
+
+[node name="PreliminaryScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q8k6l")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.406
+anchor_top = 0.321
+anchor_right = 0.594
+anchor_bottom = 0.679
+offset_left = 0.319946
+offset_top = -0.12001
+offset_right = -0.320068
+offset_bottom = 0.119995
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_hygjt")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SelfDisplay" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.0664062
+anchor_top = 0.273611
+anchor_right = 0.276406
+anchor_bottom = 0.704611
+offset_right = 0.199982
+offset_bottom = -0.320007
+metadata/_edit_use_anchors_ = true
+
+[node name="ChoiceLabel" type="Label" parent="SelfDisplay"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="OpponentDisplay" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.699219
+anchor_top = 0.313889
+anchor_right = 0.909219
+anchor_bottom = 0.744889
+offset_right = 0.199982
+offset_bottom = -0.320007
+metadata/_edit_use_anchors_ = true
+
+[node name="ChoiceLabel" type="Label" parent="OpponentDisplay"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -78.0
+offset_right = 215.0
+offset_bottom = -17.0
+grow_vertical = 0
+text = "Back to Selection"
+
+[node name="BeginButton" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3625
+anchor_top = 0.804167
+anchor_right = 0.625
+anchor_bottom = 0.947222
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Begin!!!!"
+metadata/_edit_use_anchors_ = true
+
+[node name="WaitingLabel" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 519.0
+offset_top = 637.0
+offset_right = 645.0
+offset_bottom = 660.0
+text = "Waiting for Host"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="BeginButton" to="." method="_on_begin_button_pressed"]

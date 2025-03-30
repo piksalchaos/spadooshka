@@ -9,8 +9,9 @@ signal icon_selected(icon_name: String)
 
 func _ready():
 	sort_children()
-	for selectable_icon in get_children():
-		selectable_icon.selected.connect(_on_selectable_icon_selected)
+	if not Engine.is_editor_hint():
+		for selectable_icon in get_children():
+			selectable_icon.selected.connect(_on_selectable_icon_selected)
 
 func _on_selectable_icon_selected(icon_name: String):
 	icon_selected.emit(icon_name)
@@ -25,9 +26,9 @@ func _notification(what: int) -> void:
 func sort_children():
 	for i in range(get_child_count()):
 		var icon_width = (size.x - inner_margin_pixels*(columns-1))/columns
-		var icon_height = icon_width / height_to_width_ratio - inner_margin_pixels/columns
+		var icon_height = icon_width / height_to_width_ratio
 		var icon_x = (i % columns) * (icon_width + inner_margin_pixels)
-		var icon_y = floorf(i/columns) * (icon_height + inner_margin_pixels)
+		var icon_y = floorf(float(i)/columns) * (icon_height + inner_margin_pixels)
 		
 		fit_child_in_rect(
 			get_child(i),

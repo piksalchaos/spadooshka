@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/items/item_classes/effect_item.gd" id="1_3igi2"]
 [ext_resource type="PackedScene" uid="uid://bt74lrtvilps" path="res://scenes/effects/jump_boost_effect.tscn" id="2_8g3pb"]
-[ext_resource type="Texture2D" uid="uid://cl8ppircs332s" path="res://assets/images/jumpboost_icon_temp.png" id="3_jhx6m"]
+[ext_resource type="Texture2D" uid="uid://cl8ppircs332s" path="res://assets/images/item_icons/jumpboost_icon_temp.png" id="3_jhx6m"]
 
 [node name="JumpBoost" type="Node3D"]
 script = ExtResource("1_3igi2")

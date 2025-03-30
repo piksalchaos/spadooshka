@@ -5,9 +5,9 @@
 [resource]
 script = ExtResource("1_lq2ex")
 shoot_mode = 0
-fire_time = 0.25
+fire_time = 0.15
 reload_time = 2.0
-rev_time = 3.0
+rev_time = 1.0
 mag_capacity = 50
 damage = 8
 shoot_range = 100

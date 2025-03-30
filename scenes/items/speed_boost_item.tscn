@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/items/item_classes/effect_item.gd" id="1_jiuej"]
 [ext_resource type="PackedScene" uid="uid://c17tyt3sc84f4" path="res://scenes/effects/speed_boost_effect.tscn" id="2_b5mtt"]
-[ext_resource type="Texture2D" uid="uid://b61iyp4uh471f" path="res://assets/images/speedboost_icon_temp.png" id="3_kphp2"]
+[ext_resource type="Texture2D" uid="uid://b61iyp4uh471f" path="res://assets/images/item_icons/speedboost_icon_temp.png" id="3_kphp2"]
 
 [node name="SpeedBoost" type="Node3D"]
 script = ExtResource("1_jiuej")

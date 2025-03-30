@@ -1,8 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://q6ftnh8r4dhc"]
+[gd_scene load_steps=6 format=3 uid="uid://q6ftnh8r4dhc"]
 
 [ext_resource type="Script" path="res://scenes/entities/item_entities/billiard_bomb.gd" id="1_snjj1"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfjor"]
+
 [sub_resource type="SphereMesh" id="SphereMesh_v5fck"]
+material = SubResource("StandardMaterial3D_bfjor")
 radius = 0.75
 height = 1.5
 

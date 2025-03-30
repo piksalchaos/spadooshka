@@ -15,6 +15,7 @@ func use():
 		"path": "res://scenes/entities/item_entities/billiard_bomb.tscn",
 		"props": {
 			"position": player.position + LAUNCH_OFFSET,
+			"rotation": Vector3(randf()*2*PI, randf()*2*PI, randf()*2*PI),
 			"linear_velocity": -player.get_camera_global_basis().z * SPEED + VELOCITY_OFFSET
 		},
 		"methods": {

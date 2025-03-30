@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://q6ftnh8r4dhc"]
+[gd_scene load_steps=7 format=3 uid="uid://q6ftnh8r4dhc"]
 
 [ext_resource type="Script" path="res://scenes/entities/item_entities/billiard_bomb.gd" id="1_snjj1"]
+[ext_resource type="Texture2D" uid="uid://5x50gahdvryi" path="res://assets/images/billiards/billiards.png" id="2_mi1v2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfjor"]
+albedo_texture = ExtResource("2_mi1v2")
+uv1_scale = Vector3(0.25, 0.25, 1)
+uv1_offset = Vector3(0.75, 0.75, 0)
 
 [sub_resource type="SphereMesh" id="SphereMesh_v5fck"]
 material = SubResource("StandardMaterial3D_bfjor")

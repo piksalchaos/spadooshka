@@ -16,6 +16,8 @@ func _process(_delta: float) -> void:
 	trajectory.b = launch_vector.y / speed * sqrt(launch_vector.x ** 2 + launch_vector.z ** 2) 
 	trajectory.position = player.position + LAUNCH_OFFSET
 	trajectory.global_basis = Basis(camera_basis[2], Vector3.UP, camera_basis[0]).orthonormalized()
+	
+	visible = is_selected
 
 func use():
 	var new_grenade_object: RigidBody3D = grenade_object.instantiate()

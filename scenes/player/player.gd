@@ -209,7 +209,7 @@ func receive_damage(damage):
 	if health <= 0:
 		die()
 		death.emit(get_multiplayer_authority())
-		
+	
 	health_changed.emit(health, stats.max_health)
 
 func get_camera_global_basis() -> Basis:

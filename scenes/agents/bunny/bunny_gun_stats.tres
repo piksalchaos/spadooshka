@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="GunStats" load_steps=2 format=3 uid="uid://g020dev37e7q"]
+
+[ext_resource type="Script" path="res://scenes/player/gun_stats.gd" id="1_18cva"]
+
+[resource]
+script = ExtResource("1_18cva")
+shoot_mode = 0
+fire_time = 0.1
+reload_time = 0.6
+rev_time = 0.0
+mag_capacity = 13
+damage = 5
+shoot_range = 50
+bullet_trajectory_rot_x = 2.0
+bullet_trajectory_rot_z = 2.0
+aim_bullet_trajectory_rot_x = 1.0
+aim_bullet_trajectory_rot_z = 1.0

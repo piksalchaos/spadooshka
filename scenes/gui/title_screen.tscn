@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6j0xtac0l3pd"]
+
+[ext_resource type="Script" path="res://scenes/gui/title_screen.gd" id="1_p4ppl"]
+[ext_resource type="Texture2D" uid="uid://dfuw6c7nhgoui" path="res://assets/images/gui/title_screen/title_temp.png" id="1_vsh7l"]
+[ext_resource type="Texture2D" uid="uid://b214543836tkk" path="res://assets/images/gui/title_screen/start_button_temp.png" id="2_bm2mf"]
+[ext_resource type="Texture2D" uid="uid://dbkss1yxgkmpw" path="res://assets/images/gui/title_screen/exit_button_temp.png" id="3_2xasn"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p4ppl")
+
+[node name="TitleTexture" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.6
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_vsh7l")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StartButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.401
+anchor_top = 0.676
+anchor_right = 0.599
+anchor_bottom = 1.0
+offset_left = 0.219971
+offset_top = 0.279968
+offset_right = -0.220032
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("2_bm2mf")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ExitButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.802
+anchor_top = 0.676
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.439941
+offset_top = 0.279968
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("3_2xasn")
+ignore_texture_size = true
+stretch_mode = 5
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

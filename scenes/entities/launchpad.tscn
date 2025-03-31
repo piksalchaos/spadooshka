@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnu4b8te7nrsb"]
+
+[ext_resource type="Script" path="res://scenes/entities/launchpad.gd" id="1_8ahnr"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ewfkt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_od4js"]
+
+[node name="Launchpad" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_ewfkt")
+script = ExtResource("1_8ahnr")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_od4js")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

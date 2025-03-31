@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://q6ftnh8r4dhc"]
+
+[ext_resource type="Script" path="res://scenes/entities/item_entities/billiard_bomb.gd" id="1_snjj1"]
+[ext_resource type="Texture2D" uid="uid://5x50gahdvryi" path="res://assets/images/billiards/billiards.png" id="2_mi1v2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfjor"]
+albedo_texture = ExtResource("2_mi1v2")
+uv1_scale = Vector3(0.25, 0.25, 1)
+uv1_offset = Vector3(0.75, 0.75, 0)
+
+[sub_resource type="SphereMesh" id="SphereMesh_v5fck"]
+material = SubResource("StandardMaterial3D_bfjor")
+radius = 0.75
+height = 1.5
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_jd5l1"]
+custom_solver_bias = 1.0
+radius = 0.75
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_f0t4c"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="BilliardBomb" type="RigidBody3D" groups=["bullet_hole_immune", "free_after_round"]]
+collision_layer = 0
+mass = 0.5
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_snjj1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_v5fck")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_jd5l1")
+
+[node name="EnableTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_f0t4c")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="EnableTimer" to="." method="_on_enable_timer_timeout"]

@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://hmxe78pntojx"]
+
+[ext_resource type="Script" path="res://scenes/gui/main_menu.gd" id="1_0dj8t"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0dj8t")
+
+[node name="LocalGameButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.648438
+anchor_top = 0.373611
+anchor_right = 0.794531
+anchor_bottom = 0.527778
+grow_horizontal = 2
+grow_vertical = 2
+text = "Local Game"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "this is the main menu lol"
+
+[connection signal="pressed" from="LocalGameButton" to="." method="_on_local_game_button_pressed"]

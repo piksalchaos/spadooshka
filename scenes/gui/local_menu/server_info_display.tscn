@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://chodaasqqr3r6"]
+
+[ext_resource type="Script" path="res://scenes/gui/local_menu/server_info_display.gd" id="1_mhptv"]
+
+[node name="ServerInfoDisplay" type="HBoxContainer"]
+script = ExtResource("1_mhptv")
+
+[node name="RoomName" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Xx_PROGAMER_xX"
+
+[node name="IP" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PLACEHOLDER IP"
+
+[node name="PlayerCount" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+
+[node name="JoinButton" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Join"
+
+[connection signal="pressed" from="JoinButton" to="." method="_on_join_button_pressed"]

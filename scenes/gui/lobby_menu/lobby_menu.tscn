@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3 uid="uid://g0un4ork14i8"]
+
+[ext_resource type="Script" path="res://scenes/gui/lobby_menu/lobby_menu.gd" id="1_y36gv"]
+
+[node name="LobbyMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y36gv")
+
+[node name="PlayerDisplays" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_top = 0.025
+anchor_right = 0.2
+anchor_bottom = 0.975
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="ButtonContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.679688
+anchor_top = 0.15
+anchor_right = 0.952344
+anchor_bottom = 0.875
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 20
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ReadyButton" type="Button" parent="ButtonContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+toggle_mode = true
+text = "Ready"
+metadata/_edit_use_anchors_ = true
+
+[node name="StartButton" type="Button" parent="ButtonContainer"]
+visible = false
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "Begin Match!
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="WaitingLabel" type="Label" parent="ButtonContainer"]
+visible = false
+layout_mode = 2
+text = "Waiting for Host..."
+
+[connection signal="pressed" from="ButtonContainer/ReadyButton" to="." method="_on_ready_button_pressed"]
+[connection signal="pressed" from="ButtonContainer/StartButton" to="." method="_on_start_button_pressed"]

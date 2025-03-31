@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://ty7aw8t2okli"]
+
+[ext_resource type="Script" path="res://scenes/entities/item_entities/grenade.gd" id="1_hdmlq"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_dlt5l"]
+rough = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uchby"]
+radius = 0.05
+height = 0.2
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dup11"]
+radius = 0.05
+height = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cvr1g"]
+radius = 3.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wyleg"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Grenade" type="RigidBody3D"]
+collision_layer = 0
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_dlt5l")
+continuous_cd = true
+script = ExtResource("1_hdmlq")
+falloff_strength = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_uchby")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_dup11")
+
+[node name="ExplodeTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="ExplosionArea" type="Area3D" parent="."]
+collision_layer = 3
+collision_mask = 3
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ExplosionArea"]
+shape = SubResource("SphereShape3D_cvr1g")
+
+[node name="Light" type="OmniLight3D" parent="."]
+light_color = Color(1, 0, 0, 1)
+omni_range = 1.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_wyleg")
+
+[connection signal="timeout" from="ExplodeTimer" to="." method="_on_explode_timer_timeout"]

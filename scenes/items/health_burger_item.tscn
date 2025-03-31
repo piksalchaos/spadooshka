@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0aed5ebk603j"]
+
+[ext_resource type="Script" path="res://scenes/items/health_burger_item.gd" id="1_8633u"]
+[ext_resource type="Texture2D" uid="uid://c2l4172uyo0u2" path="res://assets/images/item_icons/health_burger_icon_temp.png" id="2_innwp"]
+
+[node name="HealthBurgerItem" type="Node3D"]
+script = ExtResource("1_8633u")
+item_name = "Health Burger"
+hud_icon = ExtResource("2_innwp")

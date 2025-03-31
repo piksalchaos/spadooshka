@@ -1,0 +1,169 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4q7skpmltk8l"]
+
+[ext_resource type="Script" path="res://scenes/gui/local_menu/local_menu.gd" id="1_yla67"]
+
+[node name="LocalMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_yla67")
+
+[node name="ListenerFailedLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+offset_right = 230.0
+offset_bottom = 23.0
+text = "Failed to bind to listener port!"
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.271875
+anchor_top = 0.0347222
+anchor_right = 0.669531
+anchor_bottom = 0.272222
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Debug Menu (meant to be hidden)"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SingleplayerButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Singleplayer
+"
+
+[node name="JoinLocalhostButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Join Existing Localhost"
+
+[node name="ServerInfoPanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.3
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ServerInfoContainer" type="VBoxContainer" parent="ServerInfoPanelContainer"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ServerInfoLabels" type="HBoxContainer" parent="ServerInfoPanelContainer/ServerInfoContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="ServerInfoPanelContainer/ServerInfoContainer/ServerInfoLabels"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Name"
+
+[node name="IP" type="Label" parent="ServerInfoPanelContainer/ServerInfoContainer/ServerInfoLabels"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "IP"
+
+[node name="PlayerCount" type="Label" parent="ServerInfoPanelContainer/ServerInfoContainer/ServerInfoLabels"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Player Count
+"
+
+[node name="JoinColumnSpacer" type="Control" parent="ServerInfoPanelContainer/ServerInfoContainer/ServerInfoLabels"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JoinLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.710938
+anchor_top = 0.0666667
+anchor_right = 0.958594
+anchor_bottom = 0.101389
+grow_horizontal = 2
+grow_vertical = 2
+text = "Join by address:"
+metadata/_edit_use_anchors_ = true
+
+[node name="JoinMenu" type="VBoxContainer" parent="."]
+layout_mode = 2
+anchor_left = 0.709
+anchor_top = 0.117
+anchor_right = 0.956
+anchor_bottom = 0.257
+offset_left = -0.520081
+offset_top = -0.240005
+offset_right = 0.319946
+offset_bottom = -0.0399933
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="JoinMenu"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="AddressEntry" type="LineEdit" parent="JoinMenu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "IP address"
+max_length = 15
+
+[node name="PortEntry" type="LineEdit" parent="JoinMenu/HBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Port (Optional)"
+
+[node name="JoinGoButton" type="Button" parent="JoinMenu"]
+layout_mode = 2
+disabled = true
+text = "    Go     "
+
+[node name="HostMenu" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0445312
+anchor_top = 0.1125
+anchor_right = 0.228125
+anchor_bottom = 0.219444
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="RoomNameEntry" type="LineEdit" parent="HostMenu"]
+layout_mode = 2
+placeholder_text = "enter room name"
+max_length = 20
+
+[node name="HostButton" type="Button" parent="HostMenu"]
+layout_mode = 2
+disabled = true
+text = "Host LAN Server"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/SingleplayerButton" to="." method="_on_singleplayer_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/JoinLocalhostButton" to="." method="_on_join_localhost_button_pressed"]
+[connection signal="text_changed" from="JoinMenu/HBoxContainer/AddressEntry" to="." method="_on_address_entry_text_changed"]
+[connection signal="pressed" from="JoinMenu/JoinGoButton" to="." method="_on_join_go_button_pressed"]
+[connection signal="text_changed" from="HostMenu/RoomNameEntry" to="." method="_on_room_name_entry_text_changed"]
+[connection signal="pressed" from="HostMenu/HostButton" to="." method="_on_host_button_pressed"]

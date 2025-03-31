@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://c2c8wh6k7fca5"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_yci6l"]
+[ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/hud.tscn" id="3_shkqk"]
+[ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/main_menu.tscn" id="4_b8hkp"]
+[ext_resource type="PackedScene" uid="uid://g0un4ork14i8" path="res://scenes/lobby_menu.tscn" id="4_jqa32"]
+[ext_resource type="PackedScene" path="res://scenes/end_screen.tscn" id="5_t4ul1"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_yci6l")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/player.tscn", "res://scenes/map-scenes/map_1.tscn")
+spawn_path = NodePath("../MultiplayerContainer")
+
+[node name="MultiplayerContainer" type="Node" parent="."]
+
+[node name="GUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MainMenu" parent="GUI" instance=ExtResource("4_b8hkp")]
+layout_mode = 1
+offset_left = 385.0
+offset_top = 224.0
+offset_right = -370.0
+offset_bottom = -190.0
+
+[node name="LobbyMenu" parent="GUI" instance=ExtResource("4_jqa32")]
+visible = false
+layout_mode = 1
+
+[node name="HUD" parent="GUI" instance=ExtResource("3_shkqk")]
+visible = false
+layout_mode = 1
+mouse_filter = 2
+
+[node name="VictoryScreen" parent="GUI" instance=ExtResource("5_t4ul1")]
+visible = false
+layout_mode = 1
+text = "You won!"
+
+[node name="DefeatScreen" parent="GUI" instance=ExtResource("5_t4ul1")]
+visible = false
+layout_mode = 1
+text = "You lost."
+
+[connection signal="child_entered_tree" from="MultiplayerContainer" to="." method="_on_multiplayer_container_child_entered_tree"]
+[connection signal="host_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_host_button_pressed"]
+[connection signal="join_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_join_button_pressed"]
+[connection signal="singleplayer_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_singleplayer_button_pressed"]
+[connection signal="ready_button_pressed" from="GUI/LobbyMenu" to="." method="_on_lobby_menu_ready_button_pressed"]
+[connection signal="start_button_pressed" from="GUI/LobbyMenu" to="." method="_on_lobby_menu_start_button_pressed"]

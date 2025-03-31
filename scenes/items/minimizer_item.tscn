@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://gytiibtgnlcd"]
+
+[ext_resource type="Script" path="res://scenes/items/minimizer_item.gd" id="1_xmy0g"]
+[ext_resource type="PackedScene" uid="uid://bwvm5rtrmej0x" path="res://scenes/effects/minimizer_effect.tscn" id="2_rcwoq"]
+[ext_resource type="Texture2D" uid="uid://devc5v28gymsd" path="res://assets/images/item_icons/minimizer_icon_temp.png" id="3_j4fay"]
+
+[node name="Minimizer" type="Node3D"]
+script = ExtResource("1_xmy0g")
+effect_scene = ExtResource("2_rcwoq")
+item_name = "Minimizer"
+hud_icon = ExtResource("3_j4fay")
+
+[node name="MinimizerTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="ActivateSFX" type="AudioStreamPlayer" parent="."]
+
+[node name="DeactivateSFX" type="AudioStreamPlayer" parent="."]
+
+[connection signal="timeout" from="MinimizerTimer" to="." method="_on_jump_boost_timer_timeout"]

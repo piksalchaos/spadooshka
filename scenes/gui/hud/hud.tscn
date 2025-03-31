@@ -1,0 +1,293 @@
+[gd_scene load_steps=17 format=3 uid="uid://euhmy40ljoc4"]
+
+[ext_resource type="Script" path="res://scenes/gui/hud/hud.gd" id="1_8mkb2"]
+[ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="2_yw55s"]
+[ext_resource type="Texture2D" uid="uid://k473ttvmslg8" path="res://assets/images/gui/hud/ammo_bar.png" id="3_amodr"]
+[ext_resource type="Texture2D" uid="uid://bnnkaais57byp" path="res://assets/images/gui/hud/ammo_bar_under.png" id="3_bujad"]
+[ext_resource type="Texture2D" uid="uid://cw8qtdr0bp1af" path="res://assets/images/player_icons/player_icon_temp.png" id="3_lsk7v"]
+[ext_resource type="Script" path="res://scenes/gui/hud/score_display.gd" id="4_0pm5a"]
+[ext_resource type="PackedScene" uid="uid://ooxxqxmb5cvk" path="res://scenes/gui/hud/inventory_slot.tscn" id="5_ojg8h"]
+[ext_resource type="Texture2D" uid="uid://die8f8s7a6i8a" path="res://assets/images/round_won_icon.png" id="6_mlg6x"]
+[ext_resource type="Texture2D" uid="uid://choc1obf6wea5" path="res://assets/images/round_lost_icon.png" id="7_oxhew"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wln1f"]
+bg_color = Color(0.153453, 0.663559, 0.792775, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glbnf"]
+bg_color = Color(0.261093, 0.704154, 0.344336, 1)
+
+[sub_resource type="Gradient" id="Gradient_gvxgr"]
+offsets = PackedFloat32Array(0.532468, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 0, 0, 0.470588)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4mih1"]
+gradient = SubResource("Gradient_gvxgr")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Animation" id="Animation_dv2xh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_r8wlt"]
+resource_name = "low_health_show"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(-0.0333333, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_caxpl"]
+_data = {
+"RESET": SubResource("Animation_dv2xh"),
+"low_health_show": SubResource("Animation_r8wlt")
+}
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8mkb2")
+
+[node name="Crosshairs" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 512.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.04, 0.04)
+pivot_offset = Vector2(-10.24, -10.24)
+texture = ExtResource("2_yw55s")
+stretch_mode = 5
+
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
+modulate = Color(1, 1, 1, 0.533333)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.475
+anchor_top = 0.45
+anchor_right = 0.525
+anchor_bottom = 0.55
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AmmoAmountBar" type="TextureProgressBar" parent="AspectRatioContainer"]
+layout_mode = 2
+max_value = 1.0
+step = 0.01
+value = 1.0
+fill_mode = 5
+radial_initial_angle = 140.8
+radial_fill_degrees = 72.0
+nine_patch_stretch = true
+texture_under = ExtResource("3_bujad")
+texture_progress = ExtResource("3_amodr")
+
+[node name="PlayerStatus" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.88
+anchor_right = 0.315
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_top = -6.10352e-05
+offset_right = -0.200012
+offset_bottom = -14.0
+grow_vertical = 0
+theme_override_constants/separation = 14
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayerIcon" type="TextureRect" parent="PlayerStatus"]
+layout_mode = 2
+texture = ExtResource("3_lsk7v")
+expand_mode = 2
+stretch_mode = 4
+
+[node name="MarginAdjuster" type="Control" parent="PlayerStatus"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BarVBoxContainer" type="VBoxContainer" parent="PlayerStatus/MarginAdjuster"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.15
+anchor_right = 1.0
+anchor_bottom = 0.85
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="DashBar" type="ProgressBar" parent="PlayerStatus/MarginAdjuster/BarVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/fill = SubResource("StyleBoxFlat_wln1f")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="HealthBar" type="ProgressBar" parent="PlayerStatus/MarginAdjuster/BarVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_glbnf")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+
+[node name="ScoreDisplay" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_right = 0.7
+anchor_bottom = 0.05
+grow_horizontal = 2
+script = ExtResource("4_0pm5a")
+
+[node name="LabelHBoxContainer" type="HBoxContainer" parent="ScoreDisplay"]
+layout_mode = 2
+alignment = 1
+
+[node name="P1ScoreLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoundLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Round 1
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P2ScoreLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EffectsDisplay" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.797656
+anchor_top = 0.573611
+anchor_right = 0.914844
+anchor_bottom = 0.969444
+grow_horizontal = 0
+grow_vertical = 0
+alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Inventory" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.914438
+anchor_top = 0.550278
+anchor_right = 0.999844
+anchor_bottom = 1.00044
+offset_left = 0.519897
+offset_top = -0.200012
+offset_right = 0.199951
+offset_bottom = -0.320068
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 0
+alignment = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="InventorySlot1" parent="Inventory" instance=ExtResource("5_ojg8h")]
+layout_mode = 2
+
+[node name="InventorySlot2" parent="Inventory" instance=ExtResource("5_ojg8h")]
+layout_mode = 2
+
+[node name="InventorySlot3" parent="Inventory" instance=ExtResource("5_ojg8h")]
+layout_mode = 2
+
+[node name="LowHealthTexture" type="TextureRect" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 19.0
+offset_right = 14.0
+offset_bottom = 19.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_4mih1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LowHealthTexture"]
+libraries = {
+"": SubResource("AnimationLibrary_caxpl")
+}
+
+[node name="RoundWonIcon" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -195.0
+offset_top = -195.0
+offset_right = 195.0
+offset_bottom = 195.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_mlg6x")
+
+[node name="RoundLostIcon" type="TextureRect" parent="."]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -202.0
+offset_top = -202.0
+offset_right = 202.0
+offset_bottom = 202.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_oxhew")

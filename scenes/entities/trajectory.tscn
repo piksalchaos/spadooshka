@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://chpeu37n1l6iw"]
+
+[ext_resource type="Shader" path="res://scenes/entities/trajectory.gdshader" id="1_ljqcw"]
+[ext_resource type="Script" path="res://scenes/entities/trajectory.gd" id="2_3q5cm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e15fq"]
+render_priority = 0
+shader = ExtResource("1_ljqcw")
+shader_parameter/a = -0.1
+shader_parameter/b = 0.035
+shader_parameter/c = 0.42
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_p2wb6"]
+lightmap_size_hint = Vector2i(12, 12)
+material = SubResource("ShaderMaterial_e15fq")
+size = Vector2(20, 0.1)
+subdivide_width = 40
+center_offset = Vector3(10, 0, 0)
+
+[node name="Trajectory" type="MeshInstance3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("PlaneMesh_p2wb6")
+script = ExtResource("2_3q5cm")
+a = -0.1
+b = 0.035

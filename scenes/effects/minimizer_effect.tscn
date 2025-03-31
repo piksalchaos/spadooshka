@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bwvm5rtrmej0x"]
+
+[ext_resource type="PackedScene" uid="uid://deyxgoytnuhu" path="res://scenes/effects/temporary_effect.tscn" id="1_chkiu"]
+
+[node name="MinimizerEffect" instance=ExtResource("1_chkiu")]
+effect_name = "Minimizer"

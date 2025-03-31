@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://euhmy40ljoc4"]
+[gd_scene load_steps=19 format=3 uid="uid://euhmy40ljoc4"]
 
 [ext_resource type="Script" path="res://scenes/gui/hud/hud.gd" id="1_8mkb2"]
 [ext_resource type="Texture2D" uid="uid://m0mlvui7ps7l" path="res://assets/images/gui/hud/crosshairs.png" id="2_1vnnh"]
@@ -8,10 +8,14 @@
 [ext_resource type="Script" path="res://scenes/gui/hud/score_display.gd" id="4_0pm5a"]
 [ext_resource type="PackedScene" uid="uid://ooxxqxmb5cvk" path="res://scenes/gui/hud/inventory_slot.tscn" id="5_ojg8h"]
 [ext_resource type="Texture2D" uid="uid://die8f8s7a6i8a" path="res://assets/images/round_won_icon.png" id="6_mlg6x"]
+[ext_resource type="Script" path="res://scenes/gui/hud/bubble_shield_bar.gd" id="6_ntse7"]
 [ext_resource type="Texture2D" uid="uid://choc1obf6wea5" path="res://assets/images/round_lost_icon.png" id="7_oxhew"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wln1f"]
 bg_color = Color(0.153453, 0.663559, 0.792775, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8k04s"]
+bg_color = Color(0.565344, 0.60005, 0.683188, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glbnf"]
 bg_color = Color(0.261093, 0.704154, 0.344336, 1)
@@ -155,6 +159,16 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_wln1f")
 max_value = 1.0
 value = 1.0
 show_percentage = false
+
+[node name="BubbleShieldBar" type="ProgressBar" parent="PlayerStatus/MarginAdjuster/BarVBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/fill = SubResource("StyleBoxFlat_8k04s")
+max_value = 1.0
+value = 1.0
+show_percentage = false
+script = ExtResource("6_ntse7")
 
 [node name="HealthBar" type="ProgressBar" parent="PlayerStatus/MarginAdjuster/BarVBoxContainer"]
 layout_mode = 2

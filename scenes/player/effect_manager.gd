@@ -14,3 +14,8 @@ func is_effect_applied(effect_name: String):
 		if effect.effect_name == effect_name:
 			return true
 	return false
+
+func get_effect_applied(effect_name: String):
+	for effect in get_children():
+		if effect.effect_name == effect_name:
+			return effect

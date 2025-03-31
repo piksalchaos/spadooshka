@@ -226,6 +226,12 @@ func dash():
 func receive_damage(damage):
 	if is_dead == true:
 		return
+	
+	var bubble_shield = effect_manager.get_effect_applied("Bubble Shield")
+	if bubble_shield != null:
+		bubble_shield.timer.receive_damage(damage)
+		return
+	
 	health -= damage
 	if health <= 0:
 		die()

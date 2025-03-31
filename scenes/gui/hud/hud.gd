@@ -4,6 +4,7 @@ class_name HUD extends Node
 @onready var ammo_amount_bar: TextureProgressBar = $AspectRatioContainer/AmmoAmountBar
 @onready var health_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/HealthBar
 @onready var dash_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/DashBar
+@onready var bubble_shield_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/BubbleShieldBar
 const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
 @onready var effects_display: HBoxContainer = $EffectsDisplay
 @onready var inventory_slots: Array[Node] = $Inventory.get_children()
@@ -42,9 +43,16 @@ func update_dash_display(dash_value, max_dash):
 	dash_bar.value = dash_value / max_dash
 
 func create_effect_display(effect: Effect):
+	if effect.effect_name == "Bubble Shield":
+		create_bubble_shield_bar(effect)
+		return
+	
 	var effect_display = EFFECT_DISPLAY_SCENE.instantiate()
 	effect_display.effect = effect
 	effects_display.add_child(effect_display)
+
+func create_bubble_shield_bar(bubble_shield_effect: Effect):
+	bubble_shield_bar.start(bubble_shield_effect)
 
 func update_inventory_icons(items: Array[Item], current_item_slot: int):
 	for i in range(inventory_slots.size()):

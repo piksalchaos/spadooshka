@@ -50,9 +50,10 @@ func create_effect_display(effect: Effect):
 
 func update_inventory_icons(items: Array[Item], current_item_slot: int):
 	for i in range(inventory_slots.size()):
-		var slot_icon: TextureRect = inventory_slots[i].icon
-		slot_icon.texture = items[i].hud_icon if i < items.size() else null
-		slot_icon.modulate = Color.AQUAMARINE if i == current_item_slot else Color.WHITE
+		var slot = inventory_slots[i]
+		slot.icon.texture = items[i].hud_icon if i < items.size() else null
+		#slot.icon.modulate = Color.AQUAMARINE if i == current_item_slot else Color.WHITE
+		slot.outline_rect.visible = i == current_item_slot and items.size() > 0
 
 @rpc("any_peer", "call_local")
 func update_score_display(round_number: int, P1_score: int, P2_score: int):

@@ -1,7 +1,7 @@
 class_name HUD extends Node
 
 @onready var player_icon: TextureRect = $PlayerStatus/PlayerIcon
-@onready var ammo_amount_bar: ProgressBar = $AmmoAmountBar
+@onready var ammo_amount_bar: TextureProgressBar = $AspectRatioContainer/AmmoAmountBar
 @onready var health_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/HealthBar
 @onready var dash_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/DashBar
 const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")

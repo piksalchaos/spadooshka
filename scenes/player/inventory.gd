@@ -39,9 +39,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			items.pop_at(current_item_slot)
 			select_item_slot(current_item_slot)
 	elif event.is_action_pressed("item_slot_left"):
-		select_item_slot(current_item_slot - 1)
-	elif event.is_action_pressed("item_slot_right"):
 		select_item_slot(current_item_slot + 1)
+	elif event.is_action_pressed("item_slot_right"):
+		select_item_slot(current_item_slot - 1)
 	else: return
 
 func select_item_slot(selected_item_slot):

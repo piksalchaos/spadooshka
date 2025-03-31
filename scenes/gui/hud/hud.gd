@@ -2,8 +2,8 @@ class_name HUD extends Node
 
 @onready var player_icon: TextureRect = $PlayerStatus/PlayerIcon
 @onready var ammo_amount_bar: TextureProgressBar = $AspectRatioContainer/AmmoAmountBar
-@onready var health_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/HealthBar
-@onready var dash_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/DashBar
+@onready var health_bar: TextureProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/HealthBar
+@onready var dash_bar: TextureProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/DashBar
 const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
 @onready var effects_display: HBoxContainer = $EffectsDisplay
 @onready var inventory_slots: Array[Node] = $Inventory.get_children()
@@ -16,6 +16,8 @@ const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
 @onready var lost_icon = $RoundLostIcon
 
 @export var low_health_effect_threshold = 0.25
+
+const HEALTH_BAR_MAX_TO_TEXTURE_RATIO = 0.95
 var is_low_health = false
 
 func update_player_icon(image: CompressedTexture2D):
@@ -25,7 +27,7 @@ func update_ammo_display(num_bullets, mag_capacity):
 	ammo_amount_bar.value = float(num_bullets) / mag_capacity
 
 func update_health_display(health, max_health):
-	health_bar.value = float(health) / max_health
+	health_bar.value = float(health) / max_health * HEALTH_BAR_MAX_TO_TEXTURE_RATIO
 	#if low_health_texture_animation_player.is_playing():
 		#return
 	if float(health) / max_health < low_health_effect_threshold and is_low_health == false:

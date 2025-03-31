@@ -40,9 +40,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if items[current_item_slot].use():
 			items.pop_at(current_item_slot)
 	elif event.is_action_pressed("item_slot_left"):
-		current_item_slot -= 1
-	elif event.is_action_pressed("item_slot_right"):
 		current_item_slot += 1
+	elif event.is_action_pressed("item_slot_right"):
+		current_item_slot -= 1
 	else: return
 	
 	current_item_slot = clamp(current_item_slot, 0, items.size() - 1)

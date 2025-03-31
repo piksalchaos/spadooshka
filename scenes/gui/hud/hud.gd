@@ -2,8 +2,8 @@ class_name HUD extends Node
 
 @onready var player_icon: TextureRect = $PlayerStatus/PlayerIcon
 @onready var ammo_amount_bar: TextureProgressBar = $AspectRatioContainer/AmmoAmountBar
-@onready var health_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/HealthBar
-@onready var dash_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/DashBar
+@onready var health_bar: TextureProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/HealthBar
+@onready var dash_bar: TextureProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/DashBar
 @onready var bubble_shield_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/BubbleShieldBar
 const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
 @onready var effects_display: HBoxContainer = $EffectsDisplay
@@ -11,12 +11,14 @@ const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
 @onready var low_health_texture = $LowHealthTexture
 @onready var low_health_texture_animation_player = $LowHealthTexture/AnimationPlayer
 
-@onready var score_display: PanelContainer = $ScoreDisplay
+@onready var score_display: TextureRect = $ScoreDisplay
 
 @onready var win_icon = $RoundWonIcon
 @onready var lost_icon = $RoundLostIcon
 
 @export var low_health_effect_threshold = 0.25
+
+const HEALTH_BAR_MAX_TO_TEXTURE_RATIO = 0.95
 var is_low_health = false
 
 func update_player_icon(image: CompressedTexture2D):
@@ -26,7 +28,7 @@ func update_ammo_display(num_bullets, mag_capacity):
 	ammo_amount_bar.value = float(num_bullets) / mag_capacity
 
 func update_health_display(health, max_health):
-	health_bar.value = float(health) / max_health
+	health_bar.value = float(health) / max_health * HEALTH_BAR_MAX_TO_TEXTURE_RATIO
 	#if low_health_texture_animation_player.is_playing():
 		#return
 	if float(health) / max_health < low_health_effect_threshold and is_low_health == false:
@@ -56,13 +58,13 @@ func create_bubble_shield_bar(bubble_shield_effect: Effect):
 
 func update_inventory_icons(items: Array[Item], current_item_slot: int):
 	for i in range(inventory_slots.size()):
-		var slot_icon: TextureRect = inventory_slots[i].icon
-		slot_icon.texture = items[i].hud_icon if i < items.size() else null
-		slot_icon.modulate = Color.AQUAMARINE if i == current_item_slot else Color.WHITE
+		var slot = inventory_slots[i]
+		slot.icon.texture = items[i].hud_icon if i < items.size() else null
+		#slot.icon.modulate = Color.AQUAMARINE if i == current_item_slot else Color.WHITE
+		slot.outline_rect.visible = i == current_item_slot and items.size() > 0
 
 @rpc("any_peer", "call_local")
 func update_score_display(round_number: int, P1_score: int, P2_score: int):
-	score_display.set_round_label(round_number)
 	score_display.set_P1_score_label(P1_score)
 	score_display.set_P2_score_label(P2_score)
 	

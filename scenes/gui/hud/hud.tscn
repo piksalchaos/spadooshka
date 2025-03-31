@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://euhmy40ljoc4"]
+[gd_scene load_steps=29 format=3 uid="uid://euhmy40ljoc4"]
 
 [ext_resource type="Script" path="res://scenes/gui/hud/hud.gd" id="1_8mkb2"]
 [ext_resource type="Texture2D" uid="uid://m0mlvui7ps7l" path="res://assets/images/gui/hud/crosshairs.png" id="2_1vnnh"]
@@ -7,18 +7,51 @@
 [ext_resource type="Texture2D" uid="uid://cw8qtdr0bp1af" path="res://assets/images/player_icons/player_icon_temp.png" id="3_lsk7v"]
 [ext_resource type="Script" path="res://scenes/gui/hud/score_display.gd" id="4_0pm5a"]
 [ext_resource type="PackedScene" uid="uid://ooxxqxmb5cvk" path="res://scenes/gui/hud/inventory_slot.tscn" id="5_ojg8h"]
+[ext_resource type="Texture2D" uid="uid://dtci8deq2uxjc" path="res://assets/images/gui/hud/player_status.png" id="6_4gxcm"]
 [ext_resource type="Texture2D" uid="uid://die8f8s7a6i8a" path="res://assets/images/round_won_icon.png" id="6_mlg6x"]
 [ext_resource type="Script" path="res://scenes/gui/hud/bubble_shield_bar.gd" id="6_ntse7"]
 [ext_resource type="Texture2D" uid="uid://choc1obf6wea5" path="res://assets/images/round_lost_icon.png" id="7_oxhew"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wln1f"]
-bg_color = Color(0.153453, 0.663559, 0.792775, 1)
+[ext_resource type="Texture2D" uid="uid://d25nardc5u28k" path="res://assets/images/gui/hud/score_display.png" id="7_qrrh1"]
+[ext_resource type="FontFile" uid="uid://dccbh8rq1t0nw" path="res://assets/fonts/Super Lobster.ttf" id="9_qm6eq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8k04s"]
 bg_color = Color(0.565344, 0.60005, 0.683188, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glbnf"]
-bg_color = Color(0.261093, 0.704154, 0.344336, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_xlp8s"]
+atlas = ExtResource("6_4gxcm")
+region = Rect2(0, 500, 2048, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2bl0"]
+atlas = ExtResource("6_4gxcm")
+region = Rect2(0, 0, 2048, 165)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4xd04"]
+atlas = ExtResource("6_4gxcm")
+region = Rect2(0, 665, 2048, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5dafj"]
+atlas = ExtResource("6_4gxcm")
+region = Rect2(0, 165, 2048, 300)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oyiw1"]
+atlas = ExtResource("7_qrrh1")
+region = Rect2(155, 0, 1738.79, 110)
+
+[sub_resource type="Theme" id="Theme_d3fyj"]
+Label/font_sizes/font_size = 30
+Label/fonts/font = ExtResource("9_qm6eq")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcc8n"]
+atlas = ExtResource("7_qrrh1")
+region = Rect2(540, 105, 967.917, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxi0u"]
+atlas = ExtResource("7_qrrh1")
+region = Rect2(540, 215, 967.917, 115)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yj5pr"]
+atlas = ExtResource("7_qrrh1")
+region = Rect2(540, 325, 967.917, 115)
 
 [sub_resource type="Gradient" id="Gradient_gvxgr"]
 offsets = PackedFloat32Array(0.532468, 1)
@@ -121,10 +154,8 @@ anchors_preset = -1
 anchor_top = 0.88
 anchor_right = 0.315
 anchor_bottom = 1.0
-offset_left = 19.0
 offset_top = -6.10352e-05
 offset_right = -0.200012
-offset_bottom = -14.0
 grow_vertical = 0
 theme_override_constants/separation = 14
 metadata/_edit_use_anchors_ = true
@@ -142,23 +173,14 @@ size_flags_horizontal = 3
 [node name="BarVBoxContainer" type="VBoxContainer" parent="PlayerStatus/MarginAdjuster"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.15
 anchor_right = 1.0
-anchor_bottom = 0.85
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 5
+theme_override_constants/separation = 0
 alignment = 1
 metadata/_edit_use_anchors_ = true
-
-[node name="DashBar" type="ProgressBar" parent="PlayerStatus/MarginAdjuster/BarVBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_styles/fill = SubResource("StyleBoxFlat_wln1f")
-max_value = 1.0
-value = 1.0
-show_percentage = false
 
 [node name="BubbleShieldBar" type="ProgressBar" parent="PlayerStatus/MarginAdjuster/BarVBoxContainer"]
 visible = false
@@ -170,46 +192,120 @@ value = 1.0
 show_percentage = false
 script = ExtResource("6_ntse7")
 
-[node name="HealthBar" type="ProgressBar" parent="PlayerStatus/MarginAdjuster/BarVBoxContainer"]
+[node name="DashBar" type="TextureProgressBar" parent="PlayerStatus/MarginAdjuster/BarVBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
-size_flags_stretch_ratio = 2.0
-theme_override_styles/fill = SubResource("StyleBoxFlat_glbnf")
 max_value = 1.0
+step = 0.01
 value = 1.0
-show_percentage = false
+nine_patch_stretch = true
+texture_under = SubResource("AtlasTexture_xlp8s")
+texture_progress = SubResource("AtlasTexture_k2bl0")
 
-[node name="ScoreDisplay" type="PanelContainer" parent="."]
+[node name="HealthBar" type="TextureProgressBar" parent="PlayerStatus/MarginAdjuster/BarVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 1.89
+max_value = 1.0
+step = 0.01
+value = 0.95
+nine_patch_stretch = true
+texture_under = SubResource("AtlasTexture_4xd04")
+texture_progress = SubResource("AtlasTexture_5dafj")
+
+[node name="ScoreDisplay" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.3
 anchor_right = 0.7
-anchor_bottom = 0.05
+anchor_bottom = 0.0472222
 grow_horizontal = 2
+texture = SubResource("AtlasTexture_oyiw1")
+expand_mode = 1
 script = ExtResource("4_0pm5a")
+metadata/_edit_use_anchors_ = true
 
 [node name="LabelHBoxContainer" type="HBoxContainer" parent="ScoreDisplay"]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.941176
+grow_horizontal = 2
+grow_vertical = 2
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="P1ScoreLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+[node name="P1ScoreContainer" type="Control" parent="ScoreDisplay/LabelHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="P1ScoreLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer/P1ScoreContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.801
+offset_top = -5.0
+offset_bottom = 5.368
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_d3fyj")
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RoundLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+[node name="ScoreBars" type="Control" parent="ScoreDisplay/LabelHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Round 1
-"
-horizontal_alignment = 1
-vertical_alignment = 1
+size_flags_stretch_ratio = 2.6
 
-[node name="P2ScoreLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer"]
+[node name="P1ScoreBar" type="TextureProgressBar" parent="ScoreDisplay/LabelHBoxContainer/ScoreBars"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_right = 0.975
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.6
+max_value = 9.0
+nine_patch_stretch = true
+texture_over = SubResource("AtlasTexture_xcc8n")
+texture_progress = SubResource("AtlasTexture_mxi0u")
+metadata/_edit_use_anchors_ = true
+
+[node name="P2ScoreBar" type="TextureProgressBar" parent="ScoreDisplay/LabelHBoxContainer/ScoreBars"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.025
+anchor_right = 0.975
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.6
+max_value = 9.0
+fill_mode = 1
+nine_patch_stretch = true
+texture_over = SubResource("AtlasTexture_xcc8n")
+texture_progress = SubResource("AtlasTexture_yj5pr")
+
+[node name="P2ScoreContainer" type="Control" parent="ScoreDisplay/LabelHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="P2ScoreLabel" type="Label" parent="ScoreDisplay/LabelHBoxContainer/P2ScoreContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.801
+offset_top = -5.0
+offset_bottom = 5.368
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_d3fyj")
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -259,10 +355,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 14.0
-offset_top = 19.0
-offset_right = 14.0
-offset_bottom = 19.0
+offset_top = 23.0
+offset_bottom = 23.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_4mih1")

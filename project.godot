@@ -23,6 +23,7 @@ SpawnerManager="*res://src/spawner_manager.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/aspect="ignore"
 
 [global_group]
 

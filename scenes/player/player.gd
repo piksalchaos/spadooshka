@@ -230,7 +230,7 @@ func receive_damage(damage):
 	if health <= 0:
 		die()
 		death.emit(get_multiplayer_authority())
-		
+	
 	health_changed.emit(health, stats.max_health)
 
 @rpc("call_local", "any_peer", "reliable")

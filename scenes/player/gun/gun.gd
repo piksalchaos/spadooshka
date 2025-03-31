@@ -98,7 +98,7 @@ func reload():
 		return
 	is_gun_ready = false
 	is_reloading = true
-	$ReloadTimer.start()
+	$ReloadTimer.start(stats.reload_time * (1 - num_bullets / stats.mag_capacity))
 	$ReloadSFX.play()
 	animation_player.stop()
 	animation_player.play("reload")

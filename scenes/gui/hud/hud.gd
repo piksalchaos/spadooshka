@@ -10,7 +10,7 @@ const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
 @onready var low_health_texture = $LowHealthTexture
 @onready var low_health_texture_animation_player = $LowHealthTexture/AnimationPlayer
 
-@onready var score_display: PanelContainer = $ScoreDisplay
+@onready var score_display: TextureRect = $ScoreDisplay
 
 @onready var win_icon = $RoundWonIcon
 @onready var lost_icon = $RoundLostIcon
@@ -57,7 +57,6 @@ func update_inventory_icons(items: Array[Item], current_item_slot: int):
 
 @rpc("any_peer", "call_local")
 func update_score_display(round_number: int, P1_score: int, P2_score: int):
-	score_display.set_round_label(round_number)
 	score_display.set_P1_score_label(P1_score)
 	score_display.set_P2_score_label(P2_score)
 	

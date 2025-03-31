@@ -42,6 +42,7 @@ const HOST_NUMBER = 1
 signal score_changed(round_number: int, P1_score: int, P2_score: int)
 
 func _ready() -> void:
+	SpawnerManager.multiplayer_container = multiplayer_container
 	score_changed.connect(hud.update_score_display.rpc)
 
 func _on_title_screen_exit_button_pressed() -> void:
@@ -83,7 +84,7 @@ func _on_lobby_menu_start_button_pressed() -> void:
 		"wtf, only the host should be able to start the game")
 	close_server_browser.rpc() 
 
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func close_server_browser():
 	if server_browser:
 		server_browser.queue_free()
@@ -96,12 +97,12 @@ func _on_agent_map_select_menu_finished_selection(
 func _on_preliminary_screen_cancelled_selection(peer_id: int) -> void:
 	remove_peer_selection_choice.rpc(peer_id)
 
-@rpc("call_local", "any_peer")
+@rpc("call_local", "any_peer", "reliable")
 func record_peer_selection_choice(peer_id: int, agent_name: String, map_name: String):
 	peer_selection_choices[peer_id] = {"agent_name": agent_name, "map_name": map_name} 
 	preliminary_screen.update_with_peer_selection_choices(peer_selection_choices)
 
-@rpc("call_local", "any_peer")
+@rpc("call_local", "any_peer", "reliable")
 func remove_peer_selection_choice(peer_id):
 	peer_selection_choices.erase(peer_id)
 	preliminary_screen.update_with_peer_selection_choices(peer_selection_choices)
@@ -141,11 +142,12 @@ func remove_player(peer_id: int):
 		player.queue_free()
 
 func play_round():
+	get_tree().call_group("free_after_round", "queue_free")
 	map.despawn_loot_boxes()
 	map.spawn_loot_boxes()
 	map.spawn_players()
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func end_round(dead_peer_id: int):
 	if not is_multiplayer_authority(): return
 	
@@ -164,14 +166,14 @@ func end_round(dead_peer_id: int):
 	else:
 		gui.prepare_for_end_game.rpc(P1_score == ROUNDS_TO_WIN)
 
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func show_end_round_icon(P1_won: bool):
 	if is_multiplayer_authority() == P1_won:
 		hud.get_node("RoundWonIcon").visible = true #YOU TOO
 	else:
 		hud.get_node("RoundLostIcon").visible = true #I HATE THIS
 		
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func clear_end_round_icon():
 	hud.get_node("RoundWonIcon").visible = false
 	hud.get_node("RoundLostIcon").visible = false

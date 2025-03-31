@@ -30,7 +30,7 @@ func _on_local_menu_join_button_pressed(_ip_address: String) -> void:
 func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
 	update_peer_ready_states.rpc(peer_id, is_ready)
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func update_peer_ready_states(peer_id, is_peer_ready):
 	peer_ready_states[peer_id] = is_peer_ready
 	var peer_ready_count = peer_ready_states.values().count(true)
@@ -43,7 +43,7 @@ func update_peer_ready_states(peer_id, is_peer_ready):
 func _on_lobby_menu_start_button_pressed() -> void:
 	begin_agent_map_selection.rpc()
 
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func begin_agent_map_selection():
 	lobby_menu.hide()
 	agent_map_select_menu.show()
@@ -61,12 +61,12 @@ func _on_preliminary_screen_back_button_pressed() -> void:
 func _on_preliminary_screen_begin_button_pressed() -> void:
 	prepare_for_game.rpc()
 
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func prepare_for_game():
 	preliminary_screen.hide()
 	hud.show()
 
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func prepare_for_end_game(P1_won: bool):
 	hud.hide()
 	if is_multiplayer_authority() == P1_won:

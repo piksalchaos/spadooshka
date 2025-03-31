@@ -18,12 +18,11 @@ func _on_interact_cast_interacted(target: PhysicsBody3D) -> void:
 		
 		items.append(item)
 		
-		current_item_slot = items.size() - 1
-		inventory_changed.emit(items, current_item_slot)
+		select_item_slot(items.size() - 1)
 	
 	var fart = []
 	for item in items:
-		fart.append(item.item_name)
+		fart.append(item.is_selected)
 	print(fart)
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -32,22 +31,26 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	for item_slot in range(items.size()):
 		if event.is_action_pressed(str(item_slot + 1)):
-			current_item_slot = item_slot
-			inventory_changed.emit(items, current_item_slot)
+			select_item_slot(item_slot)
 			return
 	
 	if event.is_action_pressed("use_item"):
 		if items[current_item_slot].use():
 			items.pop_at(current_item_slot)
+			select_item_slot(current_item_slot)
 	elif event.is_action_pressed("item_slot_left"):
-		current_item_slot -= 1
+		select_item_slot(current_item_slot + 1)
 	elif event.is_action_pressed("item_slot_right"):
-		current_item_slot += 1
+		select_item_slot(current_item_slot - 1)
 	else: return
-	
-	current_item_slot = clamp(current_item_slot, 0, items.size() - 1)
+
+func select_item_slot(selected_item_slot):
+	current_item_slot = clamp(selected_item_slot, 0, items.size() - 1)
 	inventory_changed.emit(items, current_item_slot)
 	
+	for i in range(items.size()):
+		items[i].is_selected = i == current_item_slot
+
 func spawn():
 	current_item_slot = 0
 	

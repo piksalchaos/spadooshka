@@ -16,12 +16,21 @@ func _process(_delta: float) -> void:
 	trajectory.b = launch_vector.y / speed * sqrt(launch_vector.x ** 2 + launch_vector.z ** 2) 
 	trajectory.position = player.position + LAUNCH_OFFSET
 	trajectory.global_basis = Basis(camera_basis[2], Vector3.UP, camera_basis[0]).orthonormalized()
+	
+	visible = is_selected
 
 func use():
-	var new_grenade_object: RigidBody3D = grenade_object.instantiate()
-	new_grenade_object.position = LAUNCH_OFFSET + player.position
-	new_grenade_object.linear_velocity = speed * -player.get_camera_global_basis()[2]
-	new_grenade_object.add_collision_exception_with(player)
-	get_tree().current_scene.add_child(new_grenade_object)
+	SpawnerManager.spawn_with_data({
+		"path": "res://scenes/entities/item_entities/grenade.tscn",
+		"props": {
+			"position": LAUNCH_OFFSET + player.position,
+			"linear_velocity": speed * -player.get_camera_global_basis()[2]
+		},
+		"server_rpc": {
+			"add_collision_exception_with_remotely": {
+				"exception_path": player.get_path()
+			}
+		}
+	})
 	queue_free()
 	return true

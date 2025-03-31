@@ -15,10 +15,19 @@ run/main_scene="res://scenes/main.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SpawnerManager="*res://src/spawner_manager.gd"
+
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+
+[global_group]
+
+free_after_round=""
+bullet_hole_immune=""
 
 [input]
 

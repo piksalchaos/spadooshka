@@ -1,7 +1,7 @@
 [gd_scene load_steps=17 format=3 uid="uid://euhmy40ljoc4"]
 
 [ext_resource type="Script" path="res://scenes/gui/hud/hud.gd" id="1_8mkb2"]
-[ext_resource type="Texture2D" uid="uid://cfstfe3pcfcnr" path="res://addons/kenney_particle_pack/circle_05.png" id="2_yw55s"]
+[ext_resource type="Texture2D" uid="uid://m0mlvui7ps7l" path="res://assets/images/gui/hud/crosshairs.png" id="2_1vnnh"]
 [ext_resource type="Texture2D" uid="uid://k473ttvmslg8" path="res://assets/images/gui/hud/ammo_bar.png" id="3_amodr"]
 [ext_resource type="Texture2D" uid="uid://bnnkaais57byp" path="res://assets/images/gui/hud/ammo_bar_under.png" id="3_bujad"]
 [ext_resource type="Texture2D" uid="uid://cw8qtdr0bp1af" path="res://assets/images/player_icons/player_icon_temp.png" id="3_lsk7v"]
@@ -84,7 +84,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.04, 0.04)
 pivot_offset = Vector2(-10.24, -10.24)
-texture = ExtResource("2_yw55s")
+texture = ExtResource("2_1vnnh")
 stretch_mode = 5
 
 [node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]

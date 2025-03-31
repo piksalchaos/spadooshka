@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://mrfbhfo8fyg3"
 path.s3tc="res://.godot/imported/Bullet_hole_drawing_cosmocurio.jpg-d59d9d137ea8b95cbe276a3abcb2f15f.s3tc.ctex"
+path.etc2="res://.godot/imported/Bullet_hole_drawing_cosmocurio.jpg-d59d9d137ea8b95cbe276a3abcb2f15f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/images/Bullet_hole_drawing_cosmocurio.jpg"
-dest_files=["res://.godot/imported/Bullet_hole_drawing_cosmocurio.jpg-d59d9d137ea8b95cbe276a3abcb2f15f.s3tc.ctex"]
+dest_files=["res://.godot/imported/Bullet_hole_drawing_cosmocurio.jpg-d59d9d137ea8b95cbe276a3abcb2f15f.s3tc.ctex", "res://.godot/imported/Bullet_hole_drawing_cosmocurio.jpg-d59d9d137ea8b95cbe276a3abcb2f15f.etc2.ctex"]
 
 [params]
 

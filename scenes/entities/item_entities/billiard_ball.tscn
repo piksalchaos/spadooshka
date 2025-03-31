@@ -190,7 +190,7 @@ properties/6/path = NodePath(".:redness")
 properties/6/spawn = true
 properties/6/replication_mode = 1
 
-[node name="BilliardBall" type="RigidBody3D"]
+[node name="BilliardBall" type="RigidBody3D" groups=["bullet_hole_immune", "free_after_round"]]
 mass = 1.5
 script = ExtResource("1_1sxnv")
 opacity = 1.0

@@ -73,7 +73,7 @@ func shoot():
 		
 		if target.has_method("receive_damage") and target != self:
 			target.receive_damage.rpc_id(target.get_multiplayer_authority(), stats.damage)
-		if not target.has_method("is_bullet_hole_immune"): 
+		if not target.is_in_group("bullet_hole_immune"):
 			var random_angle = randf_range(0, PI * 2)
 			var new_bullet_hole = bullet_hole.instantiate()
 			var scale = new_bullet_hole.transform.basis.get_scale() #have to do stupid shit to preserve scaling

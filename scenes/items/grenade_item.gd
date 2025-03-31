@@ -24,8 +24,10 @@ func use():
 			"position": LAUNCH_OFFSET + player.position,
 			"linear_velocity": speed * -player.get_camera_global_basis()[2]
 		},
-		"methods": {
-			"add_collision_exception_with": [player]
+		"server_rpc": {
+			"add_collision_exception_with_remotely": {
+				"exception_path": player.get_path()
+			}
 		}
 	})
 	queue_free()

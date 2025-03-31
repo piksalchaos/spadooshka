@@ -24,6 +24,11 @@ SpawnerManager="*res://src/spawner_manager.gd"
 window/size/viewport_width=1280
 window/size/viewport_height=720
 
+[global_group]
+
+free_after_round=""
+bullet_hole_immune=""
+
 [input]
 
 forward={

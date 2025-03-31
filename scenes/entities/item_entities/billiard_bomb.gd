@@ -11,6 +11,7 @@ func _on_enable_timer_timeout() -> void:
 	enabled = true
 
 func explode(vector_direction: Vector3):
+	if not multiplayer.is_server(): return
 	for i in NUMBER_OF_BALLS:
 		var offset_vector_direction = get_randomly_offset_vector(vector_direction, BALL_RANGE)
 		SpawnerManager.spawn_with_data({

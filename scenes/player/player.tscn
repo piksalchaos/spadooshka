@@ -28,7 +28,7 @@ properties/2/path = NodePath(".:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" groups=["bullet_hole_immune"]]
 collision_layer = 2
 script = ExtResource("1_yaydr")
 

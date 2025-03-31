@@ -49,8 +49,6 @@ signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
 signal death(peer_id: int)
 
-func is_bullet_hole_immune(): return true
-
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
 

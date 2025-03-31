@@ -25,7 +25,8 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="BilliardBomb" type="RigidBody3D"]
+[node name="BilliardBomb" type="RigidBody3D" groups=["bullet_hole_immune", "free_after_round"]]
+collision_layer = 0
 mass = 0.5
 contact_monitor = true
 max_contacts_reported = 1

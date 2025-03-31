@@ -15,8 +15,6 @@ const SPRITESHEET_COLUMNS = 4
 var finished_expanding = false
 var UV_offset: Vector2
 
-func is_bullet_hole_immune(): return true
-
 func _ready():
 	material.uv1_offset.x = texture_index % SPRITESHEET_COLUMNS * 0.25
 	material.uv1_offset.y = floorf(float(texture_index)/SPRITESHEET_COLUMNS) * 0.25

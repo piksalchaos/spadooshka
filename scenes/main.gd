@@ -142,6 +142,7 @@ func remove_player(peer_id: int):
 		player.queue_free()
 
 func play_round():
+	get_tree().call_group("free_after_round", "queue_free")
 	map.despawn_loot_boxes()
 	map.spawn_loot_boxes()
 	map.spawn_players()

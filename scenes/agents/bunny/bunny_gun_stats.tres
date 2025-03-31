@@ -5,8 +5,9 @@
 [resource]
 script = ExtResource("1_18cva")
 shoot_mode = 0
-fire_time = 0.2
+fire_time = 0.1
 reload_time = 0.6
+rev_time = 0.0
 mag_capacity = 13
 damage = 5
 shoot_range = 50

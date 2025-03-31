@@ -15,7 +15,7 @@ const ITEM_FILE_NAMES: PackedStringArray = [
 
 func _ready() -> void:
 	var random_index: int = randi_range(0, ITEM_FILE_NAMES.size() - 1)
-	item = load(ITEM_FILE_NAMES[6]).instantiate()
+	item = load(ITEM_FILE_NAMES[random_index]).instantiate()
 
 func obtain_item() -> Item:
 	queue_free_for_all_peers.rpc()

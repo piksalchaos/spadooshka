@@ -12,19 +12,19 @@ var is_host = false
 signal ready_button_pressed(peer_id: int, is_ready: bool)
 signal start_button_pressed()
 
-@rpc("authority", "call_remote")
+@rpc("authority", "call_remote", "reliable")
 func update_peer_player_displays():
 	#lobby_menu.update_player_displays()
 	for peer_id in multiplayer.get_peers():
 		add_player_display(peer_id)
 
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func add_player_display(peer_id: int):
 	var player_display = PLAYER_DISPLAY_SCENE.instantiate()
 	player_display.name = str(peer_id)
 	player_displays.add_child(player_display)
 
-@rpc("call_local")
+@rpc("call_local", "reliable")
 func remove_player_display(peer_id: int):
 	var player_display = player_displays.get_node_or_null(str(peer_id))
 	if player_display:
@@ -37,7 +37,7 @@ func on_peer_connected(peer_id: int):
 func on_peer_disconnected(peer_id: int):
 	remove_player_display.rpc(peer_id)
 
-@rpc("any_peer", "call_local")
+@rpc("any_peer", "call_local", "reliable")
 func set_player_is_ready(peer_id: int, is_ready: bool):
 	var player_display = player_displays.get_node_or_null(str(peer_id))
 	if player_display:

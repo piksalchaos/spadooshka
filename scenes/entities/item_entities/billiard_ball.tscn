@@ -1,0 +1,214 @@
+[gd_scene load_steps=12 format=3 uid="uid://cf8immvlqlwle"]
+
+[ext_resource type="Script" path="res://scenes/entities/item_entities/billiard_ball.gd" id="1_1sxnv"]
+[ext_resource type="Texture2D" uid="uid://5x50gahdvryi" path="res://assets/images/billiards/billiards.png" id="2_c3s50"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ur6fg"]
+resource_local_to_scene = true
+transparency = 1
+albedo_texture = ExtResource("2_c3s50")
+uv1_scale = Vector3(0.25, 0.25, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_en184"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ur6fg")
+radius = 2.5
+height = 5.0
+radial_segments = 16
+rings = 8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4wqt3"]
+resource_local_to_scene = true
+custom_solver_bias = 1.0
+radius = 2.5
+
+[sub_resource type="Animation" id="Animation_hkcgw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:opacity")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:redness")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_w6wcw"]
+resource_name = "destroy"
+length = 0.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.435275, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.2, 1.2, 1.2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:opacity")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.366021, 1),
+"update": 0,
+"values": [255, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_i0d0j"]
+resource_name = "expand"
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.329877, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.329877, 1),
+"update": 0,
+"values": [Vector3(0.01, 0.01, 0.01), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_mdhtt"]
+resource_name = "hit"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.267943, 1),
+"update": 0,
+"values": [Vector3(0.95, 0.95, 0.95), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:redness")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [60, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_au0td"]
+_data = {
+"RESET": SubResource("Animation_hkcgw"),
+"destroy": SubResource("Animation_w6wcw"),
+"expand": SubResource("Animation_i0d0j"),
+"hit": SubResource("Animation_mdhtt")
+}
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_k767g"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:texture_index")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("CollisionShape3D:scale")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("MeshInstance3D:scale")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:opacity")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+properties/6/path = NodePath(".:redness")
+properties/6/spawn = true
+properties/6/replication_mode = 1
+
+[node name="BilliardBall" type="RigidBody3D" groups=["bullet_hole_immune", "free_after_round"]]
+mass = 1.5
+script = ExtResource("1_1sxnv")
+opacity = 1.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_en184")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_4wqt3")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_au0td")
+}
+autoplay = "expand"
+movie_quit_on_finish = true
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_k767g")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

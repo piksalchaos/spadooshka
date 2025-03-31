@@ -5,6 +5,7 @@ class_name Item extends Node3D
 @export var hud_icon: Texture2D
 
 func use() -> bool:
+	queue_free()
 	return true
 
 func _enter_tree() -> void:

@@ -46,9 +46,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	is_aiming = event.is_action_pressed("aim")
 
 func _process(_delta) -> void:
+	if not is_multiplayer_authority(): return
 	if Input.is_action_pressed("shoot") and stats.shoot_mode == GunStats.ShootMode.AUTO:
 		shoot()
-	
 	if Input.is_action_just_pressed("shoot") and need_to_rev:
 		rev()
 	if Input.is_action_just_released("shoot") and need_to_rev:
@@ -71,9 +71,9 @@ func shoot():
 		var position = shoot_ray.get_collision_point()
 		var normal = shoot_ray.get_collision_normal()
 		
-		if target.has_method("receive_damage"):
+		if target.has_method("receive_damage") and target != self:
 			target.receive_damage.rpc_id(target.get_multiplayer_authority(), stats.damage)
-		if not target is Player:
+		if not target.is_in_group("bullet_hole_immune"):
 			var random_angle = randf_range(0, PI * 2)
 			var new_bullet_hole = bullet_hole.instantiate()
 			var scale = new_bullet_hole.transform.basis.get_scale() #have to do stupid shit to preserve scaling

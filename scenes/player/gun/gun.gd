@@ -84,6 +84,15 @@ func shoot():
 			else:
 				new_bullet_hole.global_transform = new_bullet_hole.transform.looking_at(position + normal, Vector3.RIGHT.rotated(normal, random_angle))
 			new_bullet_hole.global_transform = new_bullet_hole.global_transform.scaled_local(scale)
+			
+			SpawnerManager.spawn_with_data({
+				"path": "res://scenes/entities/bullet_hole.tscn",
+				"props": {
+					"global_transform": new_bullet_hole.global_transform
+				}
+			})
+			
+			new_bullet_hole.queue_free()
 	
 	#play_shoot_effects()
 	$FireTimer.start()

@@ -7,7 +7,8 @@ const ITEM_FILE_NAMES: PackedStringArray = [
 	"res://scenes/items/grenade_item.tscn",
 	"res://scenes/items/health_burger_item.tscn",
 	"res://scenes/items/minimizer_item.tscn",
-	"res://scenes/items/billiard_bomb_item.tscn"
+	"res://scenes/items/billiard_bomb_item.tscn",
+	"res://scenes/items/bubble_shield_item.tscn",
 ]
 
 @export var item: Item

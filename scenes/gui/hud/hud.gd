@@ -2,6 +2,7 @@ class_name HUD extends Node
 
 @onready var player_icon: TextureRect = $PlayerStatus/PlayerIcon
 @onready var ammo_amount_bar: TextureProgressBar = $AspectRatioContainer/AmmoAmountBar
+@onready var crosshairs: Control = $AspectRatioContainer/Crosshairs
 @onready var health_bar: TextureProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/HealthBar
 @onready var dash_bar: TextureProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/DashBar
 @onready var bubble_shield_bar: ProgressBar = $PlayerStatus/MarginAdjuster/BarVBoxContainer/BubbleShieldBar
@@ -77,3 +78,6 @@ func update_win_lost_display(is_win: bool):
 		win_icon.visible = true
 	else:
 		lost_icon.visible = true
+
+func on_gun_shot():
+	crosshairs.start_shoot_animation()

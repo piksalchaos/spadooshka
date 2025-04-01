@@ -12,11 +12,11 @@ var num_bullets: int
 
 var bullet_hole = preload("res://scenes/entities/bullet_hole.tscn")
 var is_reloading: bool
-var is_aiming: bool
 var need_to_rev: bool
 var is_revving: bool
 
 signal ammo_changed(num_bullets: int, mag_capacity: int)
+signal shot
 
 func _ready() -> void:
 	shoot_ray.target_position = Vector3(0, -stats.shoot_range, 0)
@@ -31,7 +31,6 @@ func spawn():
 	is_reloading = false
 	num_bullets = stats.mag_capacity
 	is_reloading = false
-	is_aiming = false
 	ammo_changed.emit(num_bullets, stats.mag_capacity)
 	
 	reload()
@@ -42,8 +41,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		shoot()
 	if event.is_action_pressed("reload"):
 		reload()
-	
-	is_aiming = event.is_action_pressed("aim")
 
 func _process(_delta) -> void:
 	if not is_multiplayer_authority(): return
@@ -61,6 +58,7 @@ func shoot():
 	is_gun_ready = false
 	ammo_changed.emit(num_bullets, stats.mag_capacity)
 	
+	var is_aiming = Input.is_action_pressed("aim")
 	var bullet_trajectory_rot_x = stats.aim_bullet_trajectory_rot_x if is_aiming else stats.bullet_trajectory_rot_x
 	var bullet_trajectory_rot_z = stats.aim_bullet_trajectory_rot_z if is_aiming else stats.bullet_trajectory_rot_z
 	shoot_ray.rotation_degrees.x = randf_range(-bullet_trajectory_rot_x, bullet_trajectory_rot_x)
@@ -95,6 +93,7 @@ func shoot():
 			new_bullet_hole.queue_free()
 	
 	#play_shoot_effects()
+	shot.emit()
 	$FireTimer.start()
 	if num_bullets == 0:
 		await $FireTimer.timeout

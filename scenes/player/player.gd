@@ -45,6 +45,7 @@ var is_dead = true
 
 signal player_icon_changed(image: CompressedTexture2D)
 signal ammo_changed(num_bullets: int, mag_capacity: int)
+signal gun_shot
 signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
 signal death(peer_id: int)
@@ -164,7 +165,6 @@ func _physics_process(delta: float) -> void:
 		query_jump()
 		jump_buffer_timer -= delta
 	
-	
 	#push_away_rigid_bodies()
 	move_and_slide()
 	#stupid hack to get dash bar to immediately deplete at start of dash
@@ -258,7 +258,6 @@ func update_fov(delta):
 		return
 	#camera.fov = max(default_fov, camera.fov - fov_decay_rate * delta)
 	camera.fov = move_toward(camera.fov, max(default_fov, camera.fov - fov_decay_rate * delta), 2)
-	
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
@@ -269,6 +268,9 @@ func _on_dash_cooldown_timer_timeout() -> void:
 
 func _on_gun_ammo_changed(num_bullets: int, mag_capacity: int) -> void:
 	ammo_changed.emit(num_bullets, mag_capacity)
+
+func _on_gun_shot() -> void:
+	gun_shot.emit()
 
 func apply_effect(effect: Effect):
 	effect_manager.apply_effect(effect)

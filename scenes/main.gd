@@ -185,6 +185,7 @@ func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 		node.player_icon_changed.connect(hud.update_player_icon)
 		node.ammo_changed.connect(hud.update_ammo_display)
 		node.dash_changed.connect(hud.update_dash_display)
+		node.gun_shot.connect(hud.on_gun_shot)
 		node.health_changed.connect(hud.update_health_display)
 		
 		var inventory = node.get_node("Inventory")

@@ -11,7 +11,8 @@ const PLAYER_FILE_NAMES = { # godot 4.4 is actually adding typed arrays, so this
 
 const MAP_FILE_NAMES = {
 	"map_1" = "res://scenes/maps/map_1.tscn",
-	"map_2" = "res://scenes/maps/map_2.tscn"
+	"map_2" = "res://scenes/maps/map_2.tscn",
+	"map_3" = "res://scenes/maps/map_3.tscn"
 }
 
 @export var server_port = 8910

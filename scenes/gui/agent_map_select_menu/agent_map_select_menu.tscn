@@ -175,6 +175,22 @@ texture = ExtResource("9_2664i")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="map_3" parent="RotationContainer/PanelContainer2/MarginContainer/MapIconContainer" instance=ExtResource("1_d2hxs")]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="RotationContainer/PanelContainer2/MarginContainer/MapIconContainer/map_3"]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("9_2664i")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="ReadyButton" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = -1

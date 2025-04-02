@@ -14,7 +14,6 @@ const SERVER_INFO_DISPLAY_SCENE = preload("res://scenes/gui/local_menu/server_in
 
 signal join_button_pressed(ip_address: String)
 signal host_button_pressed(room_name: String)
-signal singleplayer_button_pressed
 
 func _on_room_name_entry_text_changed(new_text: String) -> void:
 	var old_caret_column = room_name_entry.caret_column

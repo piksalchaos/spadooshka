@@ -24,8 +24,7 @@ var server_browser: ServerBrowser
 @onready var gui: Control = $GUI
 
 @onready var multiplayer_container: Node = $MultiplayerContainer
-@onready var local_menu: LocalMenu = $GUI/LocalMenu
-@onready var lobby_menu: LobbyMenu = $GUI/LobbyMenu
+@onready var pre_game_menu: Control = $GUI/PreGameMenu
 @onready var preliminary_screen: Control = $GUI/PreliminaryScreen
 @onready var hud: HUD = $GUI/HUD
 
@@ -52,35 +51,32 @@ func _on_title_screen_exit_button_pressed() -> void:
 func _on_main_menu_local_game_button_pressed() -> void:
 	set_up_server_browser()
 
-func _on_local_menu_host_button_pressed(room_name: String) -> void:
+func _on_pre_game_menu_host_button_pressed(room_name: String) -> void:
 	enet_peer.create_server(server_port)
 	multiplayer.multiplayer_peer = enet_peer
 	
-	multiplayer.peer_connected.connect(lobby_menu.on_peer_connected)
-	multiplayer.peer_disconnected.connect(lobby_menu.on_peer_disconnected)
+	multiplayer.peer_connected.connect(pre_game_menu.on_peer_connected)
+	multiplayer.peer_disconnected.connect(pre_game_menu.on_peer_disconnected)
 	
 	if server_browser:
 		server_browser.set_up_broadcast(room_name)
 
 func set_up_server_browser():
 	server_browser = SERVER_BROWSER_SCENE.instantiate()
-	server_browser.failed_listen_port_bind.connect(local_menu.show_listener_failed_label)
-	server_browser.found_server.connect(local_menu.add_server_info_display)
-	server_browser.updated_server.connect(local_menu.update_server_info_display)
-	server_browser.removed_server.connect(local_menu.remove_server_info_display)
+	server_browser.failed_listen_port_bind.connect(pre_game_menu.on_failed_listen_port_bind)
+	server_browser.found_server.connect(pre_game_menu.on_found_server)
+	server_browser.updated_server.connect(pre_game_menu.on_updated_server)
+	server_browser.removed_server.connect(pre_game_menu.on_removed_server)
 	add_child(server_browser)
 
-func _on_local_menu_join_button_pressed(ip_address: String) -> void:
+func _on_pre_game_menu_join_button_pressed(ip_address: String) -> void:
 	join_by_ip(ip_address)
 
 func join_by_ip(ip_address: String):
 	enet_peer.create_client(ip_address, server_port)
 	multiplayer.multiplayer_peer = enet_peer
 
-func _on_local_menu_singleplayer_button_pressed() -> void:
-	play_game()
-
-func _on_lobby_menu_start_button_pressed() -> void:
+func _on_pre_game_menu_lobby_start_button_pressed() -> void:
 	assert(multiplayer.get_unique_id() == HOST_NUMBER, \
 		"wtf, only the host should be able to start the game")
 	close_server_browser.rpc() 

@@ -1,5 +1,7 @@
 extends Control
 
+const LOADING_SCREEN = preload("res://scenes/gui/loading_screen.tscn")
+
 @onready var title_screen: Control = $TitleScreen
 @onready var main_menu: Control = $MainMenu
 @onready var local_menu: LocalMenu = $LocalMenu
@@ -13,6 +15,14 @@ extends Control
 var peer_ready_states = {}
 
 func _on_title_screen_start_button_pressed() -> void:
+	var loading_screen = LOADING_SCREEN.instantiate()
+	add_child(loading_screen)
+	loading_screen.begin_scene_load("res://scenes/gui/main_menu.tscn")
+	loading_screen.finished_loading_scene.connect(temp_function)
+	#title_screen.hide()
+	#main_menu.show()
+
+func temp_function(_temp: String):
 	title_screen.hide()
 	main_menu.show()
 

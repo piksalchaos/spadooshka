@@ -38,7 +38,7 @@ atlas = ExtResource("7_qrrh1")
 region = Rect2(155, 0, 1738.79, 110)
 
 [sub_resource type="Theme" id="Theme_d3fyj"]
-Label/font_sizes/font_size = 30
+Label/font_sizes/font_size = 48
 Label/fonts/font = ExtResource("9_qm6eq")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xcc8n"]
@@ -208,9 +208,9 @@ texture_progress = SubResource("AtlasTexture_5dafj")
 [node name="ScoreDisplay" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3
-anchor_right = 0.7
-anchor_bottom = 0.0472222
+anchor_left = 0.179688
+anchor_right = 0.819531
+anchor_bottom = 0.0777778
 grow_horizontal = 2
 texture = SubResource("AtlasTexture_oyiw1")
 expand_mode = 1

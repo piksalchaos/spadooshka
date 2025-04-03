@@ -9,8 +9,12 @@ const PLAYER_DISPLAY_SCENE = preload("res://scenes/gui/lobby_menu/lobby_player_d
 
 var is_host = false
 
+signal back_button_pressed
 signal ready_button_pressed(peer_id: int, is_ready: bool)
 signal start_button_pressed()
+
+func _on_back_button_pressed() -> void:
+	back_button_pressed.emit()
 
 @rpc("authority", "call_remote", "reliable")
 func update_peer_player_displays():
@@ -30,6 +34,11 @@ func remove_player_display(peer_id: int):
 	if player_display:
 		player_display.queue_free()
 
+func reset():
+	for player_display in player_displays.get_children():
+		player_display.queue_free()
+	ready_button.button_pressed = false
+
 func on_peer_connected(peer_id: int):
 	update_peer_player_displays.rpc_id(peer_id)
 	add_player_display.rpc(peer_id)
@@ -47,7 +56,7 @@ func _on_ready_button_pressed() -> void:
 	var peer_id = multiplayer.get_unique_id()
 	var is_ready = ready_button.button_pressed
 	ready_button_pressed.emit(peer_id, is_ready)
-	set_player_is_ready.rpc(peer_id, is_ready)
+	#set_player_is_ready.rpc(peer_id, is_ready)
 
 func set_waiting_label_visibility(is_label_visible: bool):
 	waiting_label.visible = is_label_visible

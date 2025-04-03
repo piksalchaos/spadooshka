@@ -12,8 +12,12 @@ const SERVER_INFO_DISPLAY_SCENE = preload("res://scenes/gui/local_menu/server_in
 @onready var room_name_entry: LineEdit = $HostMenu/RoomNameEntry
 @onready var host_button: Button = $HostMenu/HostButton
 
+signal back_button_pressed
 signal join_button_pressed(ip_address: String)
 signal host_button_pressed(room_name: String)
+
+func _on_back_button_pressed() -> void:
+	back_button_pressed.emit()
 
 func _on_room_name_entry_text_changed(new_text: String) -> void:
 	var old_caret_column = room_name_entry.caret_column
@@ -41,19 +45,15 @@ func _on_address_entry_text_changed(new_text: String) -> void:
 	join_go_button.disabled = false
 
 func _on_join_go_button_pressed() -> void:
-	hide()
 	join_button_pressed.emit(address_entry.text)
 
 func on_server_info_display_join_button_pressed(ip_address: String):
-	hide()
 	join_button_pressed.emit(ip_address)
 
 func _on_singleplayer_button_pressed() -> void:
-	hide()
 	host_button_pressed.emit("lmao it isn't actually singleplayer")
 
 func _on_join_localhost_button_pressed() -> void:
-	hide()
 	join_button_pressed.emit("localhost")
 
 func show_listener_failed_label():

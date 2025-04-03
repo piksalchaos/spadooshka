@@ -30,7 +30,6 @@ var server_browser: ServerBrowser
 
 var map: Map
 
-var peer_ready_states = {}
 var peer_selection_choices = {}
 
 const ROUNDS_TO_WIN: int = 5
@@ -48,8 +47,11 @@ func _ready() -> void:
 func _on_title_screen_exit_button_pressed() -> void:
 	get_tree().quit()
 
-func _on_main_menu_local_game_button_pressed() -> void:
+func _on_pre_game_menu_local_game_button_pressed() -> void:
 	set_up_server_browser()
+
+func _on_pre_game_menu_local_menu_back_button_pressed() -> void:
+	close_server_browser()
 
 func _on_pre_game_menu_host_button_pressed(room_name: String) -> void:
 	enet_peer.create_server(server_port)
@@ -76,6 +78,12 @@ func join_by_ip(ip_address: String):
 	enet_peer.create_client(ip_address, server_port)
 	multiplayer.multiplayer_peer = enet_peer
 
+func _on_pre_game_menu_lobby_back_button_pressed() -> void:
+	if multiplayer.is_server():
+		enet_peer.close()
+	else:
+		multiplayer.multiplayer_peer.disconnect_peer(1)
+
 func _on_pre_game_menu_lobby_start_button_pressed() -> void:
 	assert(multiplayer.get_unique_id() == HOST_NUMBER, \
 		"wtf, only the host should be able to start the game")
@@ -85,6 +93,7 @@ func _on_pre_game_menu_lobby_start_button_pressed() -> void:
 func close_server_browser():
 	if server_browser:
 		server_browser.queue_free()
+		print("closed server browser")
 
 func _on_agent_map_select_menu_finished_selection(
 		peer_id: int, agent_name: String, map_name: String

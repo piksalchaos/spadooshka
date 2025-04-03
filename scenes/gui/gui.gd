@@ -4,7 +4,6 @@ extends Control
 
 @onready var title_screen: Control = $TitleScreen
 @onready var pre_game_menu: Control = $PreGameMenu
-@onready var lobby_menu: LobbyMenu = $LobbyMenu
 @onready var agent_map_select_menu: Control = $AgentMapSelectMenu
 @onready var preliminary_screen: Control = $PreliminaryScreen
 @onready var hud: HUD = $HUD
@@ -29,6 +28,9 @@ func _on_loading_screen_faded_to_black() -> void:
 
 func _on_title_screen_start_button_pressed() -> void:
 	start_gui_transition(title_screen, pre_game_menu)
+
+func _on_pre_game_menu_back_button_pressed() -> void:
+	start_gui_transition(pre_game_menu, title_screen)
 
 func _on_pre_game_menu_lobby_start_button_pressed() -> void:
 	begin_agent_map_selection.rpc()

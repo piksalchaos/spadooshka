@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://c4q7skpmltk8l"]
+[gd_scene load_steps=3 format=3 uid="uid://c4q7skpmltk8l"]
 
 [ext_resource type="Script" path="res://scenes/gui/local_menu/local_menu.gd" id="1_yla67"]
+[ext_resource type="Texture2D" uid="uid://b61f6dvp55f7c" path="res://assets/images/gui/back_arrow.png" id="2_qdd5h"]
 
 [node name="LocalMenu" type="Control"]
 layout_mode = 3
@@ -161,9 +162,23 @@ disabled = true
 text = "Host LAN Server"
 metadata/_edit_use_anchors_ = true
 
+[node name="BackButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.875
+anchor_right = 0.08
+anchor_bottom = 1.0
+offset_top = -6.10352e-05
+offset_right = -0.400009
+grow_vertical = 0
+texture_normal = ExtResource("2_qdd5h")
+ignore_texture_size = true
+stretch_mode = 5
+
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/SingleplayerButton" to="." method="_on_singleplayer_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/JoinLocalhostButton" to="." method="_on_join_localhost_button_pressed"]
 [connection signal="text_changed" from="JoinMenu/HBoxContainer/AddressEntry" to="." method="_on_address_entry_text_changed"]
 [connection signal="pressed" from="JoinMenu/JoinGoButton" to="." method="_on_join_go_button_pressed"]
 [connection signal="text_changed" from="HostMenu/RoomNameEntry" to="." method="_on_room_name_entry_text_changed"]
 [connection signal="pressed" from="HostMenu/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

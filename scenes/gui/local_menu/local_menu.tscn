@@ -94,6 +94,10 @@ text = "Player Count
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="ServerInfoDisplayContainer" type="VBoxContainer" parent="ServerInfoPanelContainer/ServerInfoContainer"]
+layout_mode = 2
+metadata/_edit_use_anchors_ = true
+
 [node name="JoinLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1

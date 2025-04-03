@@ -75,12 +75,18 @@ func _on_pre_game_menu_join_button_pressed(ip_address: String) -> void:
 	join_by_ip(ip_address)
 
 func join_by_ip(ip_address: String):
-	enet_peer.create_client(ip_address, server_port)
-	multiplayer.multiplayer_peer = enet_peer
+	var error = enet_peer.create_client(ip_address, server_port)
+	if error == OK:
+		multiplayer.multiplayer_peer = enet_peer
+		pre_game_menu.switch_local_menu_to_lobby_menu()
+		multiplayer.server_disconnected.connect(pre_game_menu.on_server_disconnected)
+	else:
+		print('failed to join lololol')
 
 func _on_pre_game_menu_lobby_back_button_pressed() -> void:
 	if multiplayer.is_server():
 		enet_peer.close()
+		server_browser.clean_up_broadcaster()
 	else:
 		multiplayer.multiplayer_peer.disconnect_peer(1)
 

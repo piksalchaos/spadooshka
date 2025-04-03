@@ -4,7 +4,7 @@ const SERVER_INFO_DISPLAY_SCENE = preload("res://scenes/gui/local_menu/server_in
 
 @onready var listener_failed_label: Label = $ListenerFailedLabel
 
-@onready var server_info_container: VBoxContainer = $ServerInfoPanelContainer/ServerInfoContainer
+@onready var server_info_display_container: VBoxContainer = $ServerInfoPanelContainer/ServerInfoContainer/ServerInfoDisplayContainer
 
 @onready var address_entry: LineEdit = $JoinMenu/HBoxContainer/AddressEntry
 @onready var join_go_button: Button = $JoinMenu/JoinGoButton
@@ -18,6 +18,8 @@ signal host_button_pressed(room_name: String)
 
 func _on_back_button_pressed() -> void:
 	back_button_pressed.emit()
+	for server_info_display in server_info_display_container.get_children():
+		server_info_display.queue_free()
 
 func _on_room_name_entry_text_changed(new_text: String) -> void:
 	var old_caret_column = room_name_entry.caret_column
@@ -62,17 +64,17 @@ func show_listener_failed_label():
 func add_server_info_display(room_name: String, ip: String, player_count: int):
 	var server_info_display: ServerInfoDisplay = SERVER_INFO_DISPLAY_SCENE.instantiate()
 	server_info_display.name = room_name
-	server_info_container.add_child(server_info_display)
+	server_info_display_container.add_child(server_info_display)
 	
 	server_info_display.update_labels(room_name, ip, player_count)
 	server_info_display.join_button_pressed.connect(on_server_info_display_join_button_pressed)
 
 func update_server_info_display(room_name: String, ip: String, player_count: int):
-	var server_info_display: ServerInfoDisplay = server_info_container.get_node(room_name)
+	var server_info_display: ServerInfoDisplay = server_info_display_container.get_node(room_name)
 	if server_info_display:
 		server_info_display.update_labels(room_name, ip, player_count)
 
 func remove_server_info_display(room_name: String):
-	var server_info_display: ServerInfoDisplay = server_info_container.get_node(room_name)
+	var server_info_display: ServerInfoDisplay = server_info_display_container.get_node(room_name)
 	if server_info_display:
 		server_info_display.queue_free()

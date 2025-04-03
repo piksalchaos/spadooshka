@@ -35,18 +35,24 @@ func _on_local_menu_host_button_pressed(room_name: String) -> void:
 
 func _on_local_menu_join_button_pressed(ip_address: String) -> void:
 	join_button_pressed.emit(ip_address)
+
+func switch_local_menu_to_lobby_menu():
 	local_menu.hide()
 	lobby_menu.show()
 
-@rpc("authority", "call_remote", "reliable")
 func _on_lobby_menu_back_button_pressed() -> void:
-	if multiplayer.is_server():
-		_on_lobby_menu_back_button_pressed.rpc()
+	lobby_back_button_pressed.emit()
+	leave_lobby_gui()
+
+func on_server_disconnected() -> void:
+	lobby_back_button_pressed.emit()
+	leave_lobby_gui()
+
+func leave_lobby_gui():
 	peer_ready_states.clear()
 	lobby_menu.hide()
 	lobby_menu.reset()
 	local_menu.show()
-	lobby_back_button_pressed.emit()
 
 func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
 	change_peer_ready_state.rpc_id(1, peer_id, is_ready)

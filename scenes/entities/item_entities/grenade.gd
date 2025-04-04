@@ -5,11 +5,16 @@ extends RigidBody3D
 @export var grenade_range = 10
 @export var falloff_strength = 2
 
-@export var time_to_explode = 3
+@export var time_to_explode = 3.0
 @export var damage_to_force_factor = 1
 
 @export var flashing_frequency_multiplier = 5
 @export var flashing_frequency_exponent = 2 #1 for pure sine wave, >1 for increasing oscillation speed
+
+@onready var mesh_instance_3d: MeshInstance3D = $MeshInstance3D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var explosion_mesh: MeshInstance3D = $ExplosionMesh
+@onready var light: OmniLight3D = $Light
 
 @onready var explode_timer = $ExplodeTimer
 
@@ -49,4 +54,11 @@ func _on_explode_timer_timeout() -> void:
 			body.receive_damage.rpc_id(body.get_multiplayer_authority(), damage)
 			continue
 		body.apply_impulse(difference_vector.normalized() * damage * damage_to_force_factor)
+	#queue_free()
+	animation_player.play("explode")
+	mesh_instance_3d.hide()
+	light.hide()
+	explosion_mesh.show()
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	queue_free()

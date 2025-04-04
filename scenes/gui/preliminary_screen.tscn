@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://scenes/gui/preliminary_screen.gd" id="1_q8k6l"]
 
 [node name="PreliminaryScreen" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

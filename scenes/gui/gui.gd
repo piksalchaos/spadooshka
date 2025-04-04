@@ -16,6 +16,10 @@ var peer_ready_states = {}
 
 # ik there's a lot of hardcoding and there's no modularity, but deal with it for now lol
 
+func _ready():
+	victory_screen.back_button_pressed.connect(on_end_screen_back_button_pressed)
+	defeat_screen.back_button_pressed.connect(on_end_screen_back_button_pressed)
+
 func start_gui_transition(node_to_hide, node_to_show):
 	next_node_to_hide = node_to_hide
 	next_node_to_show = node_to_show
@@ -66,3 +70,9 @@ func prepare_for_end_game(P1_won: bool):
 		victory_screen.show()
 	else:
 		defeat_screen.show()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func on_end_screen_back_button_pressed():
+	victory_screen.hide()
+	defeat_screen.hide()
+	pre_game_menu.show()

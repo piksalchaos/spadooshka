@@ -1,27 +1,37 @@
-[gd_scene load_steps=3 format=3 uid="uid://c55vpo17jcpjl"]
+[gd_scene load_steps=5 format=3 uid="uid://c55vpo17jcpjl"]
 
-[ext_resource type="Texture2D" uid="uid://cmfyum3hhs2vl" path="res://assets/images/agent_select_temp.png" id="1_odbeu"]
 [ext_resource type="Script" path="res://scenes/gui/lobby_menu/lobby_player_display.gd" id="1_tpbav"]
+[ext_resource type="Texture2D" uid="uid://dykdf2eincjgw" path="res://assets/images/gui/lobby_menu/joined_client.png" id="2_p44fk"]
+[ext_resource type="Texture2D" uid="uid://dvrykcal2dcpo" path="res://assets/images/gui/lobby_menu/host.png" id="3_m8lh8"]
+[ext_resource type="Texture2D" uid="uid://cctpbsjhy0waf" path="res://assets/images/gui/thumbs up.png" id="4_bj8h8"]
 
-[node name="LobbyPlayerDisplay" type="VBoxContainer"]
+[node name="LobbyPlayerDisplay" type="HBoxContainer"]
+offset_bottom = 200.0
 size_flags_vertical = 3
 theme_override_constants/separation = 10
-alignment = 1
 script = ExtResource("1_tpbav")
 
-[node name="ServerStateLabel" type="Label" parent="."]
-layout_mode = 2
-text = "Hosting Server"
-horizontal_alignment = 1
-
-[node name="ReadyLabel" type="Label" parent="."]
-layout_mode = 2
-text = "Not Ready"
-
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="JoinedTexture" type="TextureRect" parent="."]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
 size_flags_vertical = 4
-texture = ExtResource("1_odbeu")
+texture = ExtResource("2_p44fk")
 expand_mode = 1
-stretch_mode = 6
+stretch_mode = 5
+
+[node name="HostTexture" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_m8lh8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ReadyTexture" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+texture = ExtResource("4_bj8h8")
+expand_mode = 1
+stretch_mode = 5

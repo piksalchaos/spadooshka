@@ -59,9 +59,13 @@ func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func remove_peer_ready_state(peer_id):
-	print("WAAA")
 	peer_ready_states.erase(peer_id)
 	update_peer_ready_states.rpc_id(1)
+
+func remove_all_peer_ready_states():
+	for peer_id in peer_ready_states.keys():
+		remove_peer_ready_state(peer_id)
+	lobby_menu.undo_ready_button_pressed.rpc()
 
 @rpc("any_peer", "call_local", "reliable")
 func change_peer_ready_state(peer_id, is_peer_ready):
@@ -85,6 +89,7 @@ func update_peer_ready_state_displays(new_peer_ready_states, are_peers_ready):
 	print(peer_ready_states)
 
 func _on_lobby_menu_start_button_pressed() -> void:
+	remove_all_peer_ready_states()
 	lobby_start_button_pressed.emit()
 
 func on_peer_connected(peer_id: int):

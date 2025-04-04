@@ -3,9 +3,8 @@ class_name LobbyMenu extends Control
 const PLAYER_DISPLAY_SCENE = preload("res://scenes/gui/lobby_menu/lobby_player_display.tscn")
 
 @onready var player_displays: VBoxContainer = $PlayerDisplays
-@onready var ready_button: Button = $ButtonContainer/ReadyButton
-@onready var start_button: Button = $ButtonContainer/StartButton
-@onready var waiting_label: Label = $ButtonContainer/WaitingLabel
+@onready var ready_button: TextureButton = $ReadyButton
+@onready var start_button: TextureButton = $StartButton
 
 var is_host = false
 
@@ -37,6 +36,10 @@ func remove_player_display(peer_id: int):
 func reset():
 	for player_display in player_displays.get_children():
 		player_display.queue_free()
+	undo_ready_button_pressed()
+
+@rpc("call_local", "authority", "reliable")
+func undo_ready_button_pressed():
 	ready_button.button_pressed = false
 
 func on_peer_connected(peer_id: int):
@@ -59,7 +62,7 @@ func _on_ready_button_pressed() -> void:
 	#set_player_is_ready.rpc(peer_id, is_ready)
 
 func set_waiting_label_visibility(is_label_visible: bool):
-	waiting_label.visible = is_label_visible
+	pass #waiting_label.visible = is_label_visible
 
 func set_start_button_visibility(is_button_visible: bool):
 	start_button.visible = is_button_visible

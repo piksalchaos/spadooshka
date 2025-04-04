@@ -97,7 +97,7 @@ func _on_pre_game_menu_lobby_start_button_pressed() -> void:
 
 @rpc("call_local", "reliable")
 func close_server_browser():
-	if server_browser:
+	if server_browser and is_instance_valid(server_browser):
 		server_browser.queue_free()
 		print("closed server browser")
 
@@ -177,6 +177,8 @@ func end_round(dead_peer_id: int):
 		play_round()
 	else:
 		gui.prepare_for_end_game.rpc(P1_score == ROUNDS_TO_WIN)
+		for node in multiplayer_container.get_children():
+			node.queue_free()
 
 @rpc("call_local", "reliable")
 func show_end_round_icon(P1_won: bool):

@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://g0un4ork14i8"]
+[gd_scene load_steps=8 format=3 uid="uid://g0un4ork14i8"]
 
 [ext_resource type="Script" path="res://scenes/gui/lobby_menu/lobby_menu.gd" id="1_y36gv"]
 [ext_resource type="Texture2D" uid="uid://b61f6dvp55f7c" path="res://assets/images/gui/back_arrow.png" id="2_cuc5w"]
+[ext_resource type="Texture2D" uid="uid://ds1r5vul7w6oa" path="res://assets/images/gui/lobby_menu/thumbs_up_button.png" id="2_wt2my"]
+[ext_resource type="Texture2D" uid="uid://rgthn2eit5sg" path="res://assets/images/gui/lobby_menu/thumbs_down_button.png" id="3_7bmto"]
+[ext_resource type="Texture2D" uid="uid://bja320vwcdsap" path="res://assets/images/gui/go_button.png" id="3_qa0gd"]
+[ext_resource type="Texture2D" uid="uid://clb6f8q4vgwhp" path="res://assets/images/gui/go_button_pressed.png" id="4_jf3kb"]
+[ext_resource type="Texture2D" uid="uid://dw6mpqkny08a6" path="res://assets/images/gui/go_button_hover.png" id="5_q2mjf"]
 
 [node name="LobbyMenu" type="Control"]
 layout_mode = 3
@@ -12,50 +17,61 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_y36gv")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.294203, 0.330305, 0.425295, 1)
+
 [node name="PlayerDisplays" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.025
 anchor_top = 0.025
-anchor_right = 0.2
-anchor_bottom = 0.975
+anchor_right = 0.68
+anchor_bottom = 0.861
+offset_right = 0.599976
+offset_bottom = 0.0799561
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 15
 
-[node name="ButtonContainer" type="VBoxContainer" parent="."]
+[node name="ReadyButton" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.679688
-anchor_top = 0.15
-anchor_right = 0.952344
-anchor_bottom = 0.875
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/separation = 20
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ReadyButton" type="Button" parent="ButtonContainer"]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
+anchor_left = 0.752344
+anchor_top = 0.1125
+anchor_right = 0.949594
+anchor_bottom = 0.451278
+offset_right = 0.519989
+offset_bottom = 0.0799866
 toggle_mode = true
-text = "Ready"
+texture_normal = ExtResource("2_wt2my")
+texture_pressed = ExtResource("3_7bmto")
+ignore_texture_size = true
+stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="StartButton" type="Button" parent="ButtonContainer"]
+[node name="StartButton" type="TextureButton" parent="."]
 visible = false
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-text = "Begin Match!
-"
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.752344
+anchor_top = 0.484722
+anchor_right = 0.949594
+anchor_bottom = 0.8235
+offset_right = 0.52002
+offset_bottom = 0.0799866
+toggle_mode = true
+texture_normal = ExtResource("3_qa0gd")
+texture_pressed = ExtResource("4_jf3kb")
+texture_hover = ExtResource("5_q2mjf")
+ignore_texture_size = true
+stretch_mode = 5
 metadata/_edit_use_anchors_ = true
-
-[node name="WaitingLabel" type="Label" parent="ButtonContainer"]
-visible = false
-layout_mode = 2
-text = "Waiting for Host..."
 
 [node name="BackButton" type="TextureButton" parent="."]
 layout_mode = 1
@@ -70,6 +86,6 @@ texture_normal = ExtResource("2_cuc5w")
 ignore_texture_size = true
 stretch_mode = 5
 
-[connection signal="pressed" from="ButtonContainer/ReadyButton" to="." method="_on_ready_button_pressed"]
-[connection signal="pressed" from="ButtonContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="ReadyButton" to="." method="_on_ready_button_pressed"]
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

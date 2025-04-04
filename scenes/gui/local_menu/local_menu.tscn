@@ -12,6 +12,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_yla67")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.294203, 0.330305, 0.425295, 1)
+
 [node name="ListenerFailedLabel" type="Label" parent="."]
 visible = false
 layout_mode = 1
@@ -20,6 +29,7 @@ offset_bottom = 23.0
 text = "Failed to bind to listener port!"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.271875
@@ -96,18 +106,19 @@ size_flags_horizontal = 3
 
 [node name="ServerInfoDisplayContainer" type="VBoxContainer" parent="ServerInfoPanelContainer/ServerInfoContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="JoinLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.710938
-anchor_top = 0.0666667
+anchor_top = 0.075
 anchor_right = 0.958594
-anchor_bottom = 0.101389
+anchor_bottom = 0.109722
 grow_horizontal = 2
 grow_vertical = 2
-text = "Join by address:"
+text = "Join directly"
 metadata/_edit_use_anchors_ = true
 
 [node name="JoinMenu" type="VBoxContainer" parent="."]

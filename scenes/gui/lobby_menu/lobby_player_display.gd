@@ -1,11 +1,16 @@
-extends VBoxContainer
+extends HBoxContainer
 
-@onready var ready_label: Label = $ReadyLabel
-@onready var server_state_label: Label = $ServerStateLabel
+@onready var host_texture: TextureRect = $HostTexture
+@onready var joined_texture: TextureRect = $JoinedTexture
+@onready var ready_texture: TextureRect = $ReadyTexture
 
 func _ready() -> void:
-	server_state_label.text = "Hosting" if name == "1" else "Joined"
-	#server_state_label.text = name
+	if name == "1":
+		host_texture.show()
+		joined_texture.hide()
+	else:
+		joined_texture.show()
+		host_texture.hide()
 
 func set_is_ready(is_ready: bool):
-	ready_label.text = "Ready" if is_ready else "Not Ready"
+	ready_texture.visible = is_ready

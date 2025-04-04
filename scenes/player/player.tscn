@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cyxjceb2t4xis"]
+[gd_scene load_steps=13 format=3 uid="uid://cyxjceb2t4xis"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_yaydr"]
 [ext_resource type="Script" path="res://scenes/player/head_camera.gd" id="2_vfxp5"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b84jqg6v7ev0v" path="res://scenes/player/gun/gun.tscn" id="4_peur4"]
 [ext_resource type="Script" path="res://scenes/player/inventory.gd" id="5_kr2gg"]
 [ext_resource type="Script" path="res://scenes/player/effect_manager.gd" id="6_6xkkg"]
+[ext_resource type="AudioStream" uid="uid://bu7efkh0wb8ob" path="res://assets/sounds/dash.wav" id="8_ife3g"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_wu3n4"]
 
@@ -84,6 +85,9 @@ script = ExtResource("6_6xkkg")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_yhuv5")
+
+[node name="DashSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_ife3g")
 
 [connection signal="interacted" from="Head/Camera/InteractCast" to="Inventory" method="_on_interact_cast_interacted"]
 [connection signal="ammo_changed" from="Head/Camera/Gun" to="." method="_on_gun_ammo_changed"]

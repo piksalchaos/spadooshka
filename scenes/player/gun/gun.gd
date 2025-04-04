@@ -58,6 +58,13 @@ func shoot():
 	is_gun_ready = false
 	ammo_changed.emit(num_bullets, stats.mag_capacity)
 	
+	play_shoot_effects()
+	shot.emit()
+	$FireTimer.start()
+	if num_bullets == 0:
+		await $FireTimer.timeout
+		reload()
+	
 	var is_aiming = Input.is_action_pressed("aim")
 	var bullet_trajectory_rot_x = stats.aim_bullet_trajectory_rot_x if is_aiming else stats.bullet_trajectory_rot_x
 	var bullet_trajectory_rot_z = stats.aim_bullet_trajectory_rot_z if is_aiming else stats.bullet_trajectory_rot_z
@@ -66,6 +73,7 @@ func shoot():
 	
 	if shoot_ray.is_colliding():
 		var target = shoot_ray.get_collider()
+		if not is_instance_valid(target): return
 		var position = shoot_ray.get_collision_point()
 		var normal = shoot_ray.get_collision_normal()
 		
@@ -91,15 +99,6 @@ func shoot():
 			})
 			
 			new_bullet_hole.queue_free()
-	
-	#play_shoot_effects()
-	shot.emit()
-	$FireTimer.start()
-	if num_bullets == 0:
-		await $FireTimer.timeout
-		reload()
-	else:
-		pass
 
 func reload():
 	if is_reloading:
@@ -125,6 +124,7 @@ func unrev():
 
 func play_shoot_effects():
 	gun_effects.play_effects()
+	$ShootSFX.stop()
 	$ShootSFX.play()
 	animation_player.stop()
 	animation_player.play("shoot")

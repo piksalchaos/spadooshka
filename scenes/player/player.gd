@@ -7,6 +7,7 @@ class_name Player extends CharacterBody3D
 @onready var inventory: Inventory = $Inventory
 @onready var effect_manager: Node = $EffectManager
 @onready var equipped_gun: Gun = $Head/Camera/Gun
+@onready var dash_sfx: AudioStreamPlayer = $DashSFX
 
 @export var stats: AgentStats
 @export var health: int
@@ -216,6 +217,7 @@ func query_jump():
 
 
 func dash():
+	dash_sfx.play()
 	is_dashing = true
 	can_dash = false
 	var dash_direction := camera.global_transform.basis.z * -1

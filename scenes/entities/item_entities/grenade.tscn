@@ -70,7 +70,7 @@ _data = {
 "explode": SubResource("Animation_8bt13")
 }
 
-[node name="Grenade" type="RigidBody3D"]
+[node name="Grenade" type="RigidBody3D" groups=["free_after_round"]]
 collision_layer = 0
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_dlt5l")

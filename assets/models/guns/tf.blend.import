@@ -3,12 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://32vmvddr4bfp"
-valid=false
+uid="uid://bmwsbevaib12y"
+path="res://.godot/imported/tf.blend-0efef37c688caab627f4453f20ae9db0.scn"
 
 [deps]
 
-source_file="res://assets/models/guns/winchester_1873.blend"
+source_file="res://assets/models/guns/tf.blend"
+dest_files=["res://.godot/imported/tf.blend-0efef37c688caab627f4453f20ae9db0.scn"]
 
 [params]
 

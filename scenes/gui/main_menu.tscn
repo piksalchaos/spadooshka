@@ -1,7 +1,6 @@
-[gd_scene load_steps=21 format=3 uid="uid://hmxe78pntojx"]
+[gd_scene load_steps=20 format=3 uid="uid://hmxe78pntojx"]
 
 [ext_resource type="Script" path="res://scenes/gui/main_menu.gd" id="1_0dj8t"]
-[ext_resource type="Texture2D" uid="uid://c7wses8t0sikm" path="res://assets/images/gui/main_menu/screentone-g-5.0ppi.png" id="2_3hmp8"]
 [ext_resource type="Texture2D" uid="uid://b61f6dvp55f7c" path="res://assets/images/gui/back_arrow.png" id="2_ljbrb"]
 [ext_resource type="Texture2D" uid="uid://d0j3n8ustpk1k" path="res://assets/images/gui/main_menu/main_menu_buttons_pressed.png" id="3_5n2l4"]
 [ext_resource type="Texture2D" uid="uid://cno1q4t3gp5f3" path="res://assets/images/gui/main_menu/main_menu_buttons.png" id="3_vhon8"]
@@ -69,26 +68,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0dj8t")
-
-[node name="ColorRect" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.204944, 0.256014, 0.374552, 1)
-
-[node name="TextureRect" type="TextureRect" parent="."]
-modulate = Color(0.276034, 0.344814, 0.451007, 1)
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_3hmp8")
-expand_mode = 1
 
 [node name="BackButton" type="TextureButton" parent="."]
 layout_mode = 1

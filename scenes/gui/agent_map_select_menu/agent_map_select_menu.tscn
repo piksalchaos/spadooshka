@@ -1,22 +1,29 @@
-[gd_scene load_steps=13 format=3 uid="uid://bmx0b2qjwg5qs"]
+[gd_scene load_steps=15 format=3 uid="uid://bmx0b2qjwg5qs"]
 
 [ext_resource type="PackedScene" uid="uid://d3kokyyr1wofd" path="res://scenes/gui/agent_map_select_menu/selectable_icon.tscn" id="1_d2hxs"]
 [ext_resource type="Script" path="res://scenes/gui/agent_map_select_menu/agent_map_select_menu.gd" id="1_gqp1f"]
 [ext_resource type="PackedScene" uid="uid://c20gsp31nhvle" path="res://scenes/gui/agent_map_select_menu/selectable_icon_container.tscn" id="2_65f5a"]
-[ext_resource type="Texture2D" uid="uid://ecmsy1mgpexj" path="res://assets/images/player_icons/catboy_icon.png" id="3_6b11k"]
 [ext_resource type="Texture2D" uid="uid://csmwg6i5yhc3v" path="res://assets/images/player_icons/bunny_icon.png" id="4_6p6bf"]
-[ext_resource type="Texture2D" uid="uid://d3ewysjfwwqoc" path="res://assets/images/player_icons/madoka_icon.png" id="6_sj46f"]
+[ext_resource type="Texture2D" uid="uid://dbn6nhyvsaacv" path="res://assets/images/agents_full_body/catboy.png" id="5_vuha6"]
+[ext_resource type="Texture2D" uid="uid://b1yc6enpgymt1" path="res://assets/images/agents_full_body/madoka.png" id="6_n6f2x"]
 [ext_resource type="Texture2D" uid="uid://58yiomfwk20f" path="res://assets/images/gui/agent_map_select_menu/agent_map_select_ready_temp.png" id="6_ymf22"]
 [ext_resource type="Texture2D" uid="uid://dnen6ckq0k0si" path="res://assets/images/gui/agent_map_select_menu/agent_map_select_ready_disabled_temp.png" id="7_thd02"]
 [ext_resource type="Texture2D" uid="uid://goxq3gdjdqri" path="res://assets/images/player_icons/sandy_icon.png" id="7_xalc7"]
 [ext_resource type="Texture2D" uid="uid://bhfckpvhkqk6v" path="res://assets/images/map_icons/map_1.png" id="8_7utji"]
 [ext_resource type="Texture2D" uid="uid://djy0a4yaym8dx" path="res://assets/images/map_icons/map_2.png" id="9_2664i"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_bplx6"]
+atlas = ExtResource("5_vuha6")
+region = Rect2(75, 40, 268, 476)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ud084"]
+atlas = ExtResource("6_n6f2x")
+region = Rect2(40, 0, 268, 476)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esc81"]
 bg_color = Color(0, 0, 0, 1)
 
 [node name="AgentMapSelectMenu" type="Control"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -85,7 +92,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("3_6b11k")
+texture = SubResource("AtlasTexture_bplx6")
 expand_mode = 1
 stretch_mode = 5
 
@@ -101,7 +108,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("6_sj46f")
+texture = SubResource("AtlasTexture_ud084")
 expand_mode = 1
 stretch_mode = 5
 

@@ -37,6 +37,7 @@ visible = false
 layout_mode = 1
 
 [node name="AgentMapSelectMenu" parent="GUI" instance=ExtResource("9_5hn2l")]
+visible = false
 layout_mode = 1
 
 [node name="PreliminaryScreen" parent="GUI" instance=ExtResource("8_wrlv4")]

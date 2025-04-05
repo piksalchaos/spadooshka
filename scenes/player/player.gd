@@ -50,6 +50,7 @@ signal gun_shot
 signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
 signal death(peer_id: int)
+signal interact_cast_changed_in_range_state
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -282,3 +283,6 @@ func is_effect_applied(effect_name: String):
 	
 func die():
 	is_dead = true
+
+func _on_interact_cast_changed_in_range_state(is_in_range: bool) -> void:
+	interact_cast_changed_in_range_state.emit(is_in_range)

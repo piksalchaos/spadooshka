@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://euhmy40ljoc4"]
+[gd_scene load_steps=31 format=3 uid="uid://euhmy40ljoc4"]
 
 [ext_resource type="Script" path="res://scenes/gui/hud/hud.gd" id="1_8mkb2"]
 [ext_resource type="Texture2D" uid="uid://k473ttvmslg8" path="res://assets/images/gui/hud/ammo_bar.png" id="3_amodr"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://choc1obf6wea5" path="res://assets/images/round_lost_icon.png" id="7_oxhew"]
 [ext_resource type="Texture2D" uid="uid://d25nardc5u28k" path="res://assets/images/gui/hud/score_display.png" id="7_qrrh1"]
 [ext_resource type="FontFile" uid="uid://dccbh8rq1t0nw" path="res://assets/fonts/Super Lobster.ttf" id="9_qm6eq"]
+[ext_resource type="Texture2D" uid="uid://degh03aj62hel" path="res://assets/images/keys/Dark/Shift-Key.png" id="14_xb7in"]
+[ext_resource type="Texture2D" uid="uid://ch3c2t8p3mdcu" path="res://assets/images/keys/Dark/E-Key.png" id="15_hscai"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8k04s"]
 bg_color = Color(0.565344, 0.60005, 0.683188, 1)
@@ -391,3 +393,32 @@ offset_bottom = 202.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_oxhew")
+
+[node name="ShiftKey" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.266406
+anchor_top = 0.887111
+anchor_right = 0.304031
+anchor_bottom = 0.920833
+offset_top = 0.279968
+offset_right = -0.160004
+grow_vertical = 0
+texture = ExtResource("14_xb7in")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="EKey" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.446094
+anchor_top = 0.469444
+anchor_right = 0.470844
+anchor_bottom = 0.529611
+offset_right = 0.32
+offset_bottom = -0.32
+texture = ExtResource("15_hscai")
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true

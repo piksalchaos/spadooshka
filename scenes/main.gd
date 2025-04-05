@@ -200,9 +200,11 @@ func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 		node.dash_changed.connect(hud.update_dash_display)
 		node.gun_shot.connect(hud.on_gun_shot)
 		node.health_changed.connect(hud.update_health_display)
+		node.death.connect(end_round.rpc)
+		node.interact_cast_changed_in_range_state.connect(hud.set_e_key_visibility)
 		
 		var inventory = node.get_node("Inventory")
 		inventory.inventory_changed.connect(hud.update_inventory_icons)
 		var effect_manager = node.get_node("EffectManager")
 		effect_manager.effect_applied.connect(hud.create_effect_display)
-		node.death.connect(end_round.rpc)
+		

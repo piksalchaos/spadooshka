@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://ooxxqxmb5cvk"]
+[gd_scene load_steps=6 format=3 uid="uid://ooxxqxmb5cvk"]
 
 [ext_resource type="Script" path="res://scenes/gui/hud/inventory_slot.gd" id="1_kd2fw"]
 [ext_resource type="Texture2D" uid="uid://bhseorssfiulj" path="res://assets/images/gui/hud/inventory.png" id="2_g6irr"]
+[ext_resource type="Texture2D" uid="uid://b76mmdjbhxx2b" path="res://assets/images/keys/Light/Q-Key.png" id="3_8rhhs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rig7q"]
 atlas = ExtResource("2_g6irr")
@@ -34,6 +35,17 @@ visible = false
 layout_mode = 2
 texture = SubResource("AtlasTexture_ifsij")
 expand_mode = 1
+
+[node name="KeyTexture" type="TextureRect" parent="OutlineRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.375
+anchor_bottom = 0.358
+offset_right = -3.05176e-05
+offset_bottom = 0.23999
+texture = ExtResource("3_8rhhs")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="MarginAdjuster" type="Control" parent="."]
 layout_mode = 2

@@ -11,6 +11,7 @@ const EFFECT_DISPLAY_SCENE = preload("res://scenes/gui/hud/effect_display.tscn")
 @onready var inventory_slots: Array[Node] = $Inventory.get_children()
 @onready var low_health_texture = $LowHealthTexture
 @onready var low_health_texture_animation_player = $LowHealthTexture/AnimationPlayer
+@onready var e_key: TextureRect = $EKey
 
 @onready var score_display: TextureRect = $ScoreDisplay
 
@@ -81,3 +82,6 @@ func update_win_lost_display(is_win: bool):
 
 func on_gun_shot():
 	crosshairs.start_shoot_animation()
+
+func set_e_key_visibility(is_visible: bool):
+	e_key.visible = is_visible

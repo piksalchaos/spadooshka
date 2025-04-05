@@ -89,6 +89,7 @@ replication_config = SubResource("SceneReplicationConfig_yhuv5")
 [node name="DashSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_ife3g")
 
+[connection signal="changed_in_range_state" from="Head/Camera/InteractCast" to="." method="_on_interact_cast_changed_in_range_state"]
 [connection signal="interacted" from="Head/Camera/InteractCast" to="Inventory" method="_on_interact_cast_interacted"]
 [connection signal="ammo_changed" from="Head/Camera/Gun" to="." method="_on_gun_ammo_changed"]
 [connection signal="shot" from="Head/Camera/Gun" to="." method="_on_gun_shot"]

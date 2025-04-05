@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bnmehxycglo2"
-path="res://.godot/imported/colt_python.blend-347c6d40abb75c07268782a37c2ed364.scn"
+uid="uid://rjfm7lm052y2"
+path="res://.godot/imported/magic girl ig w hair13.blend-f17cf9a2a37e10806be55556b45798e5.scn"
 
 [deps]
 
-source_file="res://assets/models/guns/colt_python.blend"
-dest_files=["res://.godot/imported/colt_python.blend-347c6d40abb75c07268782a37c2ed364.scn"]
+source_file="res://assets/models/magic girl ig w hair13.blend"
+dest_files=["res://.godot/imported/magic girl ig w hair13.blend-f17cf9a2a37e10806be55556b45798e5.scn"]
 
 [params]
 
@@ -31,22 +31,7 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
-_subresources={
-"nodes": {
-"PATH:Camera": {
-"import/skip_import": true
-},
-"PATH:Cylinder_001": {
-"import/skip_import": true
-},
-"PATH:Empty": {
-"import/skip_import": true
-},
-"PATH:Light": {
-"import/skip_import": true
-}
-}
-}
+_subresources={}
 blender/nodes/visible=0
 blender/nodes/active_collection_only=false
 blender/nodes/punctual_lights=true

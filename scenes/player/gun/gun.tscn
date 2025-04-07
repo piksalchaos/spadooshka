@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b84jqg6v7ev0v"]
+[gd_scene load_steps=6 format=3 uid="uid://b84jqg6v7ev0v"]
 
 [ext_resource type="Script" path="res://scenes/player/gun/gun.gd" id="1_51xk5"]
 [ext_resource type="AudioStream" uid="uid://bbfti3pj60gtp" path="res://assets/sounds/gunshot.wav" id="2_0b23x"]
 [ext_resource type="PackedScene" uid="uid://cca6nf5b5ckt4" path="res://scenes/player/gun/gun_effects.tscn" id="2_1lasm"]
+[ext_resource type="AudioStream" uid="uid://n10ixtcnq01i" path="res://assets/sounds/reload.wav" id="3_bq8fr"]
 [ext_resource type="PackedScene" uid="uid://bnmehxycglo2" path="res://assets/models/guns/colt_python.blend" id="3_rkq8b"]
 
 [node name="Gun" type="Node3D" node_paths=PackedStringArray("gun_model")]
@@ -24,8 +25,10 @@ one_shot = true
 
 [node name="ShootSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_0b23x")
+volume_db = -5.0
 
 [node name="ReloadSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_bq8fr")
 
 [node name="ShootRay" type="RayCast3D" parent="."]
 target_position = Vector3(0, -2, 0)
@@ -43,3 +46,4 @@ visible = false
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
 [connection signal="timeout" from="RevTimer" to="." method="_on_rev_timer_timeout"]
 [connection signal="timeout" from="UnrevTimer" to="." method="_on_unrev_timer_timeout"]
+[connection signal="finished" from="ReloadSFX" to="." method="_on_reload_sfx_finished"]

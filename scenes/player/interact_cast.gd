@@ -18,7 +18,7 @@ func _process(_delta: float) -> void:
 			set_target_body(closest_target_body)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact") and target_body:
+	if event.is_action_pressed("interact") and is_instance_valid(target_body):
 		if target_body.get_node_or_null("InteractionComponent"):
 			interacted.emit(target_body)
 

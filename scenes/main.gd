@@ -35,7 +35,7 @@ var map: Map
 
 var peer_selection_choices = {}
 
-const ROUNDS_TO_WIN: int = 1
+const ROUNDS_TO_WIN: int = 5
 var round_number: int = 1
 var rounds_won: int = 0
 

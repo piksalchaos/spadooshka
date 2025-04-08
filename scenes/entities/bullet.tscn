@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://csnshtvxh36qk"]
+
+[ext_resource type="Script" path="res://scenes/entities/bullet.gd" id="1_vpai7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ljhpp"]
+radius = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ewqvn"]
+albedo_color = Color(0.713726, 1, 1, 1)
+emission_enabled = true
+emission = Color(0.346583, 0.545174, 0.577257, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_k5kti"]
+material = SubResource("StandardMaterial3D_ewqvn")
+radius = 0.1
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ujrjv"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Bullet" type="CharacterBody3D" groups=["free_after_round"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_vpai7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ljhpp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_k5kti")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ujrjv")
+
+[node name="FreeTimer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="FreeTimer" to="." method="_on_free_timer_timeout"]

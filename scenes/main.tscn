@@ -1,21 +1,22 @@
-[gd_scene load_steps=11 format=3 uid="uid://c2c8wh6k7fca5"]
+[gd_scene load_steps=12 format=3 uid="uid://c2c8wh6k7fca5"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_yci6l"]
 [ext_resource type="Script" path="res://scenes/gui/gui.gd" id="2_t0ryy"]
 [ext_resource type="PackedScene" uid="uid://c6j0xtac0l3pd" path="res://scenes/gui/title_screen.tscn" id="2_v7p2d"]
-[ext_resource type="PackedScene" uid="uid://hmxe78pntojx" path="res://scenes/gui/main_menu.tscn" id="3_82cjl"]
 [ext_resource type="PackedScene" uid="uid://euhmy40ljoc4" path="res://scenes/gui/hud/hud.tscn" id="3_shkqk"]
-[ext_resource type="PackedScene" uid="uid://c4q7skpmltk8l" path="res://scenes/gui/local_menu/local_menu.tscn" id="4_b8hkp"]
-[ext_resource type="PackedScene" uid="uid://g0un4ork14i8" path="res://scenes/gui/lobby_menu/lobby_menu.tscn" id="4_jqa32"]
+[ext_resource type="PackedScene" uid="uid://c1njw07qnv2ul" path="res://scenes/gui/pre_game_menu.tscn" id="4_v2gxd"]
 [ext_resource type="PackedScene" uid="uid://dcw5bchdkvdra" path="res://scenes/gui/end_screen.tscn" id="5_t4ul1"]
 [ext_resource type="PackedScene" uid="uid://svo1j1xxwq0w" path="res://scenes/gui/preliminary_screen.tscn" id="8_wrlv4"]
 [ext_resource type="PackedScene" uid="uid://bmx0b2qjwg5qs" path="res://scenes/gui/agent_map_select_menu/agent_map_select_menu.tscn" id="9_5hn2l"]
+[ext_resource type="PackedScene" uid="uid://cbf27fd7bbrd7" path="res://scenes/gui/loading_screen.tscn" id="9_q7jm6"]
+[ext_resource type="AudioStream" uid="uid://dhcktth8dnj6l" path="res://assets/sounds/lobby.ogg" id="10_5m1s7"]
+[ext_resource type="AudioStream" uid="uid://cws7vb371nopr" path="res://assets/sounds/battle.ogg" id="11_t7vw3"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_yci6l")
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://scenes/maps/map_1.tscn", "res://scenes/maps/map_2.tscn", "res://scenes/agents/bunny/bunny.tscn", "res://scenes/agents/catboy/catboy.tscn", "res://scenes/agents/madoka/madoka.tscn", "res://scenes/agents/sandy/sandy.tscn", "res://scenes/entities/item_entities/grenade.tscn", "res://scenes/entities/item_entities/billiard_bomb.tscn", "res://scenes/entities/item_entities/billiard_ball.tscn", "res://scenes/entities/bullet_hole.tscn")
+_spawnable_scenes = PackedStringArray("res://scenes/maps/map_1.tscn", "res://scenes/maps/map_2.tscn", "res://scenes/maps/map_3.tscn", "res://scenes/agents/bunny/bunny.tscn", "res://scenes/agents/catboy/catboy.tscn", "res://scenes/agents/madoka/madoka.tscn", "res://scenes/agents/sandy/sandy.tscn", "res://scenes/entities/item_entities/grenade.tscn", "res://scenes/entities/item_entities/billiard_bomb.tscn", "res://scenes/entities/item_entities/billiard_ball.tscn", "res://scenes/entities/bullet_hole.tscn", "res://scenes/entities/bullet.tscn")
 spawn_path = NodePath("../MultiplayerContainer")
 
 [node name="MultiplayerContainer" type="Node" parent="."]
@@ -33,15 +34,7 @@ script = ExtResource("2_t0ryy")
 [node name="TitleScreen" parent="GUI" instance=ExtResource("2_v7p2d")]
 layout_mode = 1
 
-[node name="MainMenu" parent="GUI" instance=ExtResource("3_82cjl")]
-visible = false
-layout_mode = 1
-
-[node name="LocalMenu" parent="GUI" instance=ExtResource("4_b8hkp")]
-visible = false
-layout_mode = 1
-
-[node name="LobbyMenu" parent="GUI" instance=ExtResource("4_jqa32")]
+[node name="PreGameMenu" parent="GUI" instance=ExtResource("4_v2gxd")]
 visible = false
 layout_mode = 1
 
@@ -68,22 +61,34 @@ visible = false
 layout_mode = 1
 text = "You lost."
 
+[node name="LoadingScreen" parent="GUI" instance=ExtResource("9_q7jm6")]
+z_index = 2
+layout_mode = 1
+
+[node name="LobbyMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_5m1s7")
+
+[node name="BattleMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_t7vw3")
+volume_db = -6.9
+
 [connection signal="child_entered_tree" from="MultiplayerContainer" to="." method="_on_multiplayer_container_child_entered_tree"]
+[connection signal="end_screen_back_button_pressed" from="GUI" to="." method="_on_gui_end_screen_back_button_pressed"]
 [connection signal="exit_button_pressed" from="GUI/TitleScreen" to="." method="_on_title_screen_exit_button_pressed"]
 [connection signal="start_button_pressed" from="GUI/TitleScreen" to="GUI" method="_on_title_screen_start_button_pressed"]
-[connection signal="local_game_button_pressed" from="GUI/MainMenu" to="." method="_on_main_menu_local_game_button_pressed"]
-[connection signal="local_game_button_pressed" from="GUI/MainMenu" to="GUI" method="_on_main_menu_local_game_button_pressed"]
-[connection signal="host_button_pressed" from="GUI/LocalMenu" to="." method="_on_local_menu_host_button_pressed"]
-[connection signal="host_button_pressed" from="GUI/LocalMenu" to="GUI" method="_on_local_menu_host_button_pressed"]
-[connection signal="join_button_pressed" from="GUI/LocalMenu" to="." method="_on_local_menu_join_button_pressed"]
-[connection signal="join_button_pressed" from="GUI/LocalMenu" to="GUI" method="_on_local_menu_join_button_pressed"]
-[connection signal="singleplayer_button_pressed" from="GUI/LocalMenu" to="." method="_on_local_menu_singleplayer_button_pressed"]
-[connection signal="ready_button_pressed" from="GUI/LobbyMenu" to="GUI" method="_on_lobby_menu_ready_button_pressed"]
-[connection signal="start_button_pressed" from="GUI/LobbyMenu" to="." method="_on_lobby_menu_start_button_pressed"]
-[connection signal="start_button_pressed" from="GUI/LobbyMenu" to="GUI" method="_on_lobby_menu_start_button_pressed"]
+[connection signal="back_button_pressed" from="GUI/PreGameMenu" to="GUI" method="_on_pre_game_menu_back_button_pressed"]
+[connection signal="host_button_pressed" from="GUI/PreGameMenu" to="." method="_on_pre_game_menu_host_button_pressed"]
+[connection signal="join_button_pressed" from="GUI/PreGameMenu" to="." method="_on_pre_game_menu_join_button_pressed"]
+[connection signal="lobby_back_button_pressed" from="GUI/PreGameMenu" to="." method="_on_pre_game_menu_lobby_back_button_pressed"]
+[connection signal="lobby_start_button_pressed" from="GUI/PreGameMenu" to="." method="_on_pre_game_menu_lobby_start_button_pressed"]
+[connection signal="lobby_start_button_pressed" from="GUI/PreGameMenu" to="GUI" method="_on_pre_game_menu_lobby_start_button_pressed"]
+[connection signal="local_game_button_pressed" from="GUI/PreGameMenu" to="." method="_on_pre_game_menu_local_game_button_pressed"]
+[connection signal="local_menu_back_button_pressed" from="GUI/PreGameMenu" to="." method="_on_pre_game_menu_local_menu_back_button_pressed"]
+[connection signal="replacing_by" from="GUI/PreGameMenu" to="." method="_on_pre_game_menu_replacing_by"]
 [connection signal="finished_selection" from="GUI/AgentMapSelectMenu" to="." method="_on_agent_map_select_menu_finished_selection"]
 [connection signal="finished_selection" from="GUI/AgentMapSelectMenu" to="GUI" method="_on_agent_map_select_menu_finished_selection"]
 [connection signal="back_button_pressed" from="GUI/PreliminaryScreen" to="GUI" method="_on_preliminary_screen_back_button_pressed"]
 [connection signal="begin_button_pressed" from="GUI/PreliminaryScreen" to="." method="_on_preliminary_screen_begin_button_pressed"]
 [connection signal="begin_button_pressed" from="GUI/PreliminaryScreen" to="GUI" method="_on_preliminary_screen_begin_button_pressed"]
 [connection signal="cancelled_selection" from="GUI/PreliminaryScreen" to="." method="_on_preliminary_screen_cancelled_selection"]
+[connection signal="faded_to_black" from="GUI/LoadingScreen" to="GUI" method="_on_loading_screen_faded_to_black"]

@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcwleuhk5clvi"]
+
+[ext_resource type="PackedScene" uid="uid://5cs46ma1usob" path="res://scenes/maps/base_map/map.tscn" id="1_eduqj"]
+[ext_resource type="PackedScene" uid="uid://cijdl8txem2ml" path="res://scenes/maps/map_making/loot_box_spawn_position.tscn" id="2_6584k"]
+[ext_resource type="PackedScene" uid="uid://dkjngpfr7w4qf" path="res://scenes/maps/map_making/player_spawn_position.tscn" id="3_3oyr0"]
+[ext_resource type="PackedScene" uid="uid://qdxgw7s441wo" path="res://scenes/maps/environments/home_environment.tscn" id="5_1wddj"]
+[ext_resource type="PackedScene" uid="uid://bnu4b8te7nrsb" path="res://scenes/entities/launchpad.tscn" id="5_q1x6a"]
+
+[node name="Map1" instance=ExtResource("1_eduqj")]
+
+[node name="DirectionalLight3D" parent="." index="0"]
+sky_mode = 2
+
+[node name="LootBoxSpawnPositions" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.20364, 0)
+
+[node name="SpawnPosition" parent="LootBoxSpawnPositions" index="0" instance=ExtResource("2_6584k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.26648, 2.96817, -12.1408)
+
+[node name="SpawnPosition2" parent="LootBoxSpawnPositions" index="1" instance=ExtResource("2_6584k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.26648, 2.96817, 10.8097)
+
+[node name="SpawnPosition3" parent="LootBoxSpawnPositions" index="2" instance=ExtResource("2_6584k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5219, 3.09438, 10.3029)
+
+[node name="SpawnPosition4" parent="LootBoxSpawnPositions" index="3" instance=ExtResource("2_6584k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.5219, 3.09438, -9.44)
+
+[node name="SpawnPosition5" parent="LootBoxSpawnPositions" index="4" instance=ExtResource("2_6584k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0161318, -1.10767, -0.00553906)
+
+[node name="SpawnPosition6" parent="LootBoxSpawnPositions" index="5" instance=ExtResource("2_6584k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.62179, 3.21063, 22.872)
+
+[node name="SpawnPosition7" parent="LootBoxSpawnPositions" index="6" instance=ExtResource("2_6584k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.62179, 3.21063, -22.9344)
+
+[node name="PlayerSpawnPosition" parent="PlayerSpawnPositions" index="0" instance=ExtResource("3_3oyr0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.8399, 0.191376, 38.6108)
+
+[node name="PlayerSpawnPosition2" parent="PlayerSpawnPositions" index="1" instance=ExtResource("3_3oyr0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.7887, 13.1701, 39.7421)
+
+[node name="PlayerSpawnPosition3" parent="PlayerSpawnPositions" index="2" instance=ExtResource("3_3oyr0")]
+transform = Transform3D(-0.740594, 0, 0.671953, 0, 1, 0, -0.671953, 0, -0.740594, 37.8917, 16.9944, -38.0972)
+
+[node name="PlayerSpawnPosition7" parent="PlayerSpawnPositions" index="3" instance=ExtResource("3_3oyr0")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -39.5119, 15.129, -8.95042)
+
+[node name="PlayerSpawnPosition8" parent="PlayerSpawnPositions" index="4" instance=ExtResource("3_3oyr0")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 29.2417, 13.8251, -0.021431)
+
+[node name="PlayerSpawnPosition4" parent="PlayerSpawnPositions" index="5" instance=ExtResource("3_3oyr0")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -24.7856, 8.0967, -43.6108)
+
+[node name="PlayerSpawnPosition5" parent="PlayerSpawnPositions" index="6" instance=ExtResource("3_3oyr0")]
+transform = Transform3D(0.998721, 0, -0.0505582, 0, 1, 0, 0.0505582, 0, 0.998721, -8.25229, 20.473, 21.8914)
+
+[node name="PlayerSpawnPosition6" parent="PlayerSpawnPositions" index="7" instance=ExtResource("3_3oyr0")]
+transform = Transform3D(0.44882, 0, 0.893622, 0, 1, 0, -0.893622, 0, 0.44882, 38.9536, 27.5368, 37.5398)
+
+[node name="Launchpad" parent="." index="5" instance=ExtResource("5_q1x6a")]
+transform = Transform3D(8.01498, 0, 0, 0, 1, 0, 0, 0, 1, -9.03257, 0.436067, 23.4384)
+strength = 30
+
+[node name="Launchpad2" parent="." index="6" instance=ExtResource("5_q1x6a")]
+transform = Transform3D(8.01498, 0, 0, 0, 1, 0, 0, 0, 1, -9.03257, 0.436067, 7.02591)
+strength = 30
+
+[node name="Launchpad3" parent="." index="7" instance=ExtResource("5_q1x6a")]
+transform = Transform3D(-3.50346e-07, 0, -1, 0, 1, 0, 8.01498, 0, -4.37114e-08, -15.4148, 0.436067, -8.13024)
+strength = 30
+
+[node name="HomeEnvironment" parent="." index="8" instance=ExtResource("5_1wddj")]

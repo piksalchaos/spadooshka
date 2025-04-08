@@ -1,6 +1,64 @@
-[gd_scene load_steps=2 format=3 uid="uid://hmxe78pntojx"]
+[gd_scene load_steps=20 format=3 uid="uid://hmxe78pntojx"]
 
 [ext_resource type="Script" path="res://scenes/gui/main_menu.gd" id="1_0dj8t"]
+[ext_resource type="Texture2D" uid="uid://b61f6dvp55f7c" path="res://assets/images/gui/back_arrow.png" id="2_ljbrb"]
+[ext_resource type="Texture2D" uid="uid://d0j3n8ustpk1k" path="res://assets/images/gui/main_menu/main_menu_buttons_pressed.png" id="3_5n2l4"]
+[ext_resource type="Texture2D" uid="uid://cno1q4t3gp5f3" path="res://assets/images/gui/main_menu/main_menu_buttons.png" id="3_vhon8"]
+[ext_resource type="Texture2D" uid="uid://ce5k2jhqwl3px" path="res://assets/images/gui/main_menu/main_menu_buttons_hover.png" id="5_jldnj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpsk0"]
+atlas = ExtResource("3_vhon8")
+region = Rect2(0, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mld1b"]
+atlas = ExtResource("3_5n2l4")
+region = Rect2(0, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txfbf"]
+atlas = ExtResource("5_jldnj")
+region = Rect2(0, 0, 1024, 1024)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ciahm"]
+load_path = "res://.godot/imported/main_menu_buttons.png-0f20b2b0f93557aeb1c6cd03ae2427d5.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uxkhb"]
+atlas = SubResource("CompressedTexture2D_ciahm")
+region = Rect2(1024, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0fop"]
+atlas = ExtResource("3_5n2l4")
+region = Rect2(1024, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lbk5"]
+atlas = ExtResource("5_jldnj")
+region = Rect2(1024, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kv5b2"]
+atlas = SubResource("CompressedTexture2D_ciahm")
+region = Rect2(1024, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cs8f"]
+atlas = ExtResource("3_5n2l4")
+region = Rect2(1024, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hrbl6"]
+atlas = ExtResource("5_jldnj")
+region = Rect2(1024, 1024, 1024, 1024)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_w7ae4"]
+load_path = "res://.godot/imported/main_menu_buttons.png-0f20b2b0f93557aeb1c6cd03ae2427d5.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oaoj3"]
+atlas = SubResource("CompressedTexture2D_w7ae4")
+region = Rect2(0, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_clje2"]
+atlas = ExtResource("3_5n2l4")
+region = Rect2(0, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7fdxc"]
+atlas = ExtResource("5_jldnj")
+region = Rect2(0, 1024, 1024, 1024)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -11,22 +69,84 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0dj8t")
 
-[node name="LocalGameButton" type="Button" parent="."]
+[node name="BackButton" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.648438
-anchor_top = 0.373611
-anchor_right = 0.794531
-anchor_bottom = 0.527778
-grow_horizontal = 2
-grow_vertical = 2
-text = "Local Game"
+anchor_top = 0.825
+anchor_right = 0.112125
+anchor_bottom = 1.0
+offset_right = 1.48
+grow_vertical = 0
+texture_normal = ExtResource("2_ljbrb")
+ignore_texture_size = true
+stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "this is the main menu lol"
+[node name="ButtonContainer" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.426562
+anchor_top = 0.0902778
+anchor_right = 0.900594
+anchor_bottom = 0.926111
+offset_right = 0.23999
+offset_bottom = 0.199982
+metadata/_edit_use_anchors_ = true
 
-[connection signal="pressed" from="LocalGameButton" to="." method="_on_local_game_button_pressed"]
+[node name="TutorialButton" type="TextureButton" parent="ButtonContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("AtlasTexture_jpsk0")
+texture_pressed = SubResource("AtlasTexture_mld1b")
+texture_hover = SubResource("AtlasTexture_txfbf")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="LocalGameButton" type="TextureButton" parent="ButtonContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("AtlasTexture_uxkhb")
+texture_pressed = SubResource("AtlasTexture_o0fop")
+texture_hover = SubResource("AtlasTexture_1lbk5")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="SettingsButton" type="TextureButton" parent="ButtonContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("AtlasTexture_kv5b2")
+texture_pressed = SubResource("AtlasTexture_7cs8f")
+texture_hover = SubResource("AtlasTexture_hrbl6")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="PracticeButton" type="TextureButton" parent="ButtonContainer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("AtlasTexture_oaoj3")
+texture_pressed = SubResource("AtlasTexture_clje2")
+texture_hover = SubResource("AtlasTexture_7fdxc")
+ignore_texture_size = true
+stretch_mode = 0
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="ButtonContainer/LocalGameButton" to="." method="_on_local_game_button_pressed"]

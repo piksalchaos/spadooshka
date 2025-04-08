@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ty7aw8t2okli"]
+[gd_scene load_steps=12 format=3 uid="uid://ty7aw8t2okli"]
 
 [ext_resource type="Script" path="res://scenes/entities/item_entities/grenade.gd" id="1_hdmlq"]
 
@@ -6,12 +6,12 @@
 rough = true
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_uchby"]
-radius = 0.05
-height = 0.2
+radius = 0.2
+height = 0.8
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dup11"]
-radius = 0.05
-height = 0.2
+radius = 0.2
+height = 0.8
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_cvr1g"]
 radius = 3.0
@@ -24,7 +24,53 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Grenade" type="RigidBody3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w1spe"]
+transparency = 1
+albedo_color = Color(1, 0.478431, 0.45098, 0.431373)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qonng"]
+material = SubResource("StandardMaterial3D_w1spe")
+radius = 3.0
+height = 6.0
+
+[sub_resource type="Animation" id="Animation_8xlyc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ExplosionMesh:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8bt13"]
+resource_name = "explode"
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ExplosionMesh:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 1),
+"transitions": PackedFloat32Array(0.353554, 2.63902, 1),
+"update": 0,
+"values": [Vector3(0.01, 0.01, 0.01), Vector3(1, 1, 1), Vector3(0.01, 0.01, 0.01)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7bkjd"]
+_data = {
+"RESET": SubResource("Animation_8xlyc"),
+"explode": SubResource("Animation_8bt13")
+}
+
+[node name="Grenade" type="RigidBody3D" groups=["free_after_round"]]
 collision_layer = 0
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_dlt5l")
@@ -39,7 +85,7 @@ mesh = SubResource("CapsuleMesh_uchby")
 shape = SubResource("CapsuleShape3D_dup11")
 
 [node name="ExplodeTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 3.0
 one_shot = true
 autostart = true
 
@@ -58,4 +104,14 @@ omni_range = 1.0
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_wyleg")
 
+[node name="ExplosionMesh" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("SphereMesh_qonng")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7bkjd")
+}
+
 [connection signal="timeout" from="ExplodeTimer" to="." method="_on_explode_timer_timeout"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

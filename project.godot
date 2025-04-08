@@ -18,11 +18,13 @@ config/icon="res://icon.svg"
 [autoload]
 
 SpawnerManager="*res://src/spawner_manager.gd"
+LoaderManager="*res://src/loader_manager.gd"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/stretch/aspect="ignore"
 
 [global_group]
 
@@ -130,3 +132,6 @@ aim={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_s3tc_bptc=true
+textures/vram_compression/import_etc2_astc=true
+anti_aliasing/quality/msaa_2d=1

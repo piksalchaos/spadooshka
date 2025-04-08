@@ -1,8 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://chodaasqqr3r6"]
+[gd_scene load_steps=5 format=3 uid="uid://chodaasqqr3r6"]
 
 [ext_resource type="Script" path="res://scenes/gui/local_menu/server_info_display.gd" id="1_mhptv"]
+[ext_resource type="Texture2D" uid="uid://bja320vwcdsap" path="res://assets/images/gui/go_button.png" id="2_rdei3"]
+[ext_resource type="Texture2D" uid="uid://clb6f8q4vgwhp" path="res://assets/images/gui/go_button_pressed.png" id="3_pd8m5"]
+[ext_resource type="Texture2D" uid="uid://dw6mpqkny08a6" path="res://assets/images/gui/go_button_hover.png" id="4_e7tfw"]
 
 [node name="ServerInfoDisplay" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+anchors_preset = -1
+anchor_right = 0.392
+anchor_bottom = 0.154
+offset_right = 0.23999
+offset_bottom = 0.119987
 script = ExtResource("1_mhptv")
 
 [node name="RoomName" type="Label" parent="."]
@@ -20,9 +29,13 @@ layout_mode = 2
 size_flags_horizontal = 3
 text = "5"
 
-[node name="JoinButton" type="Button" parent="."]
+[node name="JoinButton" type="TextureButton" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "Join"
+texture_normal = ExtResource("2_rdei3")
+texture_pressed = ExtResource("3_pd8m5")
+texture_hover = ExtResource("4_e7tfw")
+ignore_texture_size = true
+stretch_mode = 5
 
 [connection signal="pressed" from="JoinButton" to="." method="_on_join_button_pressed"]

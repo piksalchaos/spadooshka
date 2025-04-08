@@ -1,52 +1,50 @@
 extends Control
 
+@onready var loading_screen: LoadingScreen = $LoadingScreen
+
 @onready var title_screen: Control = $TitleScreen
-@onready var main_menu: Control = $MainMenu
-@onready var local_menu: LocalMenu = $LocalMenu
-@onready var lobby_menu: LobbyMenu = $LobbyMenu
+@onready var pre_game_menu: Control = $PreGameMenu
 @onready var agent_map_select_menu: Control = $AgentMapSelectMenu
 @onready var preliminary_screen: Control = $PreliminaryScreen
 @onready var hud: HUD = $HUD
 @onready var victory_screen: Control = $VictoryScreen
 @onready var defeat_screen: Control = $DefeatScreen
 
+var next_node_to_hide
+var next_node_to_show
 var peer_ready_states = {}
 
+signal end_screen_back_button_pressed
+# ik there's a lot of hardcoding and there's no modularity, but deal with it for now lol
+
+func _ready():
+	victory_screen.back_button_pressed.connect(on_end_screen_back_button_pressed)
+	defeat_screen.back_button_pressed.connect(on_end_screen_back_button_pressed)
+
+func start_gui_transition(node_to_hide, node_to_show):
+	next_node_to_hide = node_to_hide
+	next_node_to_show = node_to_show
+	loading_screen.fade_to_black()
+
+func _on_loading_screen_faded_to_black() -> void:
+	next_node_to_hide.hide()
+	next_node_to_show.show()
+	loading_screen.fade_to_transparent()
+
 func _on_title_screen_start_button_pressed() -> void:
-	title_screen.hide()
-	main_menu.show()
+	start_gui_transition(title_screen, pre_game_menu)
 
-func _on_main_menu_local_game_button_pressed() -> void:
-	main_menu.hide()
-	local_menu.show()
+func _on_pre_game_menu_back_button_pressed() -> void:
+	start_gui_transition(pre_game_menu, title_screen)
 
-func _on_local_menu_host_button_pressed(_room_name: String) -> void:
-	lobby_menu.add_player_display(multiplayer.get_unique_id())
-	lobby_menu.show()
-
-func _on_local_menu_join_button_pressed(_ip_address: String) -> void:
-	lobby_menu.show()
-
-func _on_lobby_menu_ready_button_pressed(peer_id: int, is_ready: bool) -> void:
-	update_peer_ready_states.rpc(peer_id, is_ready)
-
-@rpc("any_peer", "call_local", "reliable")
-func update_peer_ready_states(peer_id, is_peer_ready):
-	peer_ready_states[peer_id] = is_peer_ready
-	var peer_ready_count = peer_ready_states.values().count(true)
-	var are_peers_ready = peer_ready_count == multiplayer.get_peers().size()+1
-	if multiplayer.get_unique_id() == 1:
-		lobby_menu.set_start_button_visibility(are_peers_ready)
-	else:
-		lobby_menu.set_waiting_label_visibility(are_peers_ready)
-
-func _on_lobby_menu_start_button_pressed() -> void:
+func _on_pre_game_menu_lobby_start_button_pressed() -> void:
 	begin_agent_map_selection.rpc()
 
 @rpc("call_local", "reliable")
 func begin_agent_map_selection():
-	lobby_menu.hide()
-	agent_map_select_menu.show()
+	start_gui_transition(pre_game_menu, agent_map_select_menu)
+	#lobby_menu.hide()
+	#agent_map_select_menu.show()
 
 func _on_agent_map_select_menu_finished_selection(
 		_peer_id: int, _agent_name: String, _map_name: String
@@ -73,3 +71,10 @@ func prepare_for_end_game(P1_won: bool):
 		victory_screen.show()
 	else:
 		defeat_screen.show()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+func on_end_screen_back_button_pressed():
+	victory_screen.hide()
+	defeat_screen.hide()
+	pre_game_menu.show()
+	end_screen_back_button_pressed.emit()

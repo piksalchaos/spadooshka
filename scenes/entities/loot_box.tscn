@@ -1,12 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://by0mye1dj10gn"]
+[gd_scene load_steps=8 format=3 uid="uid://by0mye1dj10gn"]
 
 [ext_resource type="Script" path="res://scenes/entities/loot_box.gd" id="1_6ek3c"]
+[ext_resource type="Texture2D" uid="uid://dqig8klfkphfr" path="res://assets/images/lootbox.png" id="2_lq7wm"]
 [ext_resource type="PackedScene" uid="uid://du0i5cn8athp5" path="res://scenes/components/interaction_component.tscn" id="2_no84u"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_43mc8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xuskm"]
-albedo_color = Color(1, 0.141176, 1, 1)
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("2_lq7wm")
+roughness = 0.0
+uv1_scale = Vector3(3, 2, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_3xsiv"]
 material = SubResource("StandardMaterial3D_xuskm")
@@ -19,7 +24,7 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="LootBox" type="StaticBody3D" node_paths=PackedStringArray("interaction_component")]
+[node name="LootBox" type="StaticBody3D" node_paths=PackedStringArray("interaction_component") groups=["bullet_hole_immune"]]
 script = ExtResource("1_6ek3c")
 interaction_component = NodePath("InteractionComponent")
 

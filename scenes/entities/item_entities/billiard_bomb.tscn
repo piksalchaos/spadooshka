@@ -1,15 +1,98 @@
-[gd_scene load_steps=7 format=3 uid="uid://q6ftnh8r4dhc"]
+[gd_scene load_steps=12 format=3 uid="uid://q6ftnh8r4dhc"]
 
 [ext_resource type="Script" path="res://scenes/entities/item_entities/billiard_bomb.gd" id="1_snjj1"]
 [ext_resource type="Texture2D" uid="uid://5x50gahdvryi" path="res://assets/images/billiards/billiards.png" id="2_mi1v2"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfjor"]
-albedo_texture = ExtResource("2_mi1v2")
-uv1_scale = Vector3(0.25, 0.25, 1)
-uv1_offset = Vector3(0.75, 0.75, 0)
+[sub_resource type="Shader" id="Shader_dmtts"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.3.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_toon, specular_toon;
+
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color, filter_linear_mipmap, repeat_enable;
+uniform float point_size : hint_range(0.1, 128.0, 0.1);
+
+uniform float roughness : hint_range(0.0, 1.0);
+uniform sampler2D texture_metallic : hint_default_white, filter_linear_mipmap, repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r, filter_linear_mipmap, repeat_enable;
+
+uniform float specular : hint_range(0.0, 1.0, 0.01);
+uniform float metallic : hint_range(0.0, 1.0, 0.01);
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+uniform sampler2D color_gradient;
+uniform sampler2D fresnel_gradient;
+
+float fresnel(float amount, vec3 normal, vec3 view) {
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0)), amount);
+}
+
+void vertex() {
+	UV = UV * uv1_scale.xy + uv1_offset.xy;
+}
+
+void fragment() {
+	float basic_fresnel = fresnel(4.0, NORMAL, VIEW);
+	
+	vec2 base_uv = UV;
+
+	vec4 albedo_tex = texture(texture_albedo, base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb + (basic_fresnel * texture(fresnel_gradient, vec2(basic_fresnel, 0.0)).rgb * 1.0);
+
+	float metallic_tex = dot(texture(texture_metallic, base_uv), metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	SPECULAR = specular;
+
+	vec4 roughness_texture_channel = vec4(1.0, 0.0, 0.0, 0.0);
+	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+}
+
+void light() {
+	float dotproduct = clamp(dot(NORMAL, LIGHT), -0.9, 0.9);
+	float sample = clamp((dotproduct + 1.0) * ATTENUATION / 2.1, 0.05, 0.95);
+	vec4 shaded = texture(color_gradient, vec2(sample, 0.0));
+	DIFFUSE_LIGHT += clamp((shaded.rgb * LIGHT_COLOR), 0.0, 1.0);
+}"
+
+[sub_resource type="Gradient" id="Gradient_b57ok"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.508251)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_03w2j"]
+gradient = SubResource("Gradient_b57ok")
+
+[sub_resource type="Gradient" id="Gradient_t7evn"]
+offsets = PackedFloat32Array(0.521452, 0.775578)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_5liux"]
+gradient = SubResource("Gradient_t7evn")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m0fga"]
+render_priority = 0
+shader = SubResource("Shader_dmtts")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(0.25, 0.25, 1)
+shader_parameter/uv1_offset = Vector3(0.75, 0.75, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("2_mi1v2")
+shader_parameter/color_gradient = SubResource("GradientTexture2D_03w2j")
+shader_parameter/fresnel_gradient = SubResource("GradientTexture2D_5liux")
 
 [sub_resource type="SphereMesh" id="SphereMesh_v5fck"]
-material = SubResource("StandardMaterial3D_bfjor")
+material = SubResource("ShaderMaterial_m0fga")
 radius = 0.75
 height = 1.5
 

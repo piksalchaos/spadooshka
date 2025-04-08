@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://32vmvddr4bfp"
-path="res://.godot/imported/winchester_1873.blend-d707970b186d99ef6c77b9007c4b3290.scn"
+valid=false
 
 [deps]
 
 source_file="res://assets/models/guns/winchester_1873.blend"
-dest_files=["res://.godot/imported/winchester_1873.blend-d707970b186d99ef6c77b9007c4b3290.scn"]
 
 [params]
 

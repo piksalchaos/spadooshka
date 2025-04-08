@@ -7,6 +7,7 @@ class_name Player extends CharacterBody3D
 @onready var inventory: Inventory = $Inventory
 @onready var effect_manager: Node = $EffectManager
 @onready var equipped_gun: Gun = $Head/Camera/Gun
+@onready var dash_sfx: AudioStreamPlayer = $DashSFX
 
 @export var stats: AgentStats
 @export var health: int
@@ -45,9 +46,11 @@ var is_dead = true
 
 signal player_icon_changed(image: CompressedTexture2D)
 signal ammo_changed(num_bullets: int, mag_capacity: int)
+signal gun_shot
 signal dash_changed(dash_value: int, max_dash: int)
 signal health_changed(health: int, max_health: int)
 signal death(peer_id: int)
+signal interact_cast_changed_in_range_state
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -164,7 +167,6 @@ func _physics_process(delta: float) -> void:
 		query_jump()
 		jump_buffer_timer -= delta
 	
-	
 	#push_away_rigid_bodies()
 	move_and_slide()
 	#stupid hack to get dash bar to immediately deplete at start of dash
@@ -216,6 +218,7 @@ func query_jump():
 
 
 func dash():
+	dash_sfx.play()
 	is_dashing = true
 	can_dash = false
 	var dash_direction := camera.global_transform.basis.z * -1
@@ -226,6 +229,12 @@ func dash():
 func receive_damage(damage):
 	if is_dead == true:
 		return
+	
+	var bubble_shield = effect_manager.get_effect_applied("Bubble Shield")
+	if bubble_shield != null:
+		bubble_shield.timer.receive_damage(damage)
+		return
+	
 	health -= damage
 	if health <= 0:
 		die()
@@ -252,7 +261,6 @@ func update_fov(delta):
 		return
 	#camera.fov = max(default_fov, camera.fov - fov_decay_rate * delta)
 	camera.fov = move_toward(camera.fov, max(default_fov, camera.fov - fov_decay_rate * delta), 2)
-	
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
@@ -264,6 +272,9 @@ func _on_dash_cooldown_timer_timeout() -> void:
 func _on_gun_ammo_changed(num_bullets: int, mag_capacity: int) -> void:
 	ammo_changed.emit(num_bullets, mag_capacity)
 
+func _on_gun_shot() -> void:
+	gun_shot.emit()
+
 func apply_effect(effect: Effect):
 	effect_manager.apply_effect(effect)
 
@@ -272,3 +283,6 @@ func is_effect_applied(effect_name: String):
 	
 func die():
 	is_dead = true
+
+func _on_interact_cast_changed_in_range_state(is_in_range: bool) -> void:
+	interact_cast_changed_in_range_state.emit(is_in_range)

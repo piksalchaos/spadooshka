@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c2c8wh6k7fca5"]
+[gd_scene load_steps=12 format=3 uid="uid://c2c8wh6k7fca5"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_yci6l"]
 [ext_resource type="Script" path="res://scenes/gui/gui.gd" id="2_t0ryy"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://svo1j1xxwq0w" path="res://scenes/gui/preliminary_screen.tscn" id="8_wrlv4"]
 [ext_resource type="PackedScene" uid="uid://bmx0b2qjwg5qs" path="res://scenes/gui/agent_map_select_menu/agent_map_select_menu.tscn" id="9_5hn2l"]
 [ext_resource type="PackedScene" uid="uid://cbf27fd7bbrd7" path="res://scenes/gui/loading_screen.tscn" id="9_q7jm6"]
+[ext_resource type="AudioStream" uid="uid://dhcktth8dnj6l" path="res://assets/sounds/lobby.ogg" id="10_5m1s7"]
+[ext_resource type="AudioStream" uid="uid://cws7vb371nopr" path="res://assets/sounds/battle.ogg" id="11_t7vw3"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_yci6l")
@@ -62,7 +64,15 @@ text = "You lost."
 z_index = 2
 layout_mode = 1
 
+[node name="LobbyMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_5m1s7")
+
+[node name="BattleMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_t7vw3")
+volume_db = -6.9
+
 [connection signal="child_entered_tree" from="MultiplayerContainer" to="." method="_on_multiplayer_container_child_entered_tree"]
+[connection signal="end_screen_back_button_pressed" from="GUI" to="." method="_on_gui_end_screen_back_button_pressed"]
 [connection signal="exit_button_pressed" from="GUI/TitleScreen" to="." method="_on_title_screen_exit_button_pressed"]
 [connection signal="start_button_pressed" from="GUI/TitleScreen" to="GUI" method="_on_title_screen_start_button_pressed"]
 [connection signal="back_button_pressed" from="GUI/PreGameMenu" to="GUI" method="_on_pre_game_menu_back_button_pressed"]

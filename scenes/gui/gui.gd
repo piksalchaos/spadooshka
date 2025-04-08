@@ -14,6 +14,7 @@ var next_node_to_hide
 var next_node_to_show
 var peer_ready_states = {}
 
+signal end_screen_back_button_pressed
 # ik there's a lot of hardcoding and there's no modularity, but deal with it for now lol
 
 func _ready():
@@ -76,3 +77,4 @@ func on_end_screen_back_button_pressed():
 	victory_screen.hide()
 	defeat_screen.hide()
 	pre_game_menu.show()
+	end_screen_back_button_pressed.emit()

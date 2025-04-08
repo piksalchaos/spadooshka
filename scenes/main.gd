@@ -28,11 +28,14 @@ var server_browser: ServerBrowser
 @onready var preliminary_screen: Control = $GUI/PreliminaryScreen
 @onready var hud: HUD = $GUI/HUD
 
+@onready var lobby_music: AudioStreamPlayer = $LobbyMusic
+@onready var battle_music: AudioStreamPlayer = $BattleMusic
+
 var map: Map
 
 var peer_selection_choices = {}
 
-const ROUNDS_TO_WIN: int = 5
+const ROUNDS_TO_WIN: int = 1
 var round_number: int = 1
 var rounds_won: int = 0
 
@@ -41,6 +44,7 @@ const HOST_NUMBER = 1
 signal score_changed(round_number: int, P1_score: int, P2_score: int)
 
 func _ready() -> void:
+	lobby_music.play()
 	SpawnerManager.multiplayer_container = multiplayer_container
 	score_changed.connect(hud.update_score_display.rpc)
 
@@ -124,9 +128,15 @@ func _on_preliminary_screen_begin_button_pressed() -> void:
 
 func play_game():
 	gui.prepare_for_game.rpc()
+	change_to_battle_music.rpc()
 	choose_map()
 	add_players()
 	play_round()
+
+@rpc("call_local", "authority", "reliable")
+func change_to_battle_music():
+	lobby_music.stop()
+	battle_music.play()
 
 func choose_map():
 	var map_votes = []
@@ -176,9 +186,14 @@ func end_round(dead_peer_id: int):
 		clear_end_round_icon.rpc()
 		play_round()
 	else:
+		stop_battle_music.rpc()
 		gui.prepare_for_end_game.rpc(P1_score == ROUNDS_TO_WIN)
 		for node in multiplayer_container.get_children():
 			node.queue_free()
+
+@rpc("authority", "call_local", "reliable")
+func stop_battle_music():
+	battle_music.stop()
 
 @rpc("call_local", "reliable")
 func show_end_round_icon(P1_won: bool):
@@ -208,3 +223,5 @@ func _on_multiplayer_container_child_entered_tree(node: Node) -> void:
 		var effect_manager = node.get_node("EffectManager")
 		effect_manager.effect_applied.connect(hud.create_effect_display)
 		
+func _on_gui_end_screen_back_button_pressed() -> void:
+	lobby_music.play()

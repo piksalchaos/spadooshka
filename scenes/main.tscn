@@ -43,6 +43,7 @@ visible = false
 layout_mode = 1
 
 [node name="PreliminaryScreen" parent="GUI" instance=ExtResource("8_wrlv4")]
+visible = false
 layout_mode = 1
 
 [node name="HUD" parent="GUI" instance=ExtResource("3_shkqk")]

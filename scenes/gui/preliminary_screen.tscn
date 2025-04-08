@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://svo1j1xxwq0w"]
+[gd_scene load_steps=8 format=3 uid="uid://svo1j1xxwq0w"]
 
-[ext_resource type="Texture2D" uid="uid://c4y4e2nfxgikt" path="res://assets/images/gui/preliminary_screen/versus_temp.png" id="1_hygjt"]
 [ext_resource type="Script" path="res://scenes/gui/preliminary_screen.gd" id="1_q8k6l"]
+[ext_resource type="Texture2D" uid="uid://c7wses8t0sikm" path="res://assets/images/gui/main_menu/screentone-g-5.0ppi.png" id="2_nm3od"]
+[ext_resource type="Texture2D" uid="uid://pw0fshqywa3m" path="res://assets/images/gui/preliminary_screen/versus.png" id="3_hhmja"]
+[ext_resource type="Texture2D" uid="uid://b61f6dvp55f7c" path="res://assets/images/gui/back_arrow.png" id="4_ne1n4"]
+[ext_resource type="Texture2D" uid="uid://bja320vwcdsap" path="res://assets/images/gui/go_button.png" id="5_6jrk8"]
+[ext_resource type="Texture2D" uid="uid://clb6f8q4vgwhp" path="res://assets/images/gui/go_button_pressed.png" id="6_nyvn2"]
+[ext_resource type="Texture2D" uid="uid://dw6mpqkny08a6" path="res://assets/images/gui/go_button_hover.png" id="7_3h5aw"]
 
 [node name="PreliminaryScreen" type="Control"]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,24 +17,46 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_q8k6l")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.302729, 0.263199, 0.31492, 1)
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+modulate = Color(0.901961, 0.87451, 0.882353, 0.133333)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_nm3od")
+expand_mode = 1
+
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.406
-anchor_top = 0.321
-anchor_right = 0.594
-anchor_bottom = 0.679
+anchor_left = 0.3
+anchor_top = 0.146
+anchor_right = 0.7
+anchor_bottom = 0.646
 offset_left = 0.319946
 offset_top = -0.12001
 offset_right = -0.320068
 offset_bottom = 0.119995
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_hygjt")
+texture = ExtResource("3_hhmja")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="SelfDisplay" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchor_left = 0.0664062
 anchor_top = 0.273611
@@ -46,6 +72,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="OpponentDisplay" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchor_left = 0.699219
 anchor_top = 0.313889
@@ -60,30 +87,18 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="BackButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = -78.0
-offset_right = 215.0
-offset_bottom = -17.0
-grow_vertical = 0
-text = "Back to Selection"
-
-[node name="BeginButton" type="Button" parent="."]
-visible = false
+[node name="BackButton" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3625
-anchor_top = 0.804167
-anchor_right = 0.625
-anchor_bottom = 0.947222
-offset_right = 8.0
-offset_bottom = 8.0
-text = "Begin!!!!"
-metadata/_edit_use_anchors_ = true
+anchor_top = 0.875
+anchor_right = 0.08
+anchor_bottom = 1.0
+offset_top = -6.10352e-05
+offset_right = -0.400009
+grow_vertical = 0
+texture_normal = ExtResource("4_ne1n4")
+ignore_texture_size = true
+stretch_mode = 5
 
 [node name="WaitingLabel" type="Label" parent="."]
 visible = false
@@ -93,6 +108,23 @@ offset_top = 637.0
 offset_right = 645.0
 offset_bottom = 660.0
 text = "Waiting for Host"
+
+[node name="BeginButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.615278
+anchor_right = 0.6
+anchor_bottom = 0.954056
+offset_right = 0.52002
+offset_bottom = 0.0799866
+toggle_mode = true
+texture_normal = ExtResource("5_6jrk8")
+texture_pressed = ExtResource("6_nyvn2")
+texture_hover = ExtResource("7_3h5aw")
+ignore_texture_size = true
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="BeginButton" to="." method="_on_begin_button_pressed"]

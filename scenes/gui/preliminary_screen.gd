@@ -2,8 +2,8 @@ extends Control
 
 @onready var self_choice_label: Label = $SelfDisplay/ChoiceLabel
 @onready var opponent_choice_label: Label = $OpponentDisplay/ChoiceLabel
-@onready var begin_button: Button = $BeginButton
-@onready var waiting_label: Label = $WaitingLabel
+@onready var begin_button: TextureButton = $BeginButton
+#@onready var waiting_label: Label = $WaitingLabel
 
 signal back_button_pressed
 signal cancelled_selection(peer_id: int)
@@ -35,10 +35,10 @@ func update_with_peer_selection_choices(peer_selection_choices: Dictionary):
 		if multiplayer.get_unique_id() == 1:
 			begin_button.show()
 		else:
-			waiting_label.show()
+			pass#waiting_label.show()
 	else:
 		begin_button.hide()
-		waiting_label.hide()
+		#waiting_label.hide()
 
 func _on_begin_button_pressed() -> void:
 	begin_button_pressed.emit()

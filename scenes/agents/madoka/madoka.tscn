@@ -7,5 +7,8 @@
 [node name="Player" instance=ExtResource("1_hnns5")]
 stats = ExtResource("2_pryeb")
 
+[node name="InteractCast" parent="Head/Camera" index="0"]
+target_position = Vector3(0, 0, -7)
+
 [node name="Gun" parent="Head/Camera" index="1"]
 stats = ExtResource("3_vh2rj")

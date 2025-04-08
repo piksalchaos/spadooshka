@@ -73,6 +73,7 @@ layout_mode = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="ServerInfoLabels" type="HBoxContainer" parent="ServerInfoPanelContainer/ServerInfoContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Name" type="Label" parent="ServerInfoPanelContainer/ServerInfoContainer/ServerInfoLabels"]

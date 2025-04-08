@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://bmx0b2qjwg5qs"]
+[gd_scene load_steps=21 format=3 uid="uid://bmx0b2qjwg5qs"]
 
 [ext_resource type="PackedScene" uid="uid://d3kokyyr1wofd" path="res://scenes/gui/agent_map_select_menu/selectable_icon.tscn" id="1_d2hxs"]
 [ext_resource type="Script" path="res://scenes/gui/agent_map_select_menu/agent_map_select_menu.gd" id="1_gqp1f"]
+[ext_resource type="Texture2D" uid="uid://c7wses8t0sikm" path="res://assets/images/gui/main_menu/screentone-g-5.0ppi.png" id="2_6sd0q"]
 [ext_resource type="PackedScene" uid="uid://c20gsp31nhvle" path="res://scenes/gui/agent_map_select_menu/selectable_icon_container.tscn" id="2_65f5a"]
 [ext_resource type="Texture2D" uid="uid://csmwg6i5yhc3v" path="res://assets/images/player_icons/bunny_icon.png" id="4_6p6bf"]
 [ext_resource type="Texture2D" uid="uid://dbn6nhyvsaacv" path="res://assets/images/agents_full_body/catboy.png" id="5_vuha6"]
@@ -9,8 +10,12 @@
 [ext_resource type="Texture2D" uid="uid://58yiomfwk20f" path="res://assets/images/gui/agent_map_select_menu/agent_map_select_ready_temp.png" id="6_ymf22"]
 [ext_resource type="Texture2D" uid="uid://dnen6ckq0k0si" path="res://assets/images/gui/agent_map_select_menu/agent_map_select_ready_disabled_temp.png" id="7_thd02"]
 [ext_resource type="Texture2D" uid="uid://goxq3gdjdqri" path="res://assets/images/player_icons/sandy_icon.png" id="7_xalc7"]
-[ext_resource type="Texture2D" uid="uid://bhfckpvhkqk6v" path="res://assets/images/map_icons/map_1.png" id="8_7utji"]
-[ext_resource type="Texture2D" uid="uid://djy0a4yaym8dx" path="res://assets/images/map_icons/map_2.png" id="9_2664i"]
+[ext_resource type="Texture2D" uid="uid://dp3k62vl3wdvs" path="res://assets/images/map_icons/map_1.png" id="8_7utji"]
+[ext_resource type="Texture2D" uid="uid://vvwxce417avr" path="res://assets/images/map_icons/map_2.png" id="9_2664i"]
+[ext_resource type="Texture2D" uid="uid://bfq2yj7ths8x6" path="res://assets/images/map_icons/map_3.png" id="10_j68ud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6wke"]
+bg_color = Color(0.117293, 0.0825887, 0.143898, 0.772549)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bplx6"]
 atlas = ExtResource("5_vuha6")
@@ -21,7 +26,19 @@ atlas = ExtResource("6_n6f2x")
 region = Rect2(40, 0, 268, 476)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esc81"]
-bg_color = Color(0, 0, 0, 1)
+bg_color = Color(0, 0, 0, 0.788235)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m7wha"]
+atlas = ExtResource("8_7utji")
+region = Rect2(0, 0, 1144, 572)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_haycn"]
+atlas = ExtResource("9_2664i")
+region = Rect2(0, 0, 1120, 560)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skng0"]
+atlas = ExtResource("10_j68ud")
+region = Rect2(0, 0, 1224, 612)
 
 [node name="AgentMapSelectMenu" type="Control"]
 layout_mode = 3
@@ -31,6 +48,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gqp1f")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.302729, 0.263199, 0.31492, 1)
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.901961, 0.87451, 0.882353, 0.133333)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_6sd0q")
+expand_mode = 1
 
 [node name="RotationContainer" type="Control" parent="."]
 layout_mode = 1
@@ -53,6 +90,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(128, 400)
+theme_override_styles/panel = SubResource("StyleBoxFlat_k6wke")
 
 [node name="MarginContainer" type="MarginContainer" parent="RotationContainer/PanelContainer"]
 layout_mode = 2
@@ -163,7 +201,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("8_7utji")
+texture = SubResource("AtlasTexture_m7wha")
 expand_mode = 1
 stretch_mode = 4
 
@@ -179,7 +217,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("9_2664i")
+texture = SubResource("AtlasTexture_haycn")
 expand_mode = 1
 stretch_mode = 5
 
@@ -195,24 +233,27 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("9_2664i")
+texture = SubResource("AtlasTexture_skng0")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="ReadyButton" type="TextureButton" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.325781
-anchor_top = 0.898611
-anchor_right = 0.675781
-anchor_bottom = 1.00139
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.001
+offset_left = -223.0
+offset_top = -73.0001
+offset_right = 225.0
+offset_bottom = 0.280762
 grow_horizontal = 2
 grow_vertical = 2
 disabled = true
 texture_normal = ExtResource("6_ymf22")
 texture_disabled = ExtResource("7_thd02")
 stretch_mode = 6
-metadata/_edit_use_anchors_ = true
 
 [connection signal="icon_selected" from="RotationContainer/PanelContainer/MarginContainer/AgentIconContainer" to="." method="_on_agent_icon_container_icon_selected"]
 [connection signal="icon_selected" from="RotationContainer/PanelContainer2/MarginContainer/MapIconContainer" to="." method="_on_map_icon_container_icon_selected"]

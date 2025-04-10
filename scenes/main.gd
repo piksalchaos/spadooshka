@@ -35,7 +35,7 @@ var map: Map
 
 var peer_selection_choices = {}
 
-const ROUNDS_TO_WIN: int = 5
+const ROUNDS_TO_WIN: int = 1
 var round_number: int = 1
 var rounds_won: int = 0
 
@@ -127,11 +127,14 @@ func _on_preliminary_screen_begin_button_pressed() -> void:
 	play_game()
 
 func play_game():
+	rounds_won = 0
+	round_number = 1
 	gui.prepare_for_game.rpc()
 	change_to_battle_music.rpc()
 	choose_map()
 	add_players()
 	play_round()
+	peer_selection_choices = {}
 
 @rpc("call_local", "authority", "reliable")
 func change_to_battle_music():

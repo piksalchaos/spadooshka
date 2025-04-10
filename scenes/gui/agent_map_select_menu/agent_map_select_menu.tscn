@@ -1,14 +1,14 @@
-[gd_scene load_steps=23 format=3 uid="uid://bmx0b2qjwg5qs"]
+[gd_scene load_steps=25 format=3 uid="uid://bmx0b2qjwg5qs"]
 
 [ext_resource type="PackedScene" uid="uid://d3kokyyr1wofd" path="res://scenes/gui/agent_map_select_menu/selectable_icon.tscn" id="1_d2hxs"]
 [ext_resource type="Script" path="res://scenes/gui/agent_map_select_menu/agent_map_select_menu.gd" id="1_gqp1f"]
 [ext_resource type="Texture2D" uid="uid://c7wses8t0sikm" path="res://assets/images/gui/main_menu/screentone-g-5.0ppi.png" id="2_6sd0q"]
 [ext_resource type="PackedScene" uid="uid://c20gsp31nhvle" path="res://scenes/gui/agent_map_select_menu/selectable_icon_container.tscn" id="2_65f5a"]
-[ext_resource type="Texture2D" uid="uid://csmwg6i5yhc3v" path="res://assets/images/player_icons/bunny_icon.png" id="4_6p6bf"]
+[ext_resource type="Texture2D" uid="uid://duu14bvxp78de" path="res://assets/images/agents_full_body/bunny.png" id="5_rs4hs"]
 [ext_resource type="Texture2D" uid="uid://dbn6nhyvsaacv" path="res://assets/images/agents_full_body/catboy.png" id="5_vuha6"]
 [ext_resource type="Texture2D" uid="uid://b1yc6enpgymt1" path="res://assets/images/agents_full_body/madoka.png" id="6_n6f2x"]
-[ext_resource type="Texture2D" uid="uid://goxq3gdjdqri" path="res://assets/images/player_icons/sandy_icon.png" id="7_xalc7"]
 [ext_resource type="Texture2D" uid="uid://dp3k62vl3wdvs" path="res://assets/images/map_icons/map_1.png" id="8_7utji"]
+[ext_resource type="Texture2D" uid="uid://q5a3xqqlumeq" path="res://assets/images/agents_full_body/sandy.png" id="8_stn13"]
 [ext_resource type="Texture2D" uid="uid://vvwxce417avr" path="res://assets/images/map_icons/map_2.png" id="9_2664i"]
 [ext_resource type="Texture2D" uid="uid://bfq2yj7ths8x6" path="res://assets/images/map_icons/map_3.png" id="10_j68ud"]
 [ext_resource type="Texture2D" uid="uid://u3gmd8ew16lb" path="res://assets/images/gui/agent_map_select_menu/agent_map_select_ready.png" id="12_g3hxb"]
@@ -17,6 +17,10 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6wke"]
 bg_color = Color(0.117293, 0.0825887, 0.143898, 0.772549)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jtcb6"]
+atlas = ExtResource("5_rs4hs")
+region = Rect2(127.03, -155.543, 875.799, 1590.53)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_bplx6"]
 atlas = ExtResource("5_vuha6")
 region = Rect2(75, 40, 268, 476)
@@ -24,6 +28,10 @@ region = Rect2(75, 40, 268, 476)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ud084"]
 atlas = ExtResource("6_n6f2x")
 region = Rect2(40, 0, 268, 476)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwux3"]
+atlas = ExtResource("8_stn13")
+region = Rect2(148.581, 157.592, 792.623, 1272.11)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esc81"]
 bg_color = Color(0, 0, 0, 0.788235)
@@ -122,9 +130,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("4_6p6bf")
+texture = SubResource("AtlasTexture_jtcb6")
 expand_mode = 1
-stretch_mode = 5
 
 [node name="catboy" parent="RotationContainer/PanelContainer/MarginContainer/AgentIconContainer" instance=ExtResource("1_d2hxs")]
 layout_mode = 2
@@ -170,7 +177,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-texture = ExtResource("7_xalc7")
+texture = SubResource("AtlasTexture_qwux3")
 expand_mode = 1
 stretch_mode = 5
 

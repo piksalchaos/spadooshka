@@ -1,7 +1,7 @@
 @tool
 extends Container
 
-@export var height_to_width_ratio: float = 0.5625
+@export var height_to_width_ratio: float = 1
 @export var columns: int = 2
 @export var inner_margin_pixels: int = 10
 

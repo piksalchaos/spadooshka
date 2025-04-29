@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bmx0b2qjwg5qs"]
+[gd_scene load_steps=32 format=3 uid="uid://bmx0b2qjwg5qs"]
 
 [ext_resource type="PackedScene" uid="uid://d3kokyyr1wofd" path="res://scenes/gui/agent_map_select_menu/selectable_icon.tscn" id="1_d2hxs"]
 [ext_resource type="Script" path="res://scenes/gui/agent_map_select_menu/agent_map_select_menu.gd" id="1_gqp1f"]
@@ -6,12 +6,17 @@
 [ext_resource type="PackedScene" uid="uid://c20gsp31nhvle" path="res://scenes/gui/agent_map_select_menu/selectable_icon_container.tscn" id="2_65f5a"]
 [ext_resource type="Texture2D" uid="uid://duu14bvxp78de" path="res://assets/images/agents_full_body/bunny.png" id="5_rs4hs"]
 [ext_resource type="Texture2D" uid="uid://dbn6nhyvsaacv" path="res://assets/images/agents_full_body/catboy.png" id="5_vuha6"]
-[ext_resource type="Texture2D" uid="uid://b1yc6enpgymt1" path="res://assets/images/agents_full_body/madoka.png" id="6_n6f2x"]
+[ext_resource type="Texture2D" uid="uid://benhky681eemh" path="res://assets/images/agent_icons/catboy_default.png" id="7_vm0o3"]
 [ext_resource type="Texture2D" uid="uid://dp3k62vl3wdvs" path="res://assets/images/map_icons/map_1.png" id="8_7utji"]
+[ext_resource type="Texture2D" uid="uid://db2w6dcendmiq" path="res://assets/images/agent_icons/catboy_sleepy.png" id="8_c8dyk"]
 [ext_resource type="Texture2D" uid="uid://q5a3xqqlumeq" path="res://assets/images/agents_full_body/sandy.png" id="8_stn13"]
+[ext_resource type="Texture2D" uid="uid://b3atdabf2626i" path="res://assets/images/agent_icons/magic_girl_default.png" id="9_7flq7"]
 [ext_resource type="Texture2D" uid="uid://vvwxce417avr" path="res://assets/images/map_icons/map_2.png" id="9_2664i"]
 [ext_resource type="Texture2D" uid="uid://bfq2yj7ths8x6" path="res://assets/images/map_icons/map_3.png" id="10_j68ud"]
+[ext_resource type="Texture2D" uid="uid://31v3axxo7t1m" path="res://assets/images/agent_icons/magic_girl_shock.png" id="10_pgjbc"]
+[ext_resource type="Texture2D" uid="uid://beq3jchj2l8sp" path="res://assets/images/agent_icons/ada_default.png" id="12_dbyei"]
 [ext_resource type="Texture2D" uid="uid://u3gmd8ew16lb" path="res://assets/images/gui/agent_map_select_menu/agent_map_select_ready.png" id="12_g3hxb"]
+[ext_resource type="Texture2D" uid="uid://bdrvxxd8lh2y7" path="res://assets/images/agent_icons/ada_annoyed.png" id="13_i1cvo"]
 [ext_resource type="Texture2D" uid="uid://ccxthiysymiy8" path="res://assets/images/gui/agent_map_select_menu/agent_map_select_ready_disabled.png" id="13_nphb1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k6wke"]
@@ -25,13 +30,51 @@ region = Rect2(127.03, -155.543, 875.799, 1590.53)
 atlas = ExtResource("5_vuha6")
 region = Rect2(75, 40, 268, 476)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ud084"]
-atlas = ExtResource("6_n6f2x")
-region = Rect2(40, 0, 268, 476)
+[sub_resource type="SpriteFrames" id="SpriteFrames_s2i01"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_vm0o3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_c8dyk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aohg7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_7flq7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_pgjbc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qwux3"]
 atlas = ExtResource("8_stn13")
 region = Rect2(148.581, 157.592, 792.623, 1272.11)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b02p4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_dbyei")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_i1cvo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_esc81"]
 bg_color = Color(0, 0, 0, 0.788235)
@@ -117,6 +160,7 @@ theme_override_constants/margin_bottom = 200
 
 [node name="AgentIconContainer" parent="RotationContainer/PanelContainer/MarginContainer" instance=ExtResource("2_65f5a")]
 layout_mode = 2
+height_to_width_ratio = 0.8
 
 [node name="bunny" parent="RotationContainer/PanelContainer/MarginContainer/AgentIconContainer" instance=ExtResource("1_d2hxs")]
 layout_mode = 2
@@ -137,6 +181,7 @@ expand_mode = 1
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="RotationContainer/PanelContainer/MarginContainer/AgentIconContainer/catboy"]
+visible = false
 z_as_relative = false
 layout_mode = 1
 anchors_preset = 15
@@ -149,26 +194,30 @@ texture = SubResource("AtlasTexture_bplx6")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RotationContainer/PanelContainer/MarginContainer/AgentIconContainer/catboy"]
+z_as_relative = false
+position = Vector2(57, 75)
+scale = Vector2(0.178437, 0.178437)
+sprite_frames = SubResource("SpriteFrames_s2i01")
+autoplay = "default"
+frame_progress = 0.894462
+
 [node name="madoka" parent="RotationContainer/PanelContainer/MarginContainer/AgentIconContainer" instance=ExtResource("1_d2hxs")]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="RotationContainer/PanelContainer/MarginContainer/AgentIconContainer/madoka"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RotationContainer/PanelContainer/MarginContainer/AgentIconContainer/madoka"]
 z_as_relative = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = SubResource("AtlasTexture_ud084")
-expand_mode = 1
-stretch_mode = 5
+position = Vector2(56, 76.1111)
+scale = Vector2(0.186667, 0.186667)
+sprite_frames = SubResource("SpriteFrames_aohg7")
+autoplay = "default"
+frame_progress = 0.137186
 
 [node name="sandy" parent="RotationContainer/PanelContainer/MarginContainer/AgentIconContainer" instance=ExtResource("1_d2hxs")]
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="RotationContainer/PanelContainer/MarginContainer/AgentIconContainer/sandy"]
+visible = false
 z_as_relative = false
 layout_mode = 1
 anchors_preset = 15
@@ -180,6 +229,14 @@ mouse_filter = 2
 texture = SubResource("AtlasTexture_qwux3")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RotationContainer/PanelContainer/MarginContainer/AgentIconContainer/sandy"]
+z_as_relative = false
+position = Vector2(56, 76.1111)
+scale = Vector2(0.186667, 0.186667)
+sprite_frames = SubResource("SpriteFrames_b02p4")
+autoplay = "default"
+frame_progress = 0.868316
 
 [node name="PanelContainer2" type="PanelContainer" parent="RotationContainer"]
 layout_mode = 1

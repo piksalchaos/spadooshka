@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://bbfti3pj60gtp" path="res://assets/sounds/gunshot.wav" id="2_0b23x"]
 [ext_resource type="PackedScene" uid="uid://cca6nf5b5ckt4" path="res://scenes/player/gun/gun_effects.tscn" id="2_1lasm"]
 [ext_resource type="AudioStream" uid="uid://n10ixtcnq01i" path="res://assets/sounds/reload.wav" id="3_bq8fr"]
-[ext_resource type="PackedScene" uid="uid://bnmehxycglo2" path="res://assets/models/guns/colt_python.blend" id="3_rkq8b"]
+[ext_resource type="PackedScene" uid="uid://cwp8a5pyw4hho" path="res://assets/models/guns/minigun.blend" id="3_rkq8b"]
 
 [node name="Gun" type="Node3D" node_paths=PackedStringArray("gun_model")]
 script = ExtResource("1_51xk5")

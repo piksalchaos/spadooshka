@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://dx6iv2xfdq55p"]
 
 [ext_resource type="Script" path="res://scenes/items/billiard_bomb_item.gd" id="1_kqn6u"]
-[ext_resource type="Texture2D" uid="uid://heny0o6u412f" path="res://assets/images/item_icons/building_blocks_icon_temp.png" id="2_jr5lt"]
+[ext_resource type="Texture2D" uid="uid://dmcle3fjxix47" path="res://assets/images/item_icons/billiard_bomb_icon.png" id="2_wmwb7"]
 
 [node name="BilliardBombItem" type="Node3D"]
 script = ExtResource("1_kqn6u")
 item_name = "Billiard Bomb"
-hud_icon = ExtResource("2_jr5lt")
+hud_icon = ExtResource("2_wmwb7")

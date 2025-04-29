@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cb8e0n0a3s68j"]
 
 [ext_resource type="Script" path="res://scenes/items/grenade_item.gd" id="1_kx6cr"]
-[ext_resource type="Texture2D" uid="uid://bg5cf4xyvoguj" path="res://assets/images/item_icons/grenade_icon_temp.png" id="2_56k3f"]
+[ext_resource type="Texture2D" uid="uid://c1idevop5h1o4" path="res://assets/images/item_icons/grenade_icon.png" id="2_hrv2d"]
 [ext_resource type="PackedScene" uid="uid://chpeu37n1l6iw" path="res://scenes/entities/trajectory.tscn" id="3_1o0dh"]
 [ext_resource type="Shader" path="res://scenes/entities/trajectory.gdshader" id="4_kofis"]
 
@@ -21,7 +21,7 @@ center_offset = Vector3(-2.5, 0, 0)
 [node name="GrenadeItem" type="Node3D"]
 script = ExtResource("1_kx6cr")
 item_name = "Grenade"
-hud_icon = ExtResource("2_56k3f")
+hud_icon = ExtResource("2_hrv2d")
 
 [node name="Trajectory" parent="." instance=ExtResource("3_1o0dh")]
 mesh = SubResource("PlaneMesh_78kru")

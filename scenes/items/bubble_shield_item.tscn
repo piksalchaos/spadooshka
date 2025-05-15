@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://scenes/items/item_classes/effect_item.gd" id="1_4w2ve"]
 [ext_resource type="PackedScene" uid="uid://bhwv0jmhrh5wr" path="res://scenes/effects/bubble_shield_effect.tscn" id="2_1lwsd"]
-[ext_resource type="Texture2D" uid="uid://c0iornjsx7s56" path="res://assets/images/item_icons/bubble_shield_icon_temp.png" id="2_d64iq"]
+[ext_resource type="Texture2D" uid="uid://b47eaai6a5pp6" path="res://assets/images/item_icons/bubble_shield_icon.png" id="3_qq62y"]
 
 [node name="BubbleShieldItem" type="Node3D"]
 script = ExtResource("1_4w2ve")
 effect_scene = ExtResource("2_1lwsd")
 item_name = "Bubble Shield"
-hud_icon = ExtResource("2_d64iq")
+hud_icon = ExtResource("3_qq62y")

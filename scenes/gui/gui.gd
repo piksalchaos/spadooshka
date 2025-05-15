@@ -7,8 +7,7 @@ extends Control
 @onready var agent_map_select_menu: Control = $AgentMapSelectMenu
 @onready var preliminary_screen: Control = $PreliminaryScreen
 @onready var hud: HUD = $HUD
-@onready var victory_screen: Control = $VictoryScreen
-@onready var defeat_screen: Control = $DefeatScreen
+@onready var end_screen: Control = $EndScreen
 
 var next_node_to_hide
 var next_node_to_show
@@ -16,11 +15,6 @@ var peer_ready_states = {}
 
 signal end_screen_back_button_pressed
 # ik there's a lot of hardcoding and there's no modularity, but deal with it for now lol
-
-func _ready():
-	victory_screen.back_button_pressed.connect(on_end_screen_back_button_pressed)
-	defeat_screen.back_button_pressed.connect(on_end_screen_back_button_pressed)
-
 func start_gui_transition(node_to_hide, node_to_show):
 	next_node_to_hide = node_to_hide
 	next_node_to_show = node_to_show
@@ -67,14 +61,11 @@ func prepare_for_game():
 @rpc("call_local", "reliable")
 func prepare_for_end_game(P1_won: bool):
 	hud.hide()
-	if is_multiplayer_authority() == P1_won:
-		victory_screen.show()
-	else:
-		defeat_screen.show()
+	end_screen.set_win_state(is_multiplayer_authority() == P1_won)
+	end_screen.show()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
-func on_end_screen_back_button_pressed():
-	victory_screen.hide()
-	defeat_screen.hide()
+func _on_end_screen_back_button_pressed():
+	end_screen.hide()
 	pre_game_menu.show()
 	end_screen_back_button_pressed.emit()

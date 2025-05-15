@@ -1,7 +1,12 @@
 extends Control
 
-@onready var self_choice_label: Label = $SelfDisplay/ChoiceLabel
-@onready var opponent_choice_label: Label = $OpponentDisplay/ChoiceLabel
+const SANDY_IMAGE = preload("res://assets/images/agents_full_body/ada.png")
+const BUNNY_IMAGE = preload("res://assets/images/agents_full_body/bunny.png")
+const CATBOY_IMAGE = preload("res://assets/images/agents_full_body/catboy.png")
+const MADOKA_IMAGE = preload("res://assets/images/agents_full_body/madoka.png")
+
+@onready var self_texture_rect: TextureRect = $SelfDisplay/TextureRect
+@onready var opponent_texture_rect: TextureRect = $OpponentDisplay/TextureRect
 @onready var begin_button: TextureButton = $BeginButton
 #@onready var waiting_label: Label = $WaitingLabel
 
@@ -24,12 +29,11 @@ func update_with_peer_selection_choices(peer_selection_choices: Dictionary):
 		return peer_selection_choices[peer]["agent_name"]
 	
 	for peer in every_peer:
+		var agent_name = get_peer_agent_name.call(peer) if peer_selection_choices.has(peer) else ""
 		if peer == multiplayer.get_unique_id():
-			self_choice_label.text = get_peer_agent_name.call(peer) \
-				if peer_selection_choices.has(peer) else ""
+			self_texture_rect.texture = get_texture_from_agent_name(agent_name)
 		else:
-			opponent_choice_label.text = get_peer_agent_name.call(peer) \
-				if peer_selection_choices.has(peer) else ""
+			opponent_texture_rect.texture = get_texture_from_agent_name(agent_name)
 	
 	if every_peer.size() == peer_selection_choices.size():
 		if multiplayer.get_unique_id() == 1:
@@ -39,6 +43,19 @@ func update_with_peer_selection_choices(peer_selection_choices: Dictionary):
 	else:
 		begin_button.hide()
 		#waiting_label.hide()
+
+func get_texture_from_agent_name(agent_name: String):
+	match agent_name:
+		"bunny":
+			return BUNNY_IMAGE
+		"catboy":
+			return CATBOY_IMAGE
+		"madoka":
+			return MADOKA_IMAGE
+		"sandy":
+			return SANDY_IMAGE
+		_:
+			return null
 
 func _on_begin_button_pressed() -> void:
 	begin_button_pressed.emit()

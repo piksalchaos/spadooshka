@@ -56,36 +56,56 @@ stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
 [node name="SelfDisplay" type="Control" parent="."]
-visible = false
 layout_mode = 1
-anchor_left = 0.0664062
-anchor_top = 0.273611
-anchor_right = 0.276406
-anchor_bottom = 0.704611
+anchor_left = 0.1
+anchor_right = 0.35
+anchor_bottom = 1.0
 offset_right = 0.199982
 offset_bottom = -0.320007
 metadata/_edit_use_anchors_ = true
 
 [node name="ChoiceLabel" type="Label" parent="SelfDisplay"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="OpponentDisplay" type="Control" parent="."]
-visible = false
+[node name="TextureRect" type="TextureRect" parent="SelfDisplay"]
 layout_mode = 1
-anchor_left = 0.699219
-anchor_top = 0.313889
-anchor_right = 0.909219
-anchor_bottom = 0.744889
-offset_right = 0.199982
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -0.0809593
+offset_bottom = 0.00999832
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="OpponentDisplay" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.65
+anchor_right = 0.9
+anchor_bottom = 1.0
+offset_right = 0.199951
 offset_bottom = -0.320007
 metadata/_edit_use_anchors_ = true
 
 [node name="ChoiceLabel" type="Label" parent="OpponentDisplay"]
+visible = false
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="TextureRect" type="TextureRect" parent="OpponentDisplay"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -0.0809593
+offset_bottom = 0.00999832
+expand_mode = 1
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="BackButton" type="TextureButton" parent="."]
 layout_mode = 1

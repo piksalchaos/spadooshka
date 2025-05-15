@@ -4,12 +4,11 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bnmehxycglo2"
-path="res://.godot/imported/colt_python.blend-347c6d40abb75c07268782a37c2ed364.scn"
+valid=false
 
 [deps]
 
 source_file="res://assets/models/guns/colt_python.blend"
-dest_files=["res://.godot/imported/colt_python.blend-347c6d40abb75c07268782a37c2ed364.scn"]
 
 [params]
 
